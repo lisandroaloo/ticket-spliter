@@ -1,19 +1,23 @@
 import bcrypt from "bcryptjs"
+import prisma from "../models/prismaClient";
+import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie";
 
 
 export const signUp = async (req: any, res: any) => {
     try {
-        const { fullName, username, password, confirmPassword } = req.body
-
-        if (password != confirmPassword) {
+        const { us_nombre, us_email, us_password, confirmPassword } = req.body
+        
+        if (us_password != confirmPassword) {
             return res.status(400).json({ error: "Passwords don't match" })
         }
 
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt)
+        const hashedPassword = await bcrypt.hash(us_password, salt)
 
-
-
+        const newUser = await prisma.usuario.create({
+          data: { us_nombre, us_email, us_password: hashedPassword, us_role:"usuario_general", us_estado:"Activo" },
+        })
+        res.json(newUser)
 
 
     } catch (error: any) {
@@ -23,10 +27,26 @@ export const signUp = async (req: any, res: any) => {
 
 }
 
+
 export const login = async (req: any, res: any) => {
     try {
-        const { username, password } = req.body
+        const { us_email, us_password: pw } = req.body
 
+        const user = await prisma.usuario.findUnique({ where: { us_email} })
+
+        if (user) {
+            const { us_password } = user;
+            const passwordMatch = await bcrypt.compare(pw, us_password)
+            if (passwordMatch) {
+                generateTokenAndSetCookie(us_email, res)
+            }
+
+        } else {
+            throw Error("No se encontro el usuario")
+        }
+
+
+        res.json(user)
 
     } catch (error: any) {
         console.error("Error login controller", error.message)

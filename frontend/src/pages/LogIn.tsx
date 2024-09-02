@@ -2,13 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export interface ILogin {
-  username: string
+  email: string
   password: string
 }
 
 const LogIn = () => {
   const [inputs, setInputs] = React.useState<ILogin>({
-    username: '',
+    email: '',
     password: '',
   })
 
@@ -23,11 +23,11 @@ const LogIn = () => {
                 <input
                   id="name"
                   type="text"
-                  placeholder="Ingresa tu nombre de usuario"
+                  placeholder="Ingresa tu email"
                   required
-                  value={inputs.username}
+                  value={inputs.email}
                   onChange={(e) => {
-                    setInputs({ ...inputs, username: e.target.value })
+                    setInputs({ ...inputs, email: e.target.value })
                   }}
                   className="w-full rounded-md border border-gray-500 px-4 py-2 text-gray-900"
                 />

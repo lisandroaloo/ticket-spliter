@@ -2,9 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-export interface IInputs {
-    fullName: string,
-    username: string,
+export interface IRegisterInputs {
+    nombre: string,
     email: string,
     password: string,
     confirmPassword: string,
@@ -14,16 +13,16 @@ export interface IInputs {
 
 const SignUp = () => {
 
-    const [inputs, setInputs] =
-        React.useState<IInputs>({
-            fullName: '',
-            username: '',
-            email: "",
-            password: '',
-            confirmPassword: '',
-        })
+    const [inputs, setInputs] = React.useState<IRegisterInputs>({
+      nombre: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    })
 
-
+    const formSubmit = () => {
+        // fetch("")
+    }
 
 
     return (
@@ -34,29 +33,16 @@ const SignUp = () => {
                     <h1 className="text-3xl font-bold tracking-tight text-gray-900">Registrate</h1>
                     <p className="mt-4 text-lg text-gray-700">Crea una cuenta para empezar a gestionar tus gastos.</p>
                     <div className="mt-8 flex flex-col items-center gap-4">
-                        <form className="w-full max-w-md space-y-4">
+                        <form className="w-full max-w-md space-y-4" onSubmit={() => formSubmit()}>
                             <div>
                                 <input
                                     id="name"
                                     type="text"
                                     placeholder="Ingresa tu nombre"
                                     required
-                                    value={inputs.fullName}
+                                    value={inputs.nombre}
                                     onChange={(e) => {
-                                        setInputs({ ...inputs, fullName: e.target.value })
-                                    }}
-                                    className="w-full rounded-md border border-gray-500 px-4 py-2 text-gray-900"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    id="name"
-                                    type="text"
-                                    placeholder="Ingresa tu nombre de usuario"
-                                    required
-                                    value={inputs.username}
-                                    onChange={(e) => {
-                                        setInputs({ ...inputs, username: e.target.value })
+                                        setInputs({ ...inputs, nombre: e.target.value })
                                     }}
                                     className="w-full rounded-md border border-gray-500 px-4 py-2 text-gray-900"
                                 />
