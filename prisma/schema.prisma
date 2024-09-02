@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  us_email     String             @id
+  us_nombre    String
+  us_password  String
+  us_estado    String
+  us_role      String
+  PagoPago_us_emisor_id   Pago[]  @relation("PagoPago_us_emisor_id")
+  PagoPago_us_receptor_id Pago[]  @relation("PagoPago_us_receptor_id")
+  UsuarioXProyecto UsuarioXProyecto[]
+  Ticket       Ticket[]
+
+  @@map("Usuario")
+}
+
+model Pago {
+  pa_id              Int      @id @default(autoincrement())
+  pa_us_emisor_id    String
+  pa_us_receptor_id  String
+  pa_monto           Float
+  pa_fecha           DateTime
+  pa_estado          String
+  emisor             Usuario  @relation("PagoPago_us_emisor_id", fields: [pa_us_emisor_id], references: [us_email])
+  receptor           Usuario  @relation("PagoPago_us_receptor_id", fields: [pa_us_receptor_id], references: [us_email])
+
+  @@map("Pago")
+}
+
+model Proyecto {
+  pr_id           Int              @id @default(autoincrement())
+  pr_nombre       String
+  pr_descripcion  String?
+  UsuarioXProyecto UsuarioXProyecto[]
+  Ticket          Ticket[]
+
+  @@map("Proyecto")
+}
+
+model UsuarioXProyecto {
+  uxp_us_id       String
+  uxp_pr_id       Int
+  uxp_porcentaje  Float
+  Usuario         Usuario   @relation(fields: [uxp_us_id], references: [us_email])
+  Proyecto        Proyecto  @relation(fields: [uxp_pr_id], references: [pr_id])
+
+  @@id([uxp_us_id, uxp_pr_id])
+  @@map("UsuarioXProyecto")
+}
+
+model Ticket {
+  ti_id           Int      @id @default(autoincrement())
+  ti_pr_id        Int
+  ti_us_id        String
+  ti_monto        Float
+  ti_descripcion  String
+  ti_fecha        DateTime
+  Proyecto        Proyecto  @relation(fields: [ti_pr_id], references: [pr_id])
+  Usuario         Usuario   @relation(fields: [ti_us_id], references: [us_email])
+
+  @@map("Ticket")
+}

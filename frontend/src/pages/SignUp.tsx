@@ -31,7 +31,7 @@ const SignUp = () => {
         <section className="bg-gradient-to-r from-white to-white py-12">
             <div className="px-4">
                 <div className="mx-auto max-w-2xl text-center">
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900">Registrate perro</h1>
+                    <h1 className="text-3xl font-bold tracking-tight text-gray-900">Registrate</h1>
                     <p className="mt-4 text-lg text-gray-700">Crea una cuenta para empezar a gestionar tus gastos.</p>
                     <div className="mt-8 flex flex-col items-center gap-4">
                         <form className="w-full max-w-md space-y-4">
