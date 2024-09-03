@@ -1,30 +1,41 @@
-import './App.css';
-import { Route, Routes } from '../node_modules/react-router-dom/dist/index';
-import Landing from './components/Landing';
-import SignUp from './pages/SignUp';
-import NavBar from './components/NavBar'
-import LogIn from './pages/LogIn';
+import "./App.css";
+import {
+  Navigate,
+  Route,
+  Routes,
+} from "../node_modules/react-router-dom/dist/index";
+import Landing from "./pages/Landing";
+import SignUp from "./pages/SignUp";
+
+import NavBar from "./components/NavBar";
+import LogIn from "./pages/LogIn";
+import { useAuthContext } from "./context/AuthContext";
+import Footer from "./components/Footer";
 
 function App() {
+  const { authUser } = useAuthContext();
   return (
-    <div className="App ">
+    <div className="min-h-screen flex flex-col">
       {/* Nav */}
-      <header className='mb-12'>
+      <header className="">
         <NavBar />
       </header>
-      <main className='flex-1 bg-white'>
+      <main className="flex-1 bg-white">
         <Routes>
+          <Route path="/" element={<Landing />} />
           <Route
-            path="/"
-            element={<Landing />}
+            path="/login"
+            element={authUser ? <Navigate to="/" /> : <LogIn />}
           />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<LogIn />} />
+          <Route
+            path="/signup"
+            element={authUser ? <Navigate to="/" /> : <SignUp />}
+          />
         </Routes>
       </main>
-
+      <Footer/>
     </div>
-  )
+  );
 }
 
 export default App;
