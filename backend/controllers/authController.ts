@@ -46,7 +46,7 @@ export const login = async (req: any, res: any) => {
 
     generateTokenAndSetCookie(us_email, res);
 
-    res.json("ENTRO")
+    res.json(us_email)
  
   } catch (error: any) {
     console.error("Error login controller", error.message);

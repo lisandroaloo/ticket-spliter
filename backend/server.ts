@@ -1,7 +1,8 @@
 import express from 'express';
 import dotenv from "dotenv";
-import authRoutes from "./routes/AuthRoutes";
 import cors from "cors"
+import authRoutes from './routes/authRoutes';
+import proyectRoutes from './routes/proyectRoutes';
 
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(
 )
 
 app.use("/api/auth", authRoutes);
+app.use("/api/proyects", proyectRoutes);
 
 
 
