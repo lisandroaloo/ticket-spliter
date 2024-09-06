@@ -11,6 +11,7 @@ import NavBar from "./components/NavBar";
 import LogIn from "./pages/LogIn";
 import { useAuthContext } from "./context/AuthContext";
 import Footer from "./components/Footer";
+import Proyects from "./pages/Proyects";
 
 function App() {
   const { authUser } = useAuthContext();
@@ -30,6 +31,10 @@ function App() {
           <Route
             path="/signup"
             element={authUser ? <Navigate to="/" /> : <SignUp />}
+          />
+          <Route
+            path="/proyects"
+            element={authUser ? <Proyects /> : <LogIn />}
           />
         </Routes>
       </main>
