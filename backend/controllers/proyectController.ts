@@ -48,3 +48,23 @@ export const createProyect = async (req: any, res: any) => {
     res.status(500).json({ error: 'internal Server Error' })
   }
 }
+
+export const editProyect = async (req: any, res: any) => {
+  try {
+    const { pr_id, pr_nombre, pr_descripcion } = req.body
+
+    const proyect = await prisma.proyecto.update({
+      where:{pr_id},
+      data: {
+        pr_id: pr_id,
+        pr_nombre: pr_nombre,
+        pr_descripcion: pr_descripcion
+      }
+    })
+
+    res.json(proyect)
+  } catch (error: any) {
+    console.error('Error editProyect controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}
