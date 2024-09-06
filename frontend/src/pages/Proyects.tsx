@@ -12,6 +12,12 @@ export interface IProyect {
   pr_descripcion: string
 }
 
+export interface IUserByProject {
+  uxp_us_id: string
+  uxp_pr_id: string
+  uxp_porcentaje: string
+}
+
 const Proyects = () => {
   const [projects, setProjects] = useState<IProyect[]>([])
   
@@ -29,7 +35,6 @@ const Proyects = () => {
   }, [])
 
   const handleClick = (p: IProyect) => {
-    console.log("PASO", p)
     setProjectForEdit(p)
   }
 

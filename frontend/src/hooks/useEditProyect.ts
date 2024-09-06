@@ -1,10 +1,8 @@
 import { useState } from 'react'
-import { useAuthContext } from '../context/AuthContext'
 import { IProyectForm } from '../components/proyect/ProyectForm'
 
 const useEditProyect = () => {
   const [loading, setLoading] = useState(false)
-  const { authUser } = useAuthContext()
 
   const editProyect = async ({ _pr_id, _pr_nombre, _pr_descripcion }: IProyectForm) => {
     try {
