@@ -44,10 +44,10 @@ const Proyects = () => {
       {!loading && (
         <table className="w-full bg-slate-800 text-slate-300">
           <thead>
-            <tr>
-              <th className="border-r border-r-slate-300">id</th>
-              <th className="border-r border-r-slate-300">nombre</th>
-              <th>descripcion</th>
+            <tr className='text-center'>
+              <th className="border-r border-r-slate-300 w-1/12">Id</th>
+              <th className="border-r border-r-slate-300 w-4/12">Nombre</th>
+              <th className="w-7/12">Descripcion</th>
             </tr>
           </thead>
           <tbody>
@@ -57,7 +57,7 @@ const Proyects = () => {
                 onClick={() => handleClick(p)}
                 key={index}
               >
-                <td className="border-r border-r-slate-300">{p.pr_id}</td>
+                <td className="border-r border-r-slate-300 ">{p.pr_id}</td>
                 <td className="border-r border-r-slate-300">{p.pr_nombre}</td>
                 <td>{p.pr_descripcion}</td>
               </tr>

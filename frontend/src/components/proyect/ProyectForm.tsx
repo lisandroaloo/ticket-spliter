@@ -3,6 +3,7 @@ import TextInput from '../TextInput'
 import useCreateProyect from '../../hooks/useCreateProyect'
 import { IProyect } from '../../pages/Proyects'
 import useEditProyect from '../../hooks/useEditProyect'
+import useGetProyects from '../../hooks/UseGetProyects'
 
 export interface IProyectFormProps {
   setProjects: Dispatch<SetStateAction<IProyect[]>>
@@ -38,6 +39,7 @@ const IProyectToIProyectForm = (ip: IProyect): IProyectForm => {
 const ProyectForm = ({ setProjects, projects, projectForEdit, setProjectForEdit }: IProyectFormProps) => {
   const { loading: loadingC, createProyect } = useCreateProyect()
   const { loading: loadingE, editProyect } = useEditProyect()
+  const { loading: loadingG, getProyects } = useGetProyects()
 
   const [formState, setFormState] = useState<IProyectForm>(projectForEdit ? IProyectToIProyectForm(projectForEdit) : initializeProyectForm())
 
@@ -50,12 +52,18 @@ const ProyectForm = ({ setProjects, projects, projectForEdit, setProjectForEdit 
     }))
   }
 
-  const handleCreateProyect = () => {
-    createProyect(formState)
+  const handleCreateProyect = async () => {
+    await createProyect(formState)
+    const _proyects = await getProyects()
+    setProjects(_proyects) 
+    setFormState(initializeProyectForm())
   }
 
-  const handleEditProyect = () => {
-    editProyect(formState)
+  const handleEditProyect = async () => {
+    await editProyect(formState)
+    const _proyects = await getProyects()
+    setProjects(_proyects)
+    setFormState(initializeProyectForm())
   }
 
   useEffect(() => {
