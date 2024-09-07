@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
-import useLogOut from "../hooks/UseLogout";
+import { useAuthContext } from "../../context/AuthContext";
+import useLogOut from "../../hooks/UseLogout";
 
-const NavBar = () => {
-  const { authUser, setAuthUser } = useAuthContext();
+const NavBarNotLogged = () => {
+ 
 
-  const { logout } = useLogOut();
+  
 
   return (
     <nav className="w-full bg-gray-900 h-[60px] top-0 flex items-center justify-between ">
@@ -16,29 +16,20 @@ const NavBar = () => {
         </Link>
       </div>
       <div className="flex gap-4 items-center pr-6">
-        {!authUser ? (
-          <>
-            <Link
-              to="/LogIn"
-              className="text-sm font-medium text-white hover:text-gray-300 no-underline "
-            >
-              Login
-            </Link>
-            <Link
-              to="/SignUp"
-              className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-sm no-underline"
-            >
-              Sign Up
-            </Link>
-          </>
-        ) : (
-          <button
-            className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-sm "
-            onClick={logout}
-          >
-            LOGOUT
-          </button>
-        )}
+
+        <Link
+          to="/LogIn"
+          className="text-sm font-medium text-white hover:text-gray-300 no-underline "
+        >
+          Login
+        </Link>
+        <Link
+          to="/SignUp"
+          className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-sm no-underline"
+        >
+          Sign Up
+        </Link>
+
       </div>
     </nav>
   );
@@ -64,4 +55,4 @@ function WalletIcon(props: any) {
   );
 }
 
-export default NavBar;
+export default NavBarNotLogged;

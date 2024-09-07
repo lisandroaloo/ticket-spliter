@@ -7,19 +7,25 @@ import {
 import Landing from "./pages/Landing";
 import SignUp from "./pages/SignUp";
 
-import NavBar from "./components/NavBar";
+
 import LogIn from "./pages/LogIn";
 import { useAuthContext } from "./context/AuthContext";
 import Footer from "./components/Footer";
 import Proyects from "./pages/Proyects";
+import NavBarLogged from "./components/navbars/NavBarLogged";
+import NavBarNotLogged from "./components/navbars/NavBarNotLogged";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const { authUser } = useAuthContext();
+
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Nav */}
       <header className="">
-        <NavBar />
+        {authUser ? <NavBarLogged /> : <NavBarNotLogged />}
+
       </header>
       <main className="flex-1 bg-white">
         <Routes>
@@ -36,9 +42,14 @@ function App() {
             path="/proyects"
             element={authUser ? <Proyects /> : <LogIn />}
           />
+          <Route
+            path="/userprofile"
+            element={authUser ? <UserProfile /> : <LogIn />}
+          />
+          
         </Routes>
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

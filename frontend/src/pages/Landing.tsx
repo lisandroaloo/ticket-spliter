@@ -35,16 +35,13 @@ const Landing = () => {
           <p className="mt-4 text-white">Our expense tracking app offers a range of features to make managing shared expenses a breeze.</p>
 
           <div className="mt-8 w-11/12 flex flex-col gap-4 ">
-            <Link
-              to="/proyects"
-              className="no-underline text-gray-900"
-            >
+
             <FeatureCard
               icon={'bi bi-folder'}
               title={'Project Management'}
               description={'Create and manage projects with name, description, and member assignment.'}
-              />
-              </Link>
+            />
+
             <FeatureCard
               icon={'bi bi-calculator-fill'}
               title={'Contribution Tracking'}
