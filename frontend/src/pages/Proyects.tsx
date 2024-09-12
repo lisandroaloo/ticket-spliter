@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import useGetProyects from '../hooks/UseGetProyects'
 import ProyectForm from '../components/proyect/ProyectForm'
+import { Link, useNavigate } from 'react-router-dom'
+
 
 
 export interface IGetProyects {
@@ -21,23 +23,27 @@ export interface IUserByProject {
 
 const Proyects = () => {
   const [projects, setProjects] = useState<IProyect[]>([])
-  
+
   const [projectForEdit, setProjectForEdit] = useState<IProyect | null>(null)
 
-  const {loading, getProyects} = useGetProyects()
+  const { loading, getProyects } = useGetProyects()
+
+  const navigate = useNavigate();
+
+  const onClickRow = (id: string) => {
+    navigate("/proyects/" + id);
+  }
+
 
   const getProjectsForTable = async () => {
     const _projects = await getProyects()
     setProjects(_projects)
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     getProjectsForTable()
   }, [])
 
-  const handleClick = (p: IProyect) => {
-    setProjectForEdit(p)
-  }
 
   return (
     <>
@@ -58,14 +64,20 @@ const Proyects = () => {
           </thead>
           <tbody>
             {projects.map((p: IProyect, index) => (
+
               <tr
-                className="border-t border-t-slate-300"
-                onClick={() => handleClick(p)}
+                className="border-t border-t-slate-300 cursor-pointer"
+                onClick={() => onClickRow(p.pr_id)}
                 key={index}
               >
+
+
                 <td className="border-r border-r-slate-300 ">{p.pr_id}</td>
                 <td className="border-r border-r-slate-300">{p.pr_nombre}</td>
                 <td>{p.pr_descripcion}</td>
+
+
+
               </tr>
             ))}
           </tbody>

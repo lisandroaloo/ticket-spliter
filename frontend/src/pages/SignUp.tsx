@@ -25,8 +25,8 @@ const SignUp = () => {
   };
 
   return (
-    <section className="bg-gradient-to-r from-white to-white py-12">
-      <div className="px-4">
+    <section className="h-[92vh] relative">
+      <div className=" absolute  inset-0 top-[15%] ">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
             Registrate
