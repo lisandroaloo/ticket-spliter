@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import FeatureCard from "../components/FeatureCard";
+import Footer from "../components/Footer";
 
 const Landing = () => {
   return (
@@ -55,6 +56,7 @@ const Landing = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   )
 };

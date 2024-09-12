@@ -2,7 +2,7 @@ import prisma from '../models/prismaClient'
 
 export const getProyects = async (req: any, res: any) => {
   try {
-    const { us_email } = req.params.userId
+    const { userId: us_email } = req.params
 
     const proyects = await prisma.proyecto.findMany({
       where: {
@@ -18,6 +18,34 @@ export const getProyects = async (req: any, res: any) => {
     })
 
     res.json(proyects)
+  } catch (error: any) {
+    console.error('Error getProyects controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}
+
+
+export const getProyectByIDDeep = async (req: any, res: any) => {
+  try {
+
+    const { prId } = req.params
+
+    
+    const proyect = await prisma.proyecto.findUnique({
+      where: {
+
+        pr_id : +prId
+      },
+      select: {
+        pr_id: true,
+        pr_nombre: true,
+        pr_descripcion: true,
+        UsuarioXProyecto: true
+      },
+
+    })
+
+    res.json(proyect)
   } catch (error: any) {
     console.error('Error getProyects controller', error.message)
     res.status(500).json({ error: 'internal Server Error' })

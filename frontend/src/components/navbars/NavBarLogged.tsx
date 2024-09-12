@@ -7,7 +7,7 @@ const NavBarLogged = () => {
     const { logout } = useLogOut();
 
     return (
-        <nav className="w-full bg-gray-900 h-[60px] top-0 flex items-center justify-between ">
+        <nav className="w-full bg-gray-900 h-[8vh] top-0 flex items-center justify-between ">
             <div className="pl-4">
                 <Link to="/" className="flex items-center">
                     <WalletIcon className="text-white" />
