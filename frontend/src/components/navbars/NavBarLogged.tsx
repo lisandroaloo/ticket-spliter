@@ -22,7 +22,7 @@ const NavBarLogged = () => {
                 </Link>
 
                 <Link
-                    to="/proyects"
+                    to="/projects"
                     className="text-sm font-medium text-white hover:text-gray-300 no-underline "
                 >
                     Proyectos

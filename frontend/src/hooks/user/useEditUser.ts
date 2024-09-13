@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { IUser } from '../pages/UserProfile'
+import { IUser } from '../../pages/UserProfile'
 
 
 const useEditUser = () => {

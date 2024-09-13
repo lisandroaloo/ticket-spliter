@@ -24,7 +24,7 @@ export const signUp = async (req: any, res: any) => {
         us_estado: "Activo",
       },
     });
-    res.json(newUser);
+    res.json(us_email)
   } catch (error: any) {
     console.error("Error signup controller", error.message);
     res.status(500).json({ error: "internal Server Error" });

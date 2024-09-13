@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import { IProyectForm } from '../components/proyect/ProyectForm'
+import { IProjectForm } from '../../components/project/ProjectForm'
 
-const useEditProyect = () => {
+const useEditProject = () => {
   const [loading, setLoading] = useState(false)
 
-  const editProyect = async ({ _pr_id, _pr_nombre, _pr_descripcion }: IProyectForm) => {
+  const editProject = async ({ _pr_id, _pr_nombre, _pr_descripcion }: IProjectForm) => {
     try {
         setLoading(true)
 
-        const _res = await fetch(`http://localhost:5000/api/proyects/`, {
+        const _res = await fetch(`http://localhost:5000/api/projects/`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -32,7 +32,7 @@ const useEditProyect = () => {
       setLoading(false)
     }
   }
-  return { loading, editProyect }
+  return { loading, editProject }
 }
 
-export default useEditProyect
+export default useEditProject

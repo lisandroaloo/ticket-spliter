@@ -1,16 +1,15 @@
 import { useState } from 'react'
-import { useAuthContext } from '../context/AuthContext'
 
-const useGetProyects = () => {
+const useGetProjectByIDDeep = () => {
   const [loading, setLoading] = useState(false)
-  const { authUser } = useAuthContext()
 
-  const getProyects = async () => {
+
+  const getProjectsByIDDeep = async (pr_id: number) => {
     try {
-      console.log(authUser);
-      
+
+
       setLoading(true)
-      const _res = await fetch(`http://localhost:5000/api/proyects/${authUser}`, {
+      const _res = await fetch(`http://localhost:5000/api/projects/detail/${pr_id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -28,7 +27,7 @@ const useGetProyects = () => {
       setLoading(false)
     }
   }
-  return { loading, getProyects }
+  return { loading, getProjectsByIDDeep }
 }
 
-export default useGetProyects
+export default useGetProjectByIDDeep

@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from "dotenv";
 import cors from "cors"
 import authRoutes from './routes/authRoutes';
-import proyectRoutes from './routes/proyectRoutes';
+import projectRoutes from './routes/projectRoutes';
 import userRoutes from './routes/userRoutes';
 
 
@@ -20,7 +20,7 @@ app.use(
 )
 
 app.use("/api/auth", authRoutes);
-app.use("/api/proyects", proyectRoutes);
+app.use("/api/projects", projectRoutes);
 app.use("/api/users", userRoutes);
 
 
