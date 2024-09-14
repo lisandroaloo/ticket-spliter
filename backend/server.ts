@@ -4,6 +4,7 @@ import cors from "cors"
 import authRoutes from './routes/authRoutes';
 import projectRoutes from './routes/projectRoutes';
 import userRoutes from './routes/userRoutes';
+import ticketRoutes from './routes/ticketRoutes';
 
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/tickets", ticketRoutes);
 
 
 

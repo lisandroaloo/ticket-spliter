@@ -37,16 +37,43 @@ export const getProjectByIDDeep = async (req: any, res: any) => {
         pr_nombre: true,
         pr_descripcion: true,
         UsuarioXProyecto: {
-          select: { Usuario: {select:{
-            us_nombre: true
-          }}, uxp_porcentaje: true },
+          select: {
+            Usuario: {
+              select: {
+                us_nombre: true,
+              },
+            },
+            uxp_porcentaje: true,
+          },
+        },
+        Ticket: {
+          select: {
+            ti_us_id: true,
+            ti_descripcion: true,
+            ti_fecha: true,
+            ti_id: true,
+            ti_monto: true,
+            ti_pr_id: true,
+            Usuario: {
+              select: {
+                us_nombre: true,
+              },
+            },
+          },
         },
       },
     })
 
-    res.json(project)
+    const montoTotal = project?.Ticket.reduce((sum, ticket) => sum + ticket.ti_monto, 0)
+    
+    const projectWithTotal = {
+      ...project,
+      montoTotal
+    }
+
+    res.json(projectWithTotal)
   } catch (error: any) {
-    console.error('Error getProjects controller', error.message)
+    console.error('Error getProjectDeep controller', error.message)
     res.status(500).json({ error: 'internal Server Error' })
   }
 }
@@ -98,7 +125,7 @@ export const editProject = async (req: any, res: any) => {
 
 export const addUserToProject = async (req: any, res: any) => {
   try {
-    const { us_email} = req.body
+    const { us_email } = req.body
     const { prId } = req.params
 
     const totalPercentage = await prisma.usuarioXProyecto.aggregate({
