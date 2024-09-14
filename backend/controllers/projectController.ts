@@ -41,6 +41,7 @@ export const getProjectByIDDeep = async (req: any, res: any) => {
             Usuario: {
               select: {
                 us_nombre: true,
+                us_email: true
               },
             },
             uxp_porcentaje: true,
@@ -64,10 +65,23 @@ export const getProjectByIDDeep = async (req: any, res: any) => {
       },
     })
 
+    const usersNotInProject = await prisma.usuario.findMany({
+      where: {
+        UsuarioXProyecto: {
+          none: { uxp_pr_id: +prId },
+        },
+      },
+      select: {
+        us_nombre: true,
+        us_email: true,
+      },
+    })
+
     const montoTotal = project?.Ticket.reduce((sum, ticket) => sum + ticket.ti_monto, 0)
     
     const projectWithTotal = {
       ...project,
+      usersNotInProject,
       montoTotal
     }
 

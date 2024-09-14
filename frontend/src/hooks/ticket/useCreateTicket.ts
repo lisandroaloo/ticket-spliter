@@ -11,9 +11,8 @@ export interface ITicketForm {
 
 const useCreateTicket = () => {
   const [loading, setLoading] = useState(false)
-  const { authUser } = useAuthContext()
 
-  const createTicket = async ({ _pr_id, _ti_monto, _ti_descripcion, _ti_fecha }: ITicketForm) => {
+  const createTicket = async ({ _pr_id,_us_email, _ti_monto, _ti_descripcion, _ti_fecha }: ITicketForm) => {
     try {
         setLoading(true)
 
@@ -21,11 +20,11 @@ const useCreateTicket = () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            us_email: authUser,
+            us_email: _us_email,
             pr_id: _pr_id,
             ti_monto: _ti_monto,
             ti_descripcion: _ti_descripcion,
-            ti_fecha: _ti_fecha
+            ti_fecha: _ti_fecha,
           }),
         })
 

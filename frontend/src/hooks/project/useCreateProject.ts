@@ -10,7 +10,6 @@ const useCreateProject = () => {
     try {
       if (_pr_id === '') {
         setLoading(true)
-        console.log(authUser);
         
         const _res = await fetch(`http://localhost:5000/api/projects/`, {
           method: 'POST',

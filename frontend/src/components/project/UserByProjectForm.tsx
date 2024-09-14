@@ -3,14 +3,16 @@ import { IUserByProjectForm } from './ProjectForm'
 import TextInput from '../TextInput'
 import useAddUserToProject from '../../hooks/project/useAddUserToProject'
 import { useParams } from 'react-router'
+import { IUser } from '../../pages/ProjectDetail'
 
 export interface IUserByProjectFormProps {
   user?: IUserByProjectForm
   setIsAddingUser: React.Dispatch<React.SetStateAction<boolean>>
   updateProject: () => Promise<void>
+  usersNotInProject: IUser[]
 }
 
-const UserByProjectForm = ({ user, setIsAddingUser, updateProject }: IUserByProjectFormProps) => {
+const UserByProjectForm = ({ user, setIsAddingUser, updateProject, usersNotInProject }: IUserByProjectFormProps) => {
   const { id } = useParams<{ id: string }>()
 
   const { loading, addUserToProject } = useAddUserToProject()
@@ -45,6 +47,15 @@ const UserByProjectForm = ({ user, setIsAddingUser, updateProject }: IUserByProj
     }))
   }
 
+  const handleUserDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target
+
+    setFormState((prevState) => ({
+      ...prevState,
+      _us_email: value,
+    }))
+  }
+  
   const handleAddUserToProject = async () => {
     await addUserToProject(formState)
     setFormState(initialize())
@@ -53,8 +64,8 @@ const UserByProjectForm = ({ user, setIsAddingUser, updateProject }: IUserByProj
   }
 
   return (
-    <div className="flex bg-slate-500 justify-between">
-      <div className="w-3/12">
+    <div className="flex bg-slate-500 rounded justify-around mt-3">
+      {/* <div className="w-3/12">
         <TextInput
           type="text"
           name="_uxp_us_id"
@@ -62,7 +73,20 @@ const UserByProjectForm = ({ user, setIsAddingUser, updateProject }: IUserByProj
           handleInputChange={handleInputChange}
           placeholder="Usuario"
         />
-      </div>
+      </div> */}
+      <select
+        name="_uxp_us_id"
+        onChange={handleUserDropdownChange}
+        className="bg-slate-300 rounded p-2 my-1"
+      >
+        <option
+          value=""
+          selected
+        ></option>
+        {usersNotInProject.map((unip) => (
+          <option value={unip.us_email}>{unip.us_nombre}</option>
+        ))}
+      </select>
       {user && (
         <div className="w-3/12">
           <TextInput

@@ -13,6 +13,7 @@ export interface IProjectDeep {
   pr_id: string
   pr_nombre: string
   montoTotal: number
+  usersNotInProject: IUser[]
 }
 
 export interface ITicket {
@@ -26,11 +27,16 @@ export interface ITicket {
 }
 
 export interface IUserWrapper {
-  Usuario: IUsername
+  Usuario: IUser
   uxp_porcentaje: number
 }
 
 export interface IUsername {
+  us_nombre: string
+}
+
+export interface IUser {
+  us_email: string
   us_nombre: string
 }
 
@@ -47,11 +53,11 @@ const Project = () => {
   }
 
   const handleAddUser = () => {
-    setIsAddingUser(true)
+    setIsAddingUser(!isAddingUser)
   }
 
   const handleAddTicket = () => {
-    setIsAddingTicket(true)
+    setIsAddingTicket(!isAddingTicket)
   }
 
   useEffect(() => {
@@ -70,7 +76,7 @@ const Project = () => {
       </div>
 
       <div>
-        <div className="bg-[#1e293b] rounded-lg shadow-lg p-4 mb-4">
+        <div className="bg-[#1e293b] rounded-t-lg shadow-lg p-4 mb-4">
           <h2 className="text-2xl font-bold text-white mb-4">Integrantes</h2>
           <div className="space-y-4">
             {project?.UsuarioXProyecto.map((up: IUserWrapper) => (
@@ -80,17 +86,18 @@ const Project = () => {
               />
             ))}
           </div>
-          {isAddingUser && (
+          {isAddingUser && project && (
             <UserByProjectForm
               setIsAddingUser={setIsAddingUser}
               updateProject={getProject}
+              usersNotInProject={project.usersNotInProject}
             />
           )}
           <button
             className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
             onClick={handleAddUser}
           >
-            ➕
+            {isAddingUser ? '➖' : '➕'}
           </button>
           <h2 className="text-2xl font-bold text-white mb-4 mt-4">Tickets</h2>
           <div className="space-y-4">
@@ -98,17 +105,18 @@ const Project = () => {
               <TicketByProjectCard t={t} />
             ))}
           </div>
-          {isAddingTicket && (
+          {isAddingTicket && project && (
             <TicketByProjectForm
               setIsAddingTicket={setIsAddingTicket}
               updateProject={getProject}
+              usersInProyect={project.UsuarioXProyecto}
             />
           )}
           <button
             className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
             onClick={handleAddTicket}
           >
-            ➕
+            {isAddingTicket ? '➖' : '➕'}
           </button>
         </div>
       </div>

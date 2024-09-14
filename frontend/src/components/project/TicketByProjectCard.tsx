@@ -14,7 +14,7 @@ const UserByProjectCard = ({ t }: ITicketByProjectCardProps) => {
       <div className="flex items-center space-x-3">
         <span>${t.ti_monto}</span>
         <span>{t.ti_descripcion}</span>
-        <span className="bg-[#4fd1c5] text-[#1e293b] px-2 py-1 rounded-full text-xs">{t.ti_fecha}</span>
+        <span className="bg-[#4fd1c5] text-[#1e293b] px-2 py-1 rounded-full text-xs">{t.ti_fecha.split("T")[0]}</span>
       </div>
     </div>
   )
