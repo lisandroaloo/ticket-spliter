@@ -3,11 +3,17 @@ import useGetProjectByIDDeep from '../hooks/project/useGetProjectByIDDeep'
 import { useParams } from 'react-router'
 import UserByProjectCard from '../components/project/UserByProjectCard'
 import UserByProjectForm from '../components/project/UserByProjectForm'
+
+import useEditProjectPercentages from '../hooks/project/useEditPercentages'
 import TicketByProjectCard from '../components/project/TicketByProjectCard'
 import TicketByProjectForm from '../components/project/TicketByProjectForm'
+import { IPago } from './UserProfile'
+import PagoByProjectCard from '../components/project/PagoByProjectCard'
+import PagoByProjectForm from '../components/project/PagoByProjectForm'
 
 export interface IProjectDeep {
   Ticket: ITicket[]
+  Pago: IPago[]
   UsuarioXProyecto: IUserWrapper[]
   pr_descripcion: string
   pr_id: string
@@ -50,9 +56,11 @@ const Project = () => {
   const [project, setProject] = useState<IProjectDeep>()
   const [isAddingUser, setIsAddingUser] = useState<boolean>(false)
   const [isAddingTicket, setIsAddingTicket] = useState<boolean>(false)
+  const [isAddingPago, setIsAddingPago] = useState<boolean>(false)
   const [isEditingPercentages, setIsEditingPercentages] = useState<boolean>(false)
   const [editingPercentages, setEditingPercentages] = useState<IPercentageByUser[]>([])
   const { getProjectsByIDDeep } = useGetProjectByIDDeep()
+  const { editProjectPercentages } = useEditProjectPercentages()
 
   const getProject = async () => {
     const _project: IProjectDeep = await getProjectsByIDDeep(+id!)
@@ -71,6 +79,10 @@ const Project = () => {
     setIsAddingTicket(!isAddingTicket)
   }
 
+  const handleAddPago = () => {
+    setIsAddingPago(!isAddingPago)
+  }
+
   const editPercentages = () => {
     setIsEditingPercentages(!isEditingPercentages)
   }
@@ -81,14 +93,29 @@ const Project = () => {
     setEditingPercentages(_editingPercentages)
   }
 
+  const verifyPercentages = () => {
+    let totalPercentage = 0
+
+    for (let i = 0; i < editingPercentages.length; i++) {
+      totalPercentage += editingPercentages[i].uxp_porcentaje
+    }
+
+    return totalPercentage === 100
+  }
+
+  const handleEditPercentages = async () => {
+    if (verifyPercentages()) {
+      await editProjectPercentages(editingPercentages, id!)
+      getProject()
+      setIsEditingPercentages(!isEditingPercentages)
+    } else {
+      alert('Los porcentajes ingresados no acumulan 100%')
+    }
+  }
+
   useEffect(() => {
     getProject()
   }, [])
-  
-  // TESTING
-  useEffect(() => {
-    console.log(editingPercentages)
-  }, [editingPercentages])
 
   return (
     <section className="h-[92vh] bg-gray-900">
@@ -103,12 +130,23 @@ const Project = () => {
       <div>
         <div className="bg-[#1e293b] rounded-t-lg shadow-lg p-4 mb-4">
           <h2 className="text-2xl font-bold text-white mb-4">Integrantes</h2>
-          <button
-            onClick={editPercentages}
-            className="text-white"
-          >
-            Editar Porcentajes
-          </button>
+
+          {isEditingPercentages ? (
+            <button
+              onClick={handleEditPercentages}
+              className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+            >
+              Confirmar
+            </button>
+          ) : (
+            <button
+              onClick={editPercentages}
+              className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+            >
+              Editar Porcentajes
+            </button>
+          )}
+
           <div className="space-y-4">
             {project?.UsuarioXProyecto.map((up, index) => (
               <UserByProjectCard
@@ -138,7 +176,10 @@ const Project = () => {
           <h2 className="text-2xl font-bold text-white mb-4 mt-4">Tickets</h2>
           <div className="space-y-4">
             {project?.Ticket.map((t: ITicket, index: number) => (
-              <TicketByProjectCard key={index} t={t} />
+              <TicketByProjectCard
+                key={index}
+                t={t}
+              />
             ))}
           </div>
           {isAddingTicket && project && (
@@ -153,6 +194,28 @@ const Project = () => {
             onClick={handleAddTicket}
           >
             {isAddingTicket ? '➖' : '➕'}
+          </button>
+          <h2 className="text-2xl font-bold text-white mb-4 mt-4">Pagos</h2>
+          <div className="space-y-4">
+            {project?.Pago.map((p: IPago, index: number) => (
+              <PagoByProjectCard
+                key={index}
+                p={p}
+              />
+            ))}
+          </div>
+          {isAddingPago && project && (
+            <PagoByProjectForm
+              setIsAddingPago={setIsAddingPago}
+              updateProject={getProject}
+              usersInProyect={project.UsuarioXProyecto}
+            />
+          )}
+          <button
+            className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
+            onClick={handleAddPago}
+          >
+            {isAddingPago ? '➖' : '➕'}
           </button>
         </div>
       </div>

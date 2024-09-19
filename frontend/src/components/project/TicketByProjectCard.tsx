@@ -5,7 +5,7 @@ interface ITicketByProjectCardProps {
   t: ITicket
 }
 
-const UserByProjectCard = ({ t }: ITicketByProjectCardProps) => {
+const TicketByProjectCard = ({ t }: ITicketByProjectCardProps) => {
   return (
     <div className="flex justify-between items-center bg-gray-700 text-white p-3 rounded-lg">
       <div className="flex items-center space-x-3">
@@ -20,4 +20,4 @@ const UserByProjectCard = ({ t }: ITicketByProjectCardProps) => {
   )
 }
 
-export default UserByProjectCard
+export default TicketByProjectCard

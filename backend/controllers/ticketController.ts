@@ -20,3 +20,20 @@ export const createTicket = async (req: any, res: any) => {
     res.status(500).json({ error: 'internal Server Error' })
   }
 }
+
+export const getTicketsByUserId = async (req: any, res: any) => {
+  try {
+    const { usId } = req.params
+
+    const tickets = await prisma.ticket.findMany({
+      where: {
+        ti_us_id: usId,
+      },
+    })
+
+    res.json(tickets)
+  } catch (error: any) {
+    console.error('Error getTicketsByUsId controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}

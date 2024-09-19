@@ -1,3 +1,4 @@
+import { log } from 'console'
 import prisma from '../models/prismaClient'
 
 export const getProjects = async (req: any, res: any) => {
@@ -62,6 +63,12 @@ export const getProjectByIDDeep = async (req: any, res: any) => {
             },
           },
         },
+        Pago: {
+          include: {
+            emisor:true,
+            receptor:true
+          }
+        }
       },
     })
 
@@ -78,7 +85,7 @@ export const getProjectByIDDeep = async (req: any, res: any) => {
     })
 
     const montoTotal = project?.Ticket.reduce((sum, ticket) => sum + ticket.ti_monto, 0)
-    
+
     const projectWithTotal = {
       ...project,
       usersNotInProject,
@@ -163,3 +170,48 @@ export const addUserToProject = async (req: any, res: any) => {
     res.status(500).json({ error: 'internal Server Error' })
   }
 }
+
+export const editProjectPercentages = async (req: any, res: any) => {
+  try {
+    const usuariosProyectos = req.body;
+    const { prId } = req.params
+
+    let totalPercentage = 0;
+
+    for (let i = 0; i < usuariosProyectos.length; i++) {
+      totalPercentage += usuariosProyectos[i].uxp_porcentaje;
+    }
+
+
+    if (totalPercentage > 100) {
+      throw new Error('La suma de los porcentajes no debe exceder el 100%');
+    }
+
+
+    const updatedProjects = await Promise.all(
+      usuariosProyectos.map(async (uxp: any) => {
+        const { us_email: uxp_us_id, uxp_porcentaje } = uxp;
+
+        console.log(uxp);
+
+
+        return await prisma.usuarioXProyecto.update({
+          where: {
+            uxp_us_id_uxp_pr_id: {
+              uxp_us_id: uxp_us_id,
+              uxp_pr_id: +prId
+            },
+          },
+          data: {
+            uxp_porcentaje: uxp_porcentaje,  // El nuevo porcentaje específico para ese usuario
+          },
+        });
+      })
+    );
+
+    res.json(updatedProjects);
+  } catch (error: any) {
+    console.error('Error editProjectPercentages controller', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
