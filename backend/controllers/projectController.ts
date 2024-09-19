@@ -63,6 +63,12 @@ export const getProjectByIDDeep = async (req: any, res: any) => {
             },
           },
         },
+        Pago: {
+          include: {
+            emisor:true,
+            receptor:true
+          }
+        }
       },
     })
 

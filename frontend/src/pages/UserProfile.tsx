@@ -3,7 +3,9 @@ import useGetUserById from '../hooks/user/useGetUserById'
 import TextInput from '../components/TextInput'
 import useEditUser from '../hooks/user/useEditUser'
 import useGetTicketsByUserId from '../hooks/ticket/useGetTicketsByUserId'
-import { ITicket } from './ProjectDetail'
+import { ITicket, IUsername } from './ProjectDetail'
+import useGetPagosByEmisor from '../hooks/pagos/useGetPagosByEmisor'
+import useGetPagosByReceptor from '../hooks/pagos/useGetPagoByReceptor'
 
 export interface IUser {
     us_email: string,
@@ -11,10 +13,28 @@ export interface IUser {
     us_password: string
 }
 
+export interface IPago {
+  pa_estado: string
+  pa_fecha: string
+  pa_id: number
+  pa_monto: number
+  pa_pr_id: number
+  pa_us_emisor_id: string
+  pa_us_receptor_id: string
+  emisor?: IUsername
+  receptor?: IUsername
+}
+
 const UserProfile = () => {
 
     const { getTicketsByUserId } = useGetTicketsByUserId()
     const [tickets, setTickets] = useState<ITicket[]>([])
+    
+    const { getPagosByEmisor } = useGetPagosByEmisor()
+    const [pagosEmisor, setPagosEmisor] = useState<IPago[]>([])
+    
+    const { getPagosByReceptor } = useGetPagosByReceptor()
+    const [pagosReceptor, setPagosReceptor] = useState<IPago[]>([])
 
     const initializeUserForm = (): IUser => {
         return {
@@ -48,6 +68,10 @@ const UserProfile = () => {
         setUser(_user || initializeUserForm())
         const _tickets = await getTicketsByUserId();
         setTickets(_tickets)
+        const _pagosEmisor = await getPagosByEmisor()
+        setPagosEmisor(_pagosEmisor)
+        const _pagosReceptor = await getPagosByReceptor()
+        setPagosReceptor(_pagosReceptor)
     }
 
     useEffect(() => {
@@ -130,10 +154,16 @@ const UserProfile = () => {
                     </div>
                   </div>
                   <div className="h-1/2 overflow-hidden rounded-lg">
-                    <h4 className="h-1/6">Pagos</h4>
-                    <div className="rounded-lg p-2 shadow-sm bg-gray-700 overflow-y-scroll h-5/6">
-                      {tickets.map((t) => (
-                        <div>{t.ti_descripcion + ' - ' + t.ti_fecha.split('T')[0] + ' - $' + t.ti_monto}</div>
+                    <h4 className="h-1/6">Pagos emitidos</h4>
+                    <div className="rounded-lg p-2 shadow-sm bg-gray-700 overflow-y-scroll h-2/6">
+                      {pagosEmisor.map((pe) => (
+                        <div>{pe.receptor?.us_nombre + ' - ' + pe.pa_fecha.split('T')[0] + ' - $' + pe.pa_monto}</div>
+                      ))}
+                    </div>
+                      <h4 className="h-1/6">Pagos recibidos</h4>
+                    <div className="rounded-lg p-2 shadow-sm bg-gray-700 overflow-y-scroll h-2/6">
+                      {pagosReceptor.map((pr) => (
+                        <div>{pr.emisor?.us_nombre + ' - ' + pr.pa_fecha.split('T')[0] + ' - $' + pr.pa_monto}</div>
                       ))}
                     </div>
                   </div>

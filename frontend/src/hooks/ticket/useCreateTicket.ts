@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useAuthContext } from '../../context/AuthContext'
 
 export interface ITicketForm {
   _pr_id: string

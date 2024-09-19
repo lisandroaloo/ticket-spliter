@@ -7,9 +7,13 @@ import UserByProjectForm from '../components/project/UserByProjectForm'
 import useEditProjectPercentages from '../hooks/project/useEditPercentages'
 import TicketByProjectCard from '../components/project/TicketByProjectCard'
 import TicketByProjectForm from '../components/project/TicketByProjectForm'
+import { IPago } from './UserProfile'
+import PagoByProjectCard from '../components/project/PagoByProjectCard'
+import PagoByProjectForm from '../components/project/PagoByProjectForm'
 
 export interface IProjectDeep {
   Ticket: ITicket[]
+  Pago: IPago[]
   UsuarioXProyecto: IUserWrapper[]
   pr_descripcion: string
   pr_id: string
@@ -52,6 +56,7 @@ const Project = () => {
   const [project, setProject] = useState<IProjectDeep>()
   const [isAddingUser, setIsAddingUser] = useState<boolean>(false)
   const [isAddingTicket, setIsAddingTicket] = useState<boolean>(false)
+  const [isAddingPago, setIsAddingPago] = useState<boolean>(false)
   const [isEditingPercentages, setIsEditingPercentages] = useState<boolean>(false)
   const [editingPercentages, setEditingPercentages] = useState<IPercentageByUser[]>([])
   const { getProjectsByIDDeep } = useGetProjectByIDDeep()
@@ -72,6 +77,10 @@ const Project = () => {
 
   const handleAddTicket = () => {
     setIsAddingTicket(!isAddingTicket)
+  }
+
+  const handleAddPago = () => {
+    setIsAddingPago(!isAddingPago)
   }
 
   const editPercentages = () => {
@@ -185,6 +194,28 @@ const Project = () => {
             onClick={handleAddTicket}
           >
             {isAddingTicket ? '➖' : '➕'}
+          </button>
+          <h2 className="text-2xl font-bold text-white mb-4 mt-4">Pagos</h2>
+          <div className="space-y-4">
+            {project?.Pago.map((p: IPago, index: number) => (
+              <PagoByProjectCard
+                key={index}
+                p={p}
+              />
+            ))}
+          </div>
+          {isAddingPago && project && (
+            <PagoByProjectForm
+              setIsAddingPago={setIsAddingPago}
+              updateProject={getProject}
+              usersInProyect={project.UsuarioXProyecto}
+            />
+          )}
+          <button
+            className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
+            onClick={handleAddPago}
+          >
+            {isAddingPago ? '➖' : '➕'}
           </button>
         </div>
       </div>
