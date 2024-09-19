@@ -8,7 +8,6 @@ import useEditProjectPercentages from '../hooks/project/useEditPercentages'
 import TicketByProjectCard from '../components/project/TicketByProjectCard'
 import TicketByProjectForm from '../components/project/TicketByProjectForm'
 
-
 export interface IProjectDeep {
   Ticket: ITicket[]
   UsuarioXProyecto: IUserWrapper[]
@@ -86,40 +85,28 @@ const Project = () => {
   }
 
   const verifyPercentages = () => {
-    let totalPercentage = 0;
+    let totalPercentage = 0
 
     for (let i = 0; i < editingPercentages.length; i++) {
-      totalPercentage += editingPercentages[i].uxp_porcentaje; 
+      totalPercentage += editingPercentages[i].uxp_porcentaje
     }
 
-    return totalPercentage <= 100;
+    return totalPercentage === 100
   }
 
-
   const handleEditPercentages = async () => {
-    
-
-    if (verifyPercentages()){
+    if (verifyPercentages()) {
       await editProjectPercentages(editingPercentages, id!)
       getProject()
       setIsEditingPercentages(!isEditingPercentages)
+    } else {
+      alert('Los porcentajes ingresados no acumulan 100%')
     }
-
-    
-    alert("MAS DDE 100")
-
-
   }
-
 
   useEffect(() => {
     getProject()
   }, [])
-
-  // TESTING
-  useEffect(() => {
-    console.log(editingPercentages)
-  }, [editingPercentages])
 
   return (
     <section className="h-[92vh] bg-gray-900">
@@ -135,16 +122,21 @@ const Project = () => {
         <div className="bg-[#1e293b] rounded-t-lg shadow-lg p-4 mb-4">
           <h2 className="text-2xl font-bold text-white mb-4">Integrantes</h2>
 
-          {!isEditingPercentages ? <button
-            onClick={editPercentages}
-            className="text-white"
-          >
-            Editar Porcentajes
-          </button> : <button
-            onClick={handleEditPercentages}
-            className="text-white"
-          >
-            Confirmar          </button>}
+          {isEditingPercentages ? (
+            <button
+              onClick={handleEditPercentages}
+              className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+            >
+              Confirmar
+            </button>
+          ) : (
+            <button
+              onClick={editPercentages}
+              className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+            >
+              Editar Porcentajes
+            </button>
+          )}
 
           <div className="space-y-4">
             {project?.UsuarioXProyecto.map((up, index) => (
@@ -175,7 +167,10 @@ const Project = () => {
           <h2 className="text-2xl font-bold text-white mb-4 mt-4">Tickets</h2>
           <div className="space-y-4">
             {project?.Ticket.map((t: ITicket, index: number) => (
-              <TicketByProjectCard key={index} t={t} />
+              <TicketByProjectCard
+                key={index}
+                t={t}
+              />
             ))}
           </div>
           {isAddingTicket && project && (
