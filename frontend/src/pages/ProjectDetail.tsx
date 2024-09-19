@@ -3,8 +3,11 @@ import useGetProjectByIDDeep from '../hooks/project/useGetProjectByIDDeep'
 import { useParams } from 'react-router'
 import UserByProjectCard from '../components/project/UserByProjectCard'
 import UserByProjectForm from '../components/project/UserByProjectForm'
+
+import useEditProjectPercentages from '../hooks/project/useEditPercentages'
 import TicketByProjectCard from '../components/project/TicketByProjectCard'
 import TicketByProjectForm from '../components/project/TicketByProjectForm'
+
 
 export interface IProjectDeep {
   Ticket: ITicket[]
@@ -53,6 +56,7 @@ const Project = () => {
   const [isEditingPercentages, setIsEditingPercentages] = useState<boolean>(false)
   const [editingPercentages, setEditingPercentages] = useState<IPercentageByUser[]>([])
   const { getProjectsByIDDeep } = useGetProjectByIDDeep()
+  const { editProjectPercentages } = useEditProjectPercentages()
 
   const getProject = async () => {
     const _project: IProjectDeep = await getProjectsByIDDeep(+id!)
@@ -81,10 +85,37 @@ const Project = () => {
     setEditingPercentages(_editingPercentages)
   }
 
+  const verifyPercentages = () => {
+    let totalPercentage = 0;
+
+    for (let i = 0; i < editingPercentages.length; i++) {
+      totalPercentage += editingPercentages[i].uxp_porcentaje; 
+    }
+
+    return totalPercentage <= 100;
+  }
+
+
+  const handleEditPercentages = async () => {
+    
+
+    if (verifyPercentages()){
+      await editProjectPercentages(editingPercentages, id!)
+      getProject()
+      setIsEditingPercentages(!isEditingPercentages)
+    }
+
+    
+    alert("MAS DDE 100")
+
+
+  }
+
+
   useEffect(() => {
     getProject()
   }, [])
-  
+
   // TESTING
   useEffect(() => {
     console.log(editingPercentages)
@@ -103,12 +134,18 @@ const Project = () => {
       <div>
         <div className="bg-[#1e293b] rounded-t-lg shadow-lg p-4 mb-4">
           <h2 className="text-2xl font-bold text-white mb-4">Integrantes</h2>
-          <button
+
+          {!isEditingPercentages ? <button
             onClick={editPercentages}
             className="text-white"
           >
             Editar Porcentajes
-          </button>
+          </button> : <button
+            onClick={handleEditPercentages}
+            className="text-white"
+          >
+            Confirmar          </button>}
+
           <div className="space-y-4">
             {project?.UsuarioXProyecto.map((up, index) => (
               <UserByProjectCard

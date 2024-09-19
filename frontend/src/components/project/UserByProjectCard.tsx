@@ -51,6 +51,7 @@ const UserByProjectCard = ({ up, monto, isEditingPercentages, index, editPercent
             value={currentValue}
             handleInputChange={handleOnChange}
             handleOnBlur={handleOnBlur}
+            classNames='text-black'
           />
         ) : (
           <span className="bg-[#4fd1c5] text-[#1e293b] px-2 py-1 rounded-full text-xs">{up.uxp_porcentaje}%</span>
