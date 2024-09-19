@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import useGetProyects from '../hooks/UseGetProyects'
-import ProyectForm from '../components/proyect/ProyectForm'
-import { Link, useNavigate } from 'react-router-dom'
+import useGetProjects from '../hooks/project/UseGetProjects'
+import ProjectForm from '../components/project/ProjectForm'
+import { useNavigate } from 'react-router-dom'
 
 
 
-export interface IGetProyects {
+export interface IGetProjects {
   us_email: string
 }
 
-export interface IProyect {
+export interface IProject {
   pr_id: string
   pr_nombre: string
   pr_descripcion: string
@@ -21,22 +21,22 @@ export interface IUserByProject {
   uxp_porcentaje: string
 }
 
-const Proyects = () => {
-  const [projects, setProjects] = useState<IProyect[]>([])
+const Projects = () => {
+  const [projects, setProjects] = useState<IProject[]>([])
 
-  const [projectForEdit, setProjectForEdit] = useState<IProyect | null>(null)
+  // const [projectForEdit, setProjectForEdit] = useState<IProject | null>(null)
 
-  const { loading, getProyects } = useGetProyects()
+  const { loading, getProjects } = useGetProjects()
 
   const navigate = useNavigate();
 
   const onClickRow = (id: string) => {
-    navigate("/proyects/" + id);
+    navigate("/projects/" + id);
   }
 
 
   const getProjectsForTable = async () => {
-    const _projects = await getProyects()
+    const _projects = await getProjects()
     setProjects(_projects)
   }
 
@@ -47,11 +47,11 @@ const Proyects = () => {
 
   return (
     <>
-      <ProyectForm
+      <ProjectForm
         setProjects={setProjects}
-        projects={projects}
-        projectForEdit={projectForEdit}
-        setProjectForEdit={setProjectForEdit}
+        // projects={projects}
+        // projectForEdit={projectForEdit}
+        // setProjectForEdit={setProjectForEdit}
       />
       {!loading && (
         <table className="w-full bg-slate-800 text-slate-300">
@@ -63,7 +63,7 @@ const Proyects = () => {
             </tr>
           </thead>
           <tbody>
-            {projects.map((p: IProyect, index) => (
+            {projects.map((p: IProject, index) => (
 
               <tr
                 className="border-t border-t-slate-300 cursor-pointer"
@@ -87,4 +87,4 @@ const Proyects = () => {
   )
 }
 
-export default Proyects
+export default Projects

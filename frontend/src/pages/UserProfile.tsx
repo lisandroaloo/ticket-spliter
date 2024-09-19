@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import useGetUserById from '../hooks/useGetUserById'
+import useGetUserById from '../hooks/user/useGetUserById'
 import TextInput from '../components/TextInput'
-import useEditUser from '../hooks/useEditUser'
+import useEditUser from '../hooks/user/useEditUser'
 
 export interface IUser {
     us_email: string,

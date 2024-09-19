@@ -11,11 +11,11 @@ import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import { useAuthContext } from "./context/AuthContext";
 import Footer from "./components/Footer";
-import Proyects from "./pages/Proyects";
+import Projects from "./pages/ProjectsList";
 import NavBarLogged from "./components/navbars/NavBarLogged";
 import NavBarNotLogged from "./components/navbars/NavBarNotLogged";
 import UserProfile from "./pages/UserProfile";
-import Proyect from "./pages/Proyect";
+import Project from "./pages/ProjectDetail";
 
 function App() {
   const { authUser } = useAuthContext();
@@ -41,8 +41,8 @@ function App() {
               element={authUser ? <Navigate to="/" /> : <SignUp />}
             />
             <Route
-              path="/proyects"
-              element={authUser ? <Proyects /> : <LogIn />}
+              path="/projects"
+              element={authUser ? <Projects /> : <LogIn />}
             />
             <Route
               path="/userprofile"
@@ -50,8 +50,8 @@ function App() {
             />
 
             <Route
-              path="/proyects/:id"
-              element={authUser ? <Proyect /> : <LogIn />}
+              path="/projects/:id"
+              element={authUser ? <Project /> : <LogIn />}
             />
           </Routes>
         </main>

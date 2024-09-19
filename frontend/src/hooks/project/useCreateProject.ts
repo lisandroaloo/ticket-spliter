@@ -1,18 +1,17 @@
 import { useState } from 'react'
-import { useAuthContext } from '../context/AuthContext'
-import { IProyectForm } from '../components/proyect/ProyectForm'
+import { useAuthContext } from '../../context/AuthContext'
+import { IProjectForm } from '../../components/project/ProjectForm'
 
-const useCreateProyect = () => {
+const useCreateProject = () => {
   const [loading, setLoading] = useState(false)
   const { authUser } = useAuthContext()
 
-  const createProyect = async ({ _pr_id, _pr_nombre, _pr_descripcion }: IProyectForm) => {
+  const createProject = async ({ _pr_id, _pr_nombre, _pr_descripcion }: IProjectForm) => {
     try {
       if (_pr_id === '') {
         setLoading(true)
-        console.log(authUser);
         
-        const _res = await fetch(`http://localhost:5000/api/proyects/`, {
+        const _res = await fetch(`http://localhost:5000/api/projects/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -38,7 +37,7 @@ const useCreateProyect = () => {
       setLoading(false)
     }
   }
-  return { loading, createProyect }
+  return { loading, createProject }
 }
 
-export default useCreateProyect
+export default useCreateProject
