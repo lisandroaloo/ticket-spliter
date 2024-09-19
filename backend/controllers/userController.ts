@@ -18,6 +18,27 @@ export const getUsersByProjectId = async (req: any, res: any) => {
   }
 }
 
+export const getSpentByProjectId = async (req: any, res: any) => {
+  try {
+    const { prId } = req.params
+    const { us_email} = req.body
+
+    const tickets = await prisma.ticket.findMany({
+      where: {
+        ti_pr_id: +prId,
+        ti_us_id: us_email
+      },
+    })
+
+     const montoTotal = tickets.reduce((sum, ticket) => sum + ticket.ti_monto, 0)
+
+    res.json(montoTotal)
+  } catch (error: any) {
+    console.error('Error getSpentByProjectId controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}
+
 export const getUserById = async (req: any, res: any) => {
   try {
     const { usId } = req.params;

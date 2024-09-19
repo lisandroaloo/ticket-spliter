@@ -52,7 +52,7 @@ const UserByProjectForm = ({ user, setIsAddingUser, updateProject, usersNotInPro
 
     setFormState((prevState) => ({
       ...prevState,
-      _us_email: value,
+      _uxp_us_id: value,
     }))
   }
   

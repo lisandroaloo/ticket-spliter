@@ -40,15 +40,26 @@ export interface IUser {
   us_nombre: string
 }
 
+export interface IPercentageByUser {
+  us_email: string
+  uxp_porcentaje: number
+}
+
 const Project = () => {
   const { id } = useParams<{ id: string }>()
   const [project, setProject] = useState<IProjectDeep>()
   const [isAddingUser, setIsAddingUser] = useState<boolean>(false)
   const [isAddingTicket, setIsAddingTicket] = useState<boolean>(false)
+  const [isEditingPercentages, setIsEditingPercentages] = useState<boolean>(false)
+  const [editingPercentages, setEditingPercentages] = useState<IPercentageByUser[]>([])
   const { getProjectsByIDDeep } = useGetProjectByIDDeep()
 
   const getProject = async () => {
-    const _project = await getProjectsByIDDeep(+id!)
+    const _project: IProjectDeep = await getProjectsByIDDeep(+id!)
+    const _editingPercentages: IPercentageByUser[] = _project.UsuarioXProyecto.map((uxp) => {
+      return { us_email: uxp.Usuario.us_email, uxp_porcentaje: uxp.uxp_porcentaje }
+    })
+    setEditingPercentages(_editingPercentages)
     setProject(_project)
   }
 
@@ -60,15 +71,29 @@ const Project = () => {
     setIsAddingTicket(!isAddingTicket)
   }
 
+  const editPercentages = () => {
+    setIsEditingPercentages(!isEditingPercentages)
+  }
+
+  const editPercentage = (index: number, newPercentage: number) => {
+    const _editingPercentages: IPercentageByUser[] = [...editingPercentages]
+    _editingPercentages[index].uxp_porcentaje = newPercentage
+    setEditingPercentages(_editingPercentages)
+  }
+
   useEffect(() => {
     getProject()
   }, [])
+  
+  // TESTING
+  useEffect(() => {
+    console.log(editingPercentages)
+  }, [editingPercentages])
 
   return (
     <section className="h-[92vh] bg-gray-900">
       <div className="flex items-center justify-center mb-4 space-x-3">
         <h1 className="text-white">{project?.pr_nombre}</h1>
-        <button className="p-3 text-white rounded-full bg-gray-700 hover:bg-gray-400">✏️</button>
       </div>
       <div className="bg-[#1e293b] rounded-lg shadow-lg mb-6 p-4">
         <h2 className="text-2xl font-bold text-white mb-2">Gastos</h2>
@@ -78,11 +103,22 @@ const Project = () => {
       <div>
         <div className="bg-[#1e293b] rounded-t-lg shadow-lg p-4 mb-4">
           <h2 className="text-2xl font-bold text-white mb-4">Integrantes</h2>
+          <button
+            onClick={editPercentages}
+            className="text-white"
+          >
+            Editar Porcentajes
+          </button>
           <div className="space-y-4">
-            {project?.UsuarioXProyecto.map((up: IUserWrapper) => (
+            {project?.UsuarioXProyecto.map((up, index) => (
               <UserByProjectCard
+                key={index}
                 up={up}
                 monto={project?.montoTotal * (up.uxp_porcentaje / 100)}
+                isEditingPercentages={isEditingPercentages}
+                editPercentage={editPercentage}
+                index={index}
+                value={editingPercentages[index].uxp_porcentaje}
               />
             ))}
           </div>
@@ -101,8 +137,8 @@ const Project = () => {
           </button>
           <h2 className="text-2xl font-bold text-white mb-4 mt-4">Tickets</h2>
           <div className="space-y-4">
-            {project?.Ticket.map((t: ITicket) => (
-              <TicketByProjectCard t={t} />
+            {project?.Ticket.map((t: ITicket, index: number) => (
+              <TicketByProjectCard key={index} t={t} />
             ))}
           </div>
           {isAddingTicket && project && (
