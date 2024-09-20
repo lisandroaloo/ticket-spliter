@@ -1,12 +1,5 @@
 import { useState } from 'react'
-
-export interface ITicketForm {
-  _pr_id: string
-  _us_email: string
-  _ti_monto: string
-  _ti_descripcion: string
-  _ti_fecha: Date
-}
+import { ITicketForm } from '../../../interfaces'
 
 const useCreateTicket = () => {
   const [loading, setLoading] = useState(false)

@@ -1,13 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useSignUp from "../hooks/UseSignup";
-
-export interface IRegisterInputs {
-  us_nombre: string;
-  us_email: string;
-  us_password: string;
-  confirmPassword: string;
-}
+import { IRegisterInputs } from "../../interfaces";
 
 const SignUp = () => {
   const { signup, loading } = useSignUp();

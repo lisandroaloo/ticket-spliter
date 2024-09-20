@@ -1,10 +1,5 @@
 import React from "react";
-
-interface ICard {
-  icon: string;
-  title: string;
-  description: string;
-}
+import {ICard} from "../../interfaces"
 
 const FeatureCard = ({ icon, title, description }: ICard) => {
   return (

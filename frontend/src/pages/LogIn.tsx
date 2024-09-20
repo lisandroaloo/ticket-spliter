@@ -1,11 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useLogin from "../hooks/UseLogin";
-
-export interface ILogin {
-  us_email: string;
-  us_password: string;
-}
+import { ILogin } from "../../interfaces";
 
 const LogIn = () => {
   const [inputs, setInputs] = React.useState<ILogin>({

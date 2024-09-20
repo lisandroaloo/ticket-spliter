@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import TextInput from '../TextInput'
 import { useParams } from 'react-router'
-import useCreateTicket, { ITicketForm } from '../../hooks/ticket/useCreateTicket'
-import { IUserWrapper } from '../../pages/ProjectDetail'
-
-export interface ITicketByProjectFormProps {
-  ticket?: ITicketForm
-  setIsAddingTicket: React.Dispatch<React.SetStateAction<boolean>>
-  updateProject: () => Promise<void>
-  usersInProyect: IUserWrapper[]
-}
+import useCreateTicket from '../../hooks/ticket/useCreateTicket'
+import { ITicketByProjectFormProps, ITicketForm } from '../../../interfaces'
 
 const TicketByProjectForm = ({ ticket, setIsAddingTicket, updateProject, usersInProyect }: ITicketByProjectFormProps) => {
   const { id } = useParams<{ id: string }>()

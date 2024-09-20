@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
-import { IProjectForm } from '../../components/project/ProjectForm'
+import { IProjectForm } from '../../../interfaces'
 
 const useCreateProject = () => {
   const [loading, setLoading] = useState(false)

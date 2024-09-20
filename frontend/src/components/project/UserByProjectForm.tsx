@@ -1,16 +1,8 @@
 import React, { useState } from 'react'
-import { IUserByProjectForm } from './ProjectForm'
 import TextInput from '../TextInput'
 import useAddUserToProject from '../../hooks/project/useAddUserToProject'
 import { useParams } from 'react-router'
-import { IUser } from '../../pages/ProjectDetail'
-
-export interface IUserByProjectFormProps {
-  user?: IUserByProjectForm
-  setIsAddingUser: React.Dispatch<React.SetStateAction<boolean>>
-  updateProject: () => Promise<void>
-  usersNotInProject: IUser[]
-}
+import { IUserByProjectFormProps, IUserByProjectForm } from '../../../interfaces'
 
 const UserByProjectForm = ({ user, setIsAddingUser, updateProject, usersNotInProject }: IUserByProjectFormProps) => {
   const { id } = useParams<{ id: string }>()

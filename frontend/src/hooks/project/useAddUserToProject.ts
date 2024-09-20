@@ -1,6 +1,5 @@
 import { useState } from "react"
-import { IUserByProjectForm } from "../../components/project/ProjectForm"
-
+import { IUserByProjectForm } from "../../../interfaces"
 
 const useAddUserToProject = () => {
   

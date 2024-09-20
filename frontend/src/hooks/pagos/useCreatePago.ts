@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
-
-export interface ICreatePago {
-  pr_id: number, receptor_us_email: string, pa_monto: number, pa_fecha: Date
-}
+import { ICreatePago } from '../../../interfaces'
 
 const useCreatePago = () => {
   const [loading, setLoading] = useState(false)
