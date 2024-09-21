@@ -53,18 +53,18 @@ export interface IUserByProjectForm {
 
 export interface IProjectMembersProps {
   setEditingPercentages: any
-  editingPercentages: any
-  project: any
+  editingPercentages: IPercentageByUser[]
+  project: IProjectDeep
   getProject: any
 }
 
 export interface IProjectPagosProps {
   getProject: any
-  project: any
+  project: IProjectDeep
 }
 
 export interface IProjectTicketsProps {
-  project: any
+  project: IProjectDeep
   getProject: any
 }
 
@@ -209,4 +209,15 @@ export interface IPago {
   pa_us_receptor_id: string
   emisor?: IUsername
   receptor?: IUsername
+}
+
+export interface IProjectHeaderProps {
+  project: IProjectDeep
+  getProject: any
+}
+
+export interface IEditProjectFormProps {
+  project: IProjectDeep
+  getProject: any
+  setIsEditingProject: any
 }

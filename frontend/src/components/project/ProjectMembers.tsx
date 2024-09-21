@@ -12,6 +12,17 @@ const ProjectMembers = ({editingPercentages, setEditingPercentages, project
   const [isEditingPercentages, setIsEditingPercentages] = useState<boolean>(false)
   const { editProjectPercentages } = useEditProjectPercentages()
 
+  const handleDividirEquitativamente = async () => {
+    const procentajeEquitativo = 100 / editingPercentages.length
+    const _editingPercentages: IPercentageByUser[] = []
+    editingPercentages.forEach((ep: IPercentageByUser) => {
+      _editingPercentages.push({ us_email: ep.us_email, uxp_porcentaje: procentajeEquitativo })
+    })
+    setEditingPercentages(_editingPercentages)
+    await editProjectPercentages(_editingPercentages, id!)
+    getProject()
+  }
+
   const handleAddUser = () => {
     setIsAddingUser(!isAddingUser)
   }
@@ -63,7 +74,12 @@ const ProjectMembers = ({editingPercentages, setEditingPercentages, project
           Editar Porcentajes
         </button>
       )}
-
+      <button
+        onClick={handleDividirEquitativamente}
+        className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+      >
+        Dividir Equitativamente
+      </button>
       <div className="space-y-4">
         {project?.UsuarioXProyecto.map((up: any, index: any) => (
           <UserByProjectCard

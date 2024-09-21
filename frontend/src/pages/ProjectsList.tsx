@@ -4,7 +4,7 @@ import ProjectForm from '../components/project/ProjectForm'
 import { useNavigate } from 'react-router-dom'
 import { IProject } from '../../interfaces'
 
-const Projects = () => {
+const ProjectsList = () => {
   const [projects, setProjects] = useState<IProject[]>([])
 
   // const [projectForEdit, setProjectForEdit] = useState<IProject | null>(null)
@@ -61,4 +61,4 @@ const Projects = () => {
   )
 }
 
-export default Projects
+export default ProjectsList
