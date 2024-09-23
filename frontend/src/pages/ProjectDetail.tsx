@@ -11,7 +11,7 @@ const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>()
   const [project, setProject] = useState<IProjectDeep>()
   const [editingPercentages, setEditingPercentages] = useState<IPercentageByUser[]>([])
-  const { getProjectsByIDDeep } = useGetProjectByIDDeep()
+  const { loading, getProjectsByIDDeep } = useGetProjectByIDDeep()
 
   const getProject = async () => {
     const _project: IProjectDeep = await getProjectsByIDDeep(+id!)
@@ -28,31 +28,37 @@ const ProjectDetail = () => {
 
   return (
     <section className="h-[92vh] bg-gray-900">
-      {project && (
-        <>
-          <ProjectHeader
-            project={project}
-            getProject={getProject}
-          />
-          <div>
-            <div className="bg-[#1e293b] rounded-t-lg shadow-lg p-4 mb-4">
-              <ProjectMembers
-                editingPercentages={editingPercentages}
-                setEditingPercentages={setEditingPercentages}
-                project={project}
-                getProject={getProject}
-              />
-              <ProjectTickets
-                project={project}
-                getProject={getProject}
-              />
-              <ProjectPagos
-                project={project}
-                getProject={getProject}
-              />
+      {loading ? (
+        <div className="flex justify-center items-center h-full">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+        </div>
+      ) : (
+        project && (
+          <>
+            <ProjectHeader
+              project={project}
+              getProject={getProject}
+            />
+            <div>
+              <div className="bg-[#1e293b] rounded-t-lg shadow-lg p-4 mb-4">
+                <ProjectMembers
+                  editingPercentages={editingPercentages}
+                  setEditingPercentages={setEditingPercentages}
+                  project={project}
+                  getProject={getProject}
+                />
+                <ProjectTickets
+                  project={project}
+                  getProject={getProject}
+                />
+                <ProjectPagos
+                  project={project}
+                  getProject={getProject}
+                />
+              </div>
             </div>
-          </div>
-        </>
+          </>
+        )
       )}
     </section>
   )
