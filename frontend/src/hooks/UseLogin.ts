@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
-
-import { ILogin } from "../pages/LogIn";
+import { ILogin } from "../../interfaces";
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);

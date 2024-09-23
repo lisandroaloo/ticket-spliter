@@ -1,17 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { IUserWrapper } from '../../pages/ProjectDetail'
 import useGetSpentByProjectId from '../../hooks/user/useGetSpentByProjectId'
 import { useParams } from 'react-router'
 import TextInput from '../TextInput'
-
-interface IUserByProjectCardProps {
-  up: IUserWrapper
-  monto: number
-  isEditingPercentages: boolean
-  index: number
-  editPercentage: (index: number, newPercentage: number) => void
-  value: number
-}
+import { IUserByProjectCardProps } from '../../../interfaces'
 
 const UserByProjectCard = ({ up, monto, isEditingPercentages, index, editPercentage, value }: IUserByProjectCardProps) => {
   const { id } = useParams<{ id: string }>()
@@ -54,7 +45,7 @@ const UserByProjectCard = ({ up, monto, isEditingPercentages, index, editPercent
             classNames='text-black'
           />
         ) : (
-          <span className="bg-[#4fd1c5] text-[#1e293b] px-2 py-1 rounded-full text-xs">{up.uxp_porcentaje}%</span>
+          <span className="bg-[#4fd1c5] text-[#1e293b] px-2 py-1 rounded-full text-xs">{up.uxp_porcentaje.toFixed(2)}%</span>
         )}
       </div>
     </div>

@@ -1,9 +1,5 @@
 import React from 'react'
-import { IPago } from '../../pages/UserProfile'
-
-interface IPagoByProjectCardProps {
-  p: IPago
-}
+import {IPagoByProjectCardProps} from "../../../interfaces"
 
 const PagoByProjectCard = ({ p }: IPagoByProjectCardProps) => {
   return (

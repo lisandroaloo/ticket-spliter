@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { IProjectForm } from '../../components/project/ProjectForm'
+import { IProjectForm } from '../../../interfaces'
 
 const useEditProject = () => {
   const [loading, setLoading] = useState(false)

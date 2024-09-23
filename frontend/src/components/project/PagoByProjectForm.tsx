@@ -1,22 +1,8 @@
 import React, {  useState } from 'react'
 import TextInput from '../TextInput'
 import { useParams } from 'react-router'
-import { IUserWrapper } from '../../pages/ProjectDetail'
-import useCreatePago, { ICreatePago } from '../../hooks/pagos/useCreatePago'
-
-export interface IPagoForm {
-  pa_fecha: Date 
-  pa_us_receptor_id: string
-  pa_monto: string
-  pa_pr_id: string 
-}
-
-export interface IPagoByProjectFormProps {
-  pago?: IPagoForm
-  setIsAddingPago: React.Dispatch<React.SetStateAction<boolean>>
-  updateProject: () => Promise<void>
-  usersInProyect: IUserWrapper[]
-}
+import useCreatePago from '../../hooks/pagos/useCreatePago'
+import { ICreatePago, IPagoByProjectFormProps, IPagoForm } from '../../../interfaces'
 
 const PagoByProjectForm = ({ pago, setIsAddingPago, updateProject, usersInProyect }: IPagoByProjectFormProps) => {
   const { id } = useParams<{ id: string }>()

@@ -17,6 +17,7 @@ CREATE TABLE `Pago` (
     `pa_monto` DOUBLE NOT NULL,
     `pa_fecha` DATETIME(3) NOT NULL,
     `pa_estado` VARCHAR(191) NOT NULL,
+    `pa_pr_id` INTEGER NOT NULL,
 
     PRIMARY KEY (`pa_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -50,6 +51,9 @@ CREATE TABLE `Ticket` (
 
     PRIMARY KEY (`ti_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `Pago` ADD CONSTRAINT `Pago_pa_pr_id_fkey` FOREIGN KEY (`pa_pr_id`) REFERENCES `Proyecto`(`pr_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Pago` ADD CONSTRAINT `Pago_pa_us_emisor_id_fkey` FOREIGN KEY (`pa_us_emisor_id`) REFERENCES `Usuario`(`us_email`) ON DELETE RESTRICT ON UPDATE CASCADE;

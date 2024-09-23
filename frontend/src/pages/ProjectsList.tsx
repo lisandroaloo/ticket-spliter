@@ -2,26 +2,9 @@ import React, { useEffect, useState } from 'react'
 import useGetProjects from '../hooks/project/UseGetProjects'
 import ProjectForm from '../components/project/ProjectForm'
 import { useNavigate } from 'react-router-dom'
+import { IProject } from '../../interfaces'
 
-
-
-export interface IGetProjects {
-  us_email: string
-}
-
-export interface IProject {
-  pr_id: string
-  pr_nombre: string
-  pr_descripcion: string
-}
-
-export interface IUserByProject {
-  uxp_us_id: string
-  uxp_pr_id: string
-  uxp_porcentaje: string
-}
-
-const Projects = () => {
+const ProjectsList = () => {
   const [projects, setProjects] = useState<IProject[]>([])
 
   // const [projectForEdit, setProjectForEdit] = useState<IProject | null>(null)
@@ -44,14 +27,10 @@ const Projects = () => {
     getProjectsForTable()
   }, [])
 
-
   return (
     <>
       <ProjectForm
         setProjects={setProjects}
-        // projects={projects}
-        // projectForEdit={projectForEdit}
-        // setProjectForEdit={setProjectForEdit}
       />
       {!loading && (
         <table className="w-full bg-slate-800 text-slate-300">
@@ -70,14 +49,9 @@ const Projects = () => {
                 onClick={() => onClickRow(p.pr_id)}
                 key={index}
               >
-
-
                 <td className="border-r border-r-slate-300 ">{p.pr_id}</td>
                 <td className="border-r border-r-slate-300">{p.pr_nombre}</td>
                 <td>{p.pr_descripcion}</td>
-
-
-
               </tr>
             ))}
           </tbody>
@@ -87,4 +61,4 @@ const Projects = () => {
   )
 }
 
-export default Projects
+export default ProjectsList

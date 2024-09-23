@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { IUser } from '../../pages/UserProfile'
-
+import { IUser } from '../../../interfaces'
 
 const useEditUser = () => {
     const [loading, setLoading] = useState(false)

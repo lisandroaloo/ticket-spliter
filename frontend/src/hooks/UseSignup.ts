@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuthContext } from "../context/AuthContext";
-import { IRegisterInputs } from "../pages/SignUp";
+import { IRegisterInputs } from "../../interfaces";
 
 const useSignUp = () => {
   const [loading, setLoading] = React.useState<boolean>(false);

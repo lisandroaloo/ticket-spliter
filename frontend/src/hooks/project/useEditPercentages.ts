@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { IUserByProject } from '../../pages/ProjectsList'
-import { IPercentageByUser } from '../../pages/ProjectDetail'
+import { IPercentageByUser } from '../../../interfaces'
 
 const useEditProjectPercentages = () => {
   const [loading, setLoading] = useState(false)

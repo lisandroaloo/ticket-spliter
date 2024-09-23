@@ -1,9 +1,5 @@
 import React from 'react'
-import { ITicket } from '../../pages/ProjectDetail'
-
-interface ITicketByProjectCardProps {
-  t: ITicket
-}
+import { ITicketByProjectCardProps } from '../../../interfaces'
 
 const TicketByProjectCard = ({ t }: ITicketByProjectCardProps) => {
   return (

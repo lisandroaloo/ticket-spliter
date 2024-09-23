@@ -1,9 +1,5 @@
 import { useState } from 'react'
-
-interface IGetSpentByProjectId {
-  _pr_id: string,
-  _us_email: string
-}
+import { IGetSpentByProjectId } from '../../../interfaces'
 
 const useGetSpentByProjectId = () => {
   const [loading, setLoading] = useState(false)

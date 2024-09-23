@@ -3,27 +3,9 @@ import useGetUserById from '../hooks/user/useGetUserById'
 import TextInput from '../components/TextInput'
 import useEditUser from '../hooks/user/useEditUser'
 import useGetTicketsByUserId from '../hooks/ticket/useGetTicketsByUserId'
-import { ITicket, IUsername } from './ProjectDetail'
 import useGetPagosByEmisor from '../hooks/pagos/useGetPagosByEmisor'
 import useGetPagosByReceptor from '../hooks/pagos/useGetPagoByReceptor'
-
-export interface IUser {
-    us_email: string,
-    us_nombre: string,
-    us_password: string
-}
-
-export interface IPago {
-  pa_estado: string
-  pa_fecha: string
-  pa_id: number
-  pa_monto: number
-  pa_pr_id: number
-  pa_us_emisor_id: string
-  pa_us_receptor_id: string
-  emisor?: IUsername
-  receptor?: IUsername
-}
+import { ITicket, IPago, IUser } from '../../interfaces'
 
 const UserProfile = () => {
 
