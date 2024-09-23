@@ -36,16 +36,16 @@ const protectRoute = async (req: any, res: any, next: any) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    const projectId = req.params.id;
+    const {prId} = req.params;
 
-    console.log("PARAMS IDD" + projectId);
+    console.log("PARAMS IDD" + prId);
     
 
     const usuarioXProyecto = await prisma.usuarioXProyecto.findUnique({
       where: {
         uxp_us_id_uxp_pr_id: {
           uxp_us_id: user.us_email,
-          uxp_pr_id: 1
+          uxp_pr_id: +prId
         }
       }
     });
