@@ -14,10 +14,13 @@ const ProjectDetail = () => {
   const { loading, getProjectsByIDDeep } = useGetProjectByIDDeep()
 
   const getProject = async () => {
-    const _project: IProjectDeep = await getProjectsByIDDeep(+id!)
+    const _project: IProjectDeep = await getProjectsByIDDeep(+id!) 
+    
     const _editingPercentages: IPercentageByUser[] = _project.UsuarioXProyecto.map((uxp) => {
       return { us_email: uxp.Usuario.us_email, uxp_porcentaje: uxp.uxp_porcentaje }
     })
+
+    
     setEditingPercentages(_editingPercentages)
     setProject(_project)
   }
