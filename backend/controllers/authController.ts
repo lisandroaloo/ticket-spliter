@@ -22,6 +22,9 @@ export const signUp = async (req: any, res: any) => {
         us_estado: 'Activo',
       },
     })
+
+    generateTokenAndSetCookie(newUser.us_email, res)
+
     res.json(us_email)
   } catch (error: any) {
     console.error('Error signup controller', error.message)

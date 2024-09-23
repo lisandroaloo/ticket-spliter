@@ -9,6 +9,7 @@ const useGetUsersByPrId = () => {
 
       const _res = await fetch(`http://localhost:5000/api/users/byProjectId/${_pr_id}`, {
         method: 'GET',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
       })
 

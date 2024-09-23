@@ -10,6 +10,7 @@ const useGetProjects = () => {
       setLoading(true)
       const _res = await fetch(`http://localhost:5000/api/projects/${authUser}`, {
         method: 'GET',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
       })
 

@@ -55,12 +55,18 @@ const LogIn = () => {
 
               <button
                 type="submit"
-                className="w-full rounded-md bg-gray-900 px-4 py-2 text-white transition-colors hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+                className="relative w-full h-10 rounded-md bg-gray-900 px-4 py-2 text-white transition-colors hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={loading}
+                
               >
-                {loading ? (
-                  <span className="loading loading-spinner"></span>
-                ) : (
-                  "Iniciar Sesion"
+                <span className={`${loading ? 'invisible' : 'visible'}`}>
+                  Iniciar Sesión
+                </span>
+                {loading && (
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <span className="sr-only">Cargando...</span>
+                    <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  </span>
                 )}
               </button>
             </form>

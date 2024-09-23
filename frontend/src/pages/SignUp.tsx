@@ -15,15 +15,19 @@ const SignUp = () => {
 
   const formSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (inputs.us_password !== inputs.confirmPassword) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
     await signup(inputs);
   };
 
   return (
     <section className="h-[92vh] relative">
-      <div className=" absolute  inset-0 top-[15%] ">
+      <div className="absolute inset-0 top-[15%]">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            Registrate
+            Regístrate
           </h1>
           <p className="mt-4 text-lg text-gray-700">
             Crea una cuenta para empezar a gestionar tus gastos.
@@ -66,12 +70,12 @@ const SignUp = () => {
                   onChange={(e) => {
                     setInputs({ ...inputs, us_password: e.target.value });
                   }}
-                  className="w-full rounded-md border border-gray-500 px-4 py-2 text-gray-900 "
+                  className="w-full rounded-md border border-gray-500 px-4 py-2 text-gray-900"
                 />
               </div>
               <div>
                 <input
-                  id="password"
+                  id="confirm-password"
                   type="password"
                   placeholder="Repite la contraseña"
                   value={inputs.confirmPassword}
@@ -84,19 +88,25 @@ const SignUp = () => {
               </div>
               <button
                 type="submit"
-                className="w-full rounded-md bg-gray-900 px-4 py-2 text-white transition-colors hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+                className="relative w-full h-10 rounded-md bg-gray-900 px-4 py-2 text-white transition-colors hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={loading}
+                
               >
-                {loading ? (
-                  <span className="loading loading-spinner"></span>
-                ) : (
-                  "Registrarse"
+                <span className={`${loading ? 'invisible' : 'visible'}`}>
+                  Registrarse
+                </span>
+                {loading && (
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <span className="sr-only">Cargando...</span>
+                    <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                  </span>
                 )}
               </button>
             </form>
             <div className="text-sm text-gray-700">
-              Ya tenes una cuenta?{" "}
+              ¿Ya tienes una cuenta?{" "}
               <Link to="/login" className="font-medium hover:text-gray-900">
-                Login
+                Iniciar sesión
               </Link>
             </div>
           </div>
