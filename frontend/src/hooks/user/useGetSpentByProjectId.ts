@@ -10,6 +10,7 @@ const useGetSpentByProjectId = () => {
 
       const _res = await fetch(`http://localhost:5000/api/users/spentByProjectId/${_pr_id}`, {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           us_email: _us_email,

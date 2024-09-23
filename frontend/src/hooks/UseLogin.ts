@@ -11,6 +11,7 @@ const useLogin = () => {
       setLoading(true);
       const res = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
+        credentials: 'include',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ us_email, us_password }),
       });
@@ -20,8 +21,12 @@ const useLogin = () => {
       if (data.error) {
         throw new Error(data.error);
       }
+
       localStorage.setItem("app-user", JSON.stringify(data));
+      
       setAuthUser(data);
+
+
     } catch (error: unknown) {
       if (error instanceof Error) {
         alert(error.message);
