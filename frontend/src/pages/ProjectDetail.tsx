@@ -6,6 +6,7 @@ import ProjectTickets from '../components/project/ProjectTickets'
 import ProjectPagos from '../components/project/ProjectPagos'
 import { IProjectDeep, IPercentageByUser } from '../../interfaces'
 import ProjectHeader from '../components/project/ProjectHeader'
+import ProjectNavBar from '../components/navbars/ProjectNavBar'
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>()
@@ -13,14 +14,16 @@ const ProjectDetail = () => {
   const [editingPercentages, setEditingPercentages] = useState<IPercentageByUser[]>([])
   const { loading, getProjectsByIDDeep } = useGetProjectByIDDeep()
 
+  const [activeSection, setActiveSection] = useState<string>('members')
+
   const getProject = async () => {
-    const _project: IProjectDeep = await getProjectsByIDDeep(+id!) 
-    
+    const _project: IProjectDeep = await getProjectsByIDDeep(+id!)
+
     const _editingPercentages: IPercentageByUser[] = _project.UsuarioXProyecto.map((uxp) => {
       return { us_email: uxp.Usuario.us_email, uxp_porcentaje: uxp.uxp_porcentaje }
     })
 
-    
+
     setEditingPercentages(_editingPercentages)
     setProject(_project)
   }
@@ -30,39 +33,62 @@ const ProjectDetail = () => {
   }, [])
 
   return (
-    <section className="h-[92vh] bg-gray-900">
-      {loading ? (
-        <div className="flex justify-center items-center h-full">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
-        </div>
-      ) : (
-        project && (
-          <>
-            <ProjectHeader
-              project={project}
-              getProject={getProject}
-            />
-            <div>
-              <div className="bg-[#1e293b] rounded-t-lg shadow-lg p-4 mb-4">
+    <section className="h-[92vh] bg-gray-900 overflow-hidden">
+
+      <>
+
+        <ProjectHeader
+          project={project}
+          getProject={getProject}
+          loading={loading}
+        />
+        <div className="bg-gray-800 rounded-t-lg shadow-lg p-4 mb-4">
+          <ProjectNavBar setActiveSection={setActiveSection} activeSection={activeSection} />
+          <div className="mt-4">
+            {activeSection === 'members' && (
+              loading ? (
+                <div className="flex justify-center items-center h-full">
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+                </div>
+              ) : (
                 <ProjectMembers
                   editingPercentages={editingPercentages}
                   setEditingPercentages={setEditingPercentages}
                   project={project}
                   getProject={getProject}
-                />
+                />)
+            )}
+            {activeSection === 'tickets' && (
+              loading ? (
+                <div className="flex justify-center items-center h-full">
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+                </div>
+              ) : (
                 <ProjectTickets
                   project={project}
                   getProject={getProject}
                 />
+              )
+
+            )}
+            {activeSection === 'payments' && (
+              loading ? (
+                <div className="flex justify-center items-center h-full">
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+                </div>
+              ) : (
                 <ProjectPagos
                   project={project}
                   getProject={getProject}
                 />
-              </div>
-            </div>
-          </>
-        )
-      )}
+              )
+
+            )}
+          </div>
+        </div>
+      </>
+
+
     </section>
   )
 }

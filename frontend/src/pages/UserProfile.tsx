@@ -6,6 +6,10 @@ import useGetTicketsByUserId from '../hooks/ticket/useGetTicketsByUserId'
 import useGetPagosByEmisor from '../hooks/pagos/useGetPagosByEmisor'
 import useGetPagosByReceptor from '../hooks/pagos/useGetPagoByReceptor'
 import { ITicket, IPago, IUser } from '../../interfaces'
+import ProfileTickets from '../components/profile/ProfileTickets'
+import ProfilePayementSend from '../components/profile/ProfilePayementSend'
+import ProfilePaymentReceive from '../components/profile/ProfilePaymentReceive'
+import ProfileNavBar from '../components/navbars/ProfileNavBar'
 
 const UserProfile = () => {
     const { getTicketsByUserId } = useGetTicketsByUserId()
@@ -17,6 +21,7 @@ const UserProfile = () => {
     const { getPagosByReceptor } = useGetPagosByReceptor()
     const [pagosReceptor, setPagosReceptor] = useState<IPago[]>([])
 
+
     const initializeUserForm = (): IUser => {
         return {
             us_email: '',
@@ -24,12 +29,12 @@ const UserProfile = () => {
             us_password: '',
         }
     }
-
     const [user, setUser] = useState<IUser>(initializeUserForm())
     const { getUser } = useGetUserById()
     const { editUser } = useEditUser()
 
     const [loading, setLoading] = useState(true)
+    const [activeSection, setActiveSection] = useState('tickets')
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -128,28 +133,13 @@ const UserProfile = () => {
                                     </div>
                                 </div>
                             </form>
-                            <div className="h-[50vh]">
-                                <div className="h-1/2 overflow-hidden rounded-lg">
-                                    <h4 className="h-1/6">Tickets</h4>
-                                    <div className="rounded-lg p-2 shadow-sm bg-gray-700 overflow-y-scroll h-5/6">
-                                        {tickets.map((t) => (
-                                            <div key={t.ti_id}>{t.ti_descripcion + ' - ' + t.ti_fecha.split('T')[0] + ' - $' + t.ti_monto}</div>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="h-1/2 overflow-hidden rounded-lg">
-                                    <h4 className="h-1/6">Pagos emitidos</h4>
-                                    <div className="rounded-lg p-2 shadow-sm bg-gray-700 overflow-y-scroll h-2/6">
-                                        {pagosEmisor.map((pe) => (
-                                            <div key={pe.pa_id}>{pe.receptor?.us_nombre + ' - ' + pe.pa_fecha.split('T')[0] + ' - $' + pe.pa_monto}</div>
-                                        ))}
-                                    </div>
-                                    <h4 className="h-1/6">Pagos recibidos</h4>
-                                    <div className="rounded-lg p-2 shadow-sm bg-gray-700 overflow-y-scroll h-2/6">
-                                        {pagosReceptor.map((pr) => (
-                                            <div key={pr.pa_id}>{pr.emisor?.us_nombre + ' - ' + pr.pa_fecha.split('T')[0] + ' - $' + pr.pa_monto}</div>
-                                        ))}
-                                    </div>
+                            <div className="h-[50vh] bg-gray-800">
+                                <ProfileNavBar setActiveSection={setActiveSection} activeSection={activeSection} />
+
+                                <div className="  h-4/5 overflow-y-scroll  no-scrollbar">
+                                    {activeSection === 'tickets' && <ProfileTickets tickets={tickets} />}
+                                    {activeSection === 'sent' && <ProfilePayementSend pagosEmisor={pagosEmisor} />}
+                                    {activeSection === 'received' && <ProfilePaymentReceive pagosReceptor={pagosReceptor} />}
                                 </div>
                             </div>
                         </div>

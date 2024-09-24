@@ -19,8 +19,8 @@ const ProjectTickets = ({ project, getProject }: IProjectTicketsProps) => {
 
   return (
     <>
-      <h2 className="text-2xl font-bold text-white mb-4 mt-4">Tickets</h2>
-      <div className="space-y-4">
+    
+      <div className="space-y-4 h-[30vh] overflow-y-scroll no-scrollbar">
         {project?.Ticket.map((t: ITicket, index: number) => (
           <TicketByProjectCard
             key={index}
@@ -78,6 +78,8 @@ const ProjectTickets = ({ project, getProject }: IProjectTicketsProps) => {
           </div>
         </div>
       )}
+  <div className='flex gap-x-4'>
+
 
       <button
         className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
@@ -91,6 +93,7 @@ const ProjectTickets = ({ project, getProject }: IProjectTicketsProps) => {
       >
         Subir ticket
       </button>
+  </div>
     </>
   )
 }

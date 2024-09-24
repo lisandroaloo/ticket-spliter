@@ -5,19 +5,13 @@ import prisma from "../models/prismaClient";
 const protectRoute = async (req: any, res: any, next: any) => {
   try {
 
-
-
     const token = req.cookies.jwt;
-
-
 
     if (!token) {
       return res.status(401).json({ error: 'Unauthorized - No token provided' });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
-
-
 
 
     if (!decoded) {
@@ -30,17 +24,12 @@ const protectRoute = async (req: any, res: any, next: any) => {
     });
 
  
-
-
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
     const {prId} = req.params;
-
-    console.log("PARAMS IDD" + prId);
-    
-
+  
     const usuarioXProyecto = await prisma.usuarioXProyecto.findUnique({
       where: {
         uxp_us_id_uxp_pr_id: {
@@ -51,14 +40,13 @@ const protectRoute = async (req: any, res: any, next: any) => {
     });
 
 
-    console.log("USERxpro" + usuarioXProyecto);
-
     if (!usuarioXProyecto) {
       return res.status(403).json({ error: 'User not part of the project' });
     }
 
     req.user = user;
     next();
+    
   } catch (error: any) {
     res.status(500).json({ error: "ERROR MIDDDDLWARE" });
   }

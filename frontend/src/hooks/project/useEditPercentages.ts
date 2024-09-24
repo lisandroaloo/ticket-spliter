@@ -9,6 +9,7 @@ const useEditProjectPercentages = () => {
       setLoading(true)
       const _res = await fetch(`http://localhost:5000/api/projects/percentage/${prId}`, {
         method: 'PATCH',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(usuariosXProyectos),
       })

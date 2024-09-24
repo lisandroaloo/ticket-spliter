@@ -5,8 +5,8 @@ import UserByProjectForm from './UserByProjectForm'
 import { useParams } from 'react-router'
 import { IPercentageByUser, IProjectMembersProps } from '../../../interfaces'
 
-const ProjectMembers = ({editingPercentages, setEditingPercentages, project
-,getProject}: IProjectMembersProps) => {
+const ProjectMembers = ({ editingPercentages, setEditingPercentages, project
+  , getProject }: IProjectMembersProps) => {
   const { id } = useParams<{ id: string }>()
   const [isAddingUser, setIsAddingUser] = useState<boolean>(false)
   const [isEditingPercentages, setIsEditingPercentages] = useState<boolean>(false)
@@ -58,29 +58,9 @@ const ProjectMembers = ({editingPercentages, setEditingPercentages, project
 
   return (
     <>
-      <h2 className="text-2xl font-bold text-white mb-4">Integrantes</h2>
-      {isEditingPercentages ? (
-        <button
-          onClick={handleEditPercentages}
-          className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
-        >
-          Confirmar
-        </button>
-      ) : (
-        <button
-          onClick={editPercentages}
-          className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
-        >
-          Editar Porcentajes
-        </button>
-      )}
-      <button
-        onClick={handleDividirEquitativamente}
-        className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
-      >
-        Dividir Equitativamente
-      </button>
-      <div className="space-y-4">
+
+
+      <div className="space-y-4 h-[30vh] overflow-y-scroll no-scrollbar">
         {project?.UsuarioXProyecto.map((up: any, index: any) => (
           <UserByProjectCard
             key={index}
@@ -100,12 +80,40 @@ const ProjectMembers = ({editingPercentages, setEditingPercentages, project
           usersNotInProject={project.usersNotInProject}
         />
       )}
-      <button
-        className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
-        onClick={handleAddUser}
-      >
-        {isAddingUser ? '➖' : '➕'}
-      </button>
+
+
+      <div className='flex justify-between'>
+
+        <button
+          className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+          onClick={handleAddUser}
+        >
+          {isAddingUser ? '➖' : '➕'}
+        </button>
+        <div className='flex gap-x-4'>
+          {isEditingPercentages ? (
+            <button
+              onClick={handleEditPercentages}
+              className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+            >
+              Confirmar
+            </button>
+          ) : (
+            <button
+              onClick={editPercentages}
+              className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+            >
+              ✎
+            </button>
+          )}
+          <button
+            onClick={handleDividirEquitativamente}
+            className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+          >
+            ⚖️
+          </button>
+        </div>
+      </div>
     </>
   )
 }

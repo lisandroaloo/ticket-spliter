@@ -11,6 +11,7 @@ const useAddUserToProject = () => {
 
       const _res = await fetch(`http://localhost:5000/api/projects/detail/${_pr_id}`, {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           us_email: _uxp_us_id,

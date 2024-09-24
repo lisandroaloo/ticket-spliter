@@ -12,8 +12,8 @@ const ProjectPagos = ({getProject,project}: IProjectPagosProps) => {
   }
   return (
     <>
-      <h2 className="text-2xl font-bold text-white mb-4 mt-4">Pagos</h2>
-      <div className="space-y-4">
+  
+      <div className="space-y-4 h-[30vh] overflow-y-scroll no-scrollbar">
         {project?.Pago.map((p: IPago, index: number) => (
           <PagoByProjectCard
             key={index}

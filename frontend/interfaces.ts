@@ -54,17 +54,17 @@ export interface IUserByProjectForm {
 export interface IProjectMembersProps {
   setEditingPercentages: any
   editingPercentages: IPercentageByUser[]
-  project: IProjectDeep
+  project: IProjectDeep | undefined
   getProject: any
 }
 
 export interface IProjectPagosProps {
-  getProject: any
-  project: IProjectDeep
+  getProject: any 
+  project: IProjectDeep | undefined
 }
 
 export interface IProjectTicketsProps {
-  project: IProjectDeep
+  project: IProjectDeep | undefined
   getProject: any
 }
 
@@ -142,6 +142,7 @@ export interface IProjectDeep {
 }
 
 export interface ITicket {
+  map(arg0: (t: any) => import("react/jsx-runtime").JSX.Element): ReactNode
   ti_descripcion: string
   ti_fecha: string
   ti_id: number
@@ -212,8 +213,9 @@ export interface IPago {
 }
 
 export interface IProjectHeaderProps {
-  project: IProjectDeep
+  project: IProjectDeep | undefined
   getProject: any
+  loading: boolean
 }
 
 export interface IEditProjectFormProps {
