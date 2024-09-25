@@ -5,7 +5,12 @@ import {
     editProject,
     editProjectPercentages,
     getProjectByIDDeep,
-    getProjects
+    getProjectDetail,
+    getProjectPagos,
+    getProjects,
+    getProjectTickets,
+    getProjectUsers,
+    getUsersNotInProject
 } from '../controllers/projectController';
 import protectRoute from '../middleware/protectRoute';
 
@@ -18,5 +23,6 @@ projectRoutes.patch('/', editProject);
 projectRoutes.patch('/percentage/:prId', protectRoute, editProjectPercentages);
 projectRoutes.get('/detail/:prId', protectRoute, getProjectByIDDeep);
 projectRoutes.post('/detail/:prId', protectRoute, addUserToProject);
+projectRoutes.get('/test/:prId', protectRoute, getUsersNotInProject)
 
 export default projectRoutes;

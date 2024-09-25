@@ -48,7 +48,8 @@ const protectRoute = async (req: any, res: any, next: any) => {
     next();
     
   } catch (error: any) {
-    res.status(500).json({ error: "ERROR MIDDDDLWARE" });
+    console.log(error)
+    res.status(500).json({ error: "ERROR MIDDLWARE" });
   }
 };
 

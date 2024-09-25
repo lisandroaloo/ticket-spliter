@@ -99,6 +99,120 @@ export const getProjectByIDDeep = async (req: any, res: any) => {
   }
 }
 
+export const getProjectDetail = async (req: any, res: any) => {
+  try {
+    const { prId } = req.params
+
+    const project = await prisma.proyecto.findUnique({
+      where: {
+        pr_id: +prId,
+      },
+      select: {
+        pr_id: true,
+        pr_nombre: true,
+        pr_descripcion: true,
+      },
+    })
+
+    res.json(project)
+  } catch (error: any) {
+    console.error('Error getProjectDetail controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}
+
+export const getProjectUsers = async (req: any, res: any) => {
+  try {
+    const { prId } = req.params
+
+    const uxp = await prisma.usuarioXProyecto.findMany({
+      where: {
+        uxp_pr_id: +prId,
+      },
+      select: {
+        uxp_porcentaje: true,
+        Usuario:true
+      }
+    })
+
+    res.json(uxp)
+  } catch (error: any) {
+    console.error('Error getProjectUsers controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}
+
+export const getProjectTickets = async (req: any, res: any) => {
+  try {
+    const { prId } = req.params
+
+    const tickets = await prisma.ticket.findMany({
+      where: {
+        ti_pr_id: +prId,
+      },
+      include: {
+        Usuario: true,
+      },
+    })
+
+    const montoTotal = tickets?.reduce((sum, ticket) => sum + ticket.ti_monto, 0)
+
+    const ticketsYTotal = {
+      ...tickets,
+      montoTotal
+    }
+
+    res.json(ticketsYTotal)
+  } catch (error: any) {
+    console.error('Error getProjectTickets controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}
+
+export const getProjectPagos = async (req: any, res: any) => {
+  try {
+    const { prId } = req.params
+
+    const pagos = await prisma.pago.findMany({
+      where: {
+        pa_pr_id: +prId,
+      },
+      include: {
+        emisor:true,
+        receptor:true
+      }
+    })
+
+    res.json(pagos)
+  } catch (error: any) {
+    console.error('Error getProjectPagos controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}
+
+export const getUsersNotInProject = async (req: any, res: any) => {
+  try {
+    const { prId } = req.params
+
+    const usersNotInProject = await prisma.usuario.findMany({
+      where: {
+        UsuarioXProyecto: {
+          none: { uxp_pr_id: +prId },
+        },
+      },
+      select: {
+        us_nombre: true,
+        us_email: true,
+      },
+    })
+
+    res.json(usersNotInProject)
+  } catch (error: any) {
+    console.error('Error getUsersNotInProject controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}
+
 export const createProject = async (req: any, res: any) => {
   try {
     const { us_email, pr_id, pr_nombre, pr_descripcion } = req.body
