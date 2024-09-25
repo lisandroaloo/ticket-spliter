@@ -7,12 +7,16 @@ import ProjectPagos from '../components/project/ProjectPagos'
 import { IProjectDeep, IPercentageByUser } from '../../interfaces'
 import ProjectHeader from '../components/project/ProjectHeader'
 import ProjectNavBar from '../components/navbars/ProjectNavBar'
+import useGetSaldoPagosByUserAndProjectId from '../hooks/pagos/useGetSaldoPagosByUserAndProjectId'
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>()
   const [project, setProject] = useState<IProjectDeep>()
   const [editingPercentages, setEditingPercentages] = useState<IPercentageByUser[]>([])
   const { loading, getProjectsByIDDeep } = useGetProjectByIDDeep()
+  const { getSaldoPagosByUserAndProjectId } = useGetSaldoPagosByUserAndProjectId()
+
+  const [saldos, setSaldos] = useState<any>({})
 
   const [activeSection, setActiveSection] = useState<string>('members')
 
@@ -23,6 +27,8 @@ const ProjectDetail = () => {
       return { us_email: uxp.Usuario.us_email, uxp_porcentaje: uxp.uxp_porcentaje }
     })
 
+    const _saldos = await getSaldoPagosByUserAndProjectId(id!)
+    setSaldos(_saldos)
 
     setEditingPercentages(_editingPercentages)
     setProject(_project)
@@ -56,6 +62,7 @@ const ProjectDetail = () => {
                   setEditingPercentages={setEditingPercentages}
                   project={project}
                   getProject={getProject}
+                  saldos={saldos}
                 />)
             )}
             {activeSection === 'tickets' && (

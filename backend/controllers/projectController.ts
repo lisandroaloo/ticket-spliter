@@ -192,9 +192,6 @@ export const editProjectPercentages = async (req: any, res: any) => {
       usuariosProyectos.map(async (uxp: any) => {
         const { us_email: uxp_us_id, uxp_porcentaje } = uxp;
 
-        console.log(uxp);
-
-
         return await prisma.usuarioXProyecto.update({
           where: {
             uxp_us_id_uxp_pr_id: {

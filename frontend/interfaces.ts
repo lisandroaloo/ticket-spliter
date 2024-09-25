@@ -56,6 +56,7 @@ export interface IProjectMembersProps {
   editingPercentages: IPercentageByUser[]
   project: IProjectDeep | undefined
   getProject: any
+  saldos: any
 }
 
 export interface IProjectPagosProps {
@@ -86,6 +87,7 @@ export interface IUserByProjectCardProps {
   index: number
   editPercentage: (index: number, newPercentage: number) => void
   value: number
+  saldo: number
 }
 
 export interface IUserByProjectFormProps {

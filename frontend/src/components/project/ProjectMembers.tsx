@@ -3,10 +3,10 @@ import useEditProjectPercentages from '../../hooks/project/useEditPercentages'
 import UserByProjectCard from './UserByProjectCard'
 import UserByProjectForm from './UserByProjectForm'
 import { useParams } from 'react-router'
-import { IPercentageByUser, IProjectMembersProps } from '../../../interfaces'
+import { IPercentageByUser, IProjectMembersProps, IUserWrapper } from '../../../interfaces'
 
 const ProjectMembers = ({ editingPercentages, setEditingPercentages, project
-  , getProject }: IProjectMembersProps) => {
+  , getProject, saldos }: IProjectMembersProps) => {
   const { id } = useParams<{ id: string }>()
   const [isAddingUser, setIsAddingUser] = useState<boolean>(false)
   const [isEditingPercentages, setIsEditingPercentages] = useState<boolean>(false)
@@ -61,7 +61,7 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, project
 
 
       <div className="space-y-4 h-[30vh] overflow-y-scroll no-scrollbar">
-        {project?.UsuarioXProyecto.map((up: any, index: any) => (
+        {project?.UsuarioXProyecto.map((up: IUserWrapper, index: any) => (
           <UserByProjectCard
             key={index}
             up={up}
@@ -70,6 +70,7 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, project
             editPercentage={editPercentage}
             index={index}
             value={editingPercentages[index].uxp_porcentaje}
+            saldo={saldos[up.Usuario.us_email]}
           />
         ))}
       </div>

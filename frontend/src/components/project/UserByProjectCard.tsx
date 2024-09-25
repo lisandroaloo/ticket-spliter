@@ -4,7 +4,7 @@ import { useParams } from 'react-router'
 import TextInput from '../TextInput'
 import { IUserByProjectCardProps } from '../../../interfaces'
 
-const UserByProjectCard = ({ up, monto, isEditingPercentages, index, editPercentage, value }: IUserByProjectCardProps) => {
+const UserByProjectCard = ({ up, monto, isEditingPercentages, index, editPercentage, value, saldo = 0 }: IUserByProjectCardProps) => {
   const { id } = useParams<{ id: string }>()
 
   const [currentValue, setCurrentValue] = useState<string>(value.toString())
@@ -13,7 +13,7 @@ const UserByProjectCard = ({ up, monto, isEditingPercentages, index, editPercent
 
   const updateSpent = async () => {
     const _spent = await getSpentByProjectId({ _pr_id: id!, _us_email: up.Usuario.us_email })
-    setSpent(+_spent)
+    setSpent(+_spent + saldo)
   }
 
   const handleOnBlur = (e: any) => {
