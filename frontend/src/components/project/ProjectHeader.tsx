@@ -36,7 +36,7 @@ const ProjectHeader = ({ projectDetail, loadingDetail, getProjectDetailAsync, mo
 
       <div className="bg-[#1e293b] rounded-lg shadow-lg mb-6 p-4">
         <h2 className="text-2xl font-bold text-white mb-2">Gastos</h2>
-        {loadingDetail || !monto ? (
+        {!monto ? (
           <div className="flex justify-center items-center h-full">
             <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
           </div>

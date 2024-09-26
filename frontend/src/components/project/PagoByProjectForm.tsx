@@ -3,11 +3,13 @@ import TextInput from '../TextInput'
 import { useParams } from 'react-router'
 import useCreatePago from '../../hooks/pagos/useCreatePago'
 import { ICreatePago, IPagoByProjectFormProps, IPagoForm } from '../../../interfaces'
+import { useAuthContext } from '../../context/AuthContext'
 
 const PagoByProjectForm = ({ pago, setIsAddingPago, updateProject, usersInProyect }: IPagoByProjectFormProps) => {
   const { id } = useParams<{ id: string }>()
 
   const { loading, createPago } = useCreatePago()
+  const {authUser} = useAuthContext()
 
   const initialize = (): IPagoForm => {
     const form: IPagoForm = {
@@ -74,7 +76,9 @@ const PagoByProjectForm = ({ pago, setIsAddingPago, updateProject, usersInProyec
           value=""
           selected
         ></option>
-        {usersInProyect.map((uip) => (
+        {usersInProyect.filter((uip) => 
+          uip.Usuario.us_email !== authUser
+        ).map((uip) => (
           <option value={uip.Usuario.us_email}>{uip.Usuario.us_nombre}</option>
         ))}
       </select>
