@@ -37,20 +37,14 @@ const ProjectForm = ({ setProjects }: IProjectFormProps) => {
   }
 
   return (
-    <div className="flex flex-col p-4 bg-slate-500">
-      <TextInput
-        type="text"
-        name="_pr_id"
-        value={formState._pr_id}
-        placeholder="ID"
-        readOnly
-      />
+    <div className="mb-8 space-y-4 bg-gray-800 p-6 rounded-lg">
       <TextInput
         type="text"
         name="_pr_nombre"
         value={formState._pr_nombre}
         handleInputChange={handleInputChange}
         placeholder="Nombre"
+        classNames="w-full bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <TextInput
         type="text"
@@ -58,10 +52,12 @@ const ProjectForm = ({ setProjects }: IProjectFormProps) => {
         value={formState._pr_descripcion}
         handleInputChange={handleInputChange}
         placeholder="Descripcion"
+        classNames="w-full bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
         <button
-          className="bg-slate-300 rounded p-2 my-1"
+
           onClick={handleCreateProject}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
           Crear
         </button>

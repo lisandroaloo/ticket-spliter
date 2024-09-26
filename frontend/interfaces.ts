@@ -60,7 +60,7 @@ export interface IProjectMembersProps {
 }
 
 export interface IProjectPagosProps {
-  getProject: any 
+  getProject: any
   project: IProjectDeep | undefined
 }
 
@@ -218,10 +218,16 @@ export interface IProjectHeaderProps {
   project: IProjectDeep | undefined
   getProject: any
   loading: boolean
+
 }
 
 export interface IEditProjectFormProps {
   project: IProjectDeep
   getProject: any
   setIsEditingProject: any
+}
+
+export interface IProjectList {
+  projects: IProject[]
+  onClickRow: (id: string) => void
 }

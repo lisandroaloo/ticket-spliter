@@ -74,7 +74,7 @@ const UserProfile = () => {
                     <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
                 </section>
             ) : (
-                <section className="h-[92vh] bg-gray-900 relative">
+                <section className="h-[92vh]  bg-gray-900 relative">
                     <div className="absolute inset-0 top-[15%] mx-auto max-w-2xl text-white h-[50vh]">
                         <h2 className="text-3xl font-bold tracking-tight">Profile</h2>
                         <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 h-[50vh]">
