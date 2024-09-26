@@ -3,7 +3,7 @@ import TicketByProjectCard from './TicketByProjectCard'
 import TicketByProjectForm from './TicketByProjectForm'
 import { IProjectTicketsProps, ITicket } from '../../../interfaces'
 
-const ProjectTickets = ({ project, getProject }: IProjectTicketsProps) => {
+const ProjectTickets = ({ projectTickets, getProjectTicketsAsync }: IProjectTicketsProps) => {
   const [isAddingTicket, setIsAddingTicket] = useState<boolean>(false)
   const [isUploadingTicket, setIsUploadingTicket] = useState<boolean>(false)
 
@@ -19,20 +19,18 @@ const ProjectTickets = ({ project, getProject }: IProjectTicketsProps) => {
 
   return (
     <>
-    
       <div className="space-y-4 h-[30vh] overflow-y-scroll no-scrollbar">
-        {project?.Ticket.map((t: ITicket, index: number) => (
+        {projectTickets.Ticket.map((t: ITicket, index: number) => (
           <TicketByProjectCard
             key={index}
             t={t}
           />
         ))}
       </div>
-      {isAddingTicket && project && (
+      {isAddingTicket && (
         <TicketByProjectForm
           setIsAddingTicket={setIsAddingTicket}
-          updateProject={getProject}
-          usersInProyect={project.UsuarioXProyecto}
+          updateProject={getProjectTicketsAsync}
         />
       )}
 
@@ -67,7 +65,10 @@ const ProjectTickets = ({ project, getProject }: IProjectTicketsProps) => {
                     <button
                       type="button"
                       className="bg-slate-500 px-3 py-2 rounded mt-4"
-                      onClick={()=>{alert("To do");handleUploadTicket()}}
+                      onClick={() => {
+                        alert('To do')
+                        handleUploadTicket()
+                      }}
                     >
                       Confirmar
                     </button>
@@ -78,22 +79,20 @@ const ProjectTickets = ({ project, getProject }: IProjectTicketsProps) => {
           </div>
         </div>
       )}
-  <div className='flex gap-x-4'>
-
-
-      <button
-        className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
-        onClick={handleAddTicket}
-      >
-        {isAddingTicket ? '➖' : '➕'}
-      </button>
-      <button
-        className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
-        onClick={handleUploadTicket}
-      >
-        Subir ticket
-      </button>
-  </div>
+      <div className="flex gap-x-4">
+        <button
+          className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
+          onClick={handleAddTicket}
+        >
+          {isAddingTicket ? '➖' : '➕'}
+        </button>
+        <button
+          className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
+          onClick={handleUploadTicket}
+        >
+          Subir ticket
+        </button>
+      </div>
     </>
   )
 }

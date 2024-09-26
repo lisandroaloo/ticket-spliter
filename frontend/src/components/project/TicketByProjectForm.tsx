@@ -4,7 +4,7 @@ import { useParams } from 'react-router'
 import useCreateTicket from '../../hooks/ticket/useCreateTicket'
 import { ITicketByProjectFormProps, ITicketForm } from '../../../interfaces'
 
-const TicketByProjectForm = ({ ticket, setIsAddingTicket, updateProject, usersInProyect }: ITicketByProjectFormProps) => {
+const TicketByProjectForm = ({ ticket, setIsAddingTicket, updateProject }: ITicketByProjectFormProps) => {
   const { id } = useParams<{ id: string }>()
 
   const { loading, createTicket } = useCreateTicket()
@@ -32,14 +32,14 @@ const TicketByProjectForm = ({ ticket, setIsAddingTicket, updateProject, usersIn
     }))
   }
 
-  const handleUserDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target
+  // const handleUserDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const { value } = e.target
 
-    setFormState((prevState) => ({
-      ...prevState,
-      _us_email: value,
-    }))
-  }
+  //   setFormState((prevState) => ({
+  //     ...prevState,
+  //     _us_email: value,
+  //   }))
+  // }
 
   const handleAddTicketToProject = async () => {
     await createTicket(formState)
@@ -62,7 +62,7 @@ const TicketByProjectForm = ({ ticket, setIsAddingTicket, updateProject, usersIn
           readOnly={id !== undefined}
         />
       </div>
-      <select
+      {/* <select
         name="_us_email"
         onChange={handleUserDropdownChange}
         className="bg-slate-300 rounded p-2 my-1"
@@ -74,7 +74,7 @@ const TicketByProjectForm = ({ ticket, setIsAddingTicket, updateProject, usersIn
         {usersInProyect.map((uip) => (
           <option value={uip.Usuario.us_email}>{uip.Usuario.us_nombre}</option>
         ))}
-      </select>
+      </select> */}
       <div className="w-3/12">
         <TextInput
           type="text"

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import TextInput from '../TextInput'
-import { IEditProjectFormProps, IProjectDeep, IProjectForm } from '../../../interfaces'
+import { IEditProjectFormProps, IProject, IProjectDeep, IProjectForm } from '../../../interfaces'
 import useEditProject from '../../hooks/project/useEditProject'
 
-const instanciateEditProjectForm = (project: IProjectDeep): IProjectForm => {
+const instanciateEditProjectForm = (project: IProject): IProjectForm => {
   const form = {
     _pr_id: project.pr_id,
     _pr_nombre: project.pr_nombre,

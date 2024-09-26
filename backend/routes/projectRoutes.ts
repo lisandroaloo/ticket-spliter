@@ -21,8 +21,12 @@ projectRoutes.get('/:userId', getProjects);
 projectRoutes.post('/', createProject);
 projectRoutes.patch('/', editProject);
 projectRoutes.patch('/percentage/:prId', protectRoute, editProjectPercentages);
-projectRoutes.get('/detail/:prId', protectRoute, getProjectByIDDeep);
+// projectRoutes.get('/detail/:prId', protectRoute, getProjectByIDDeep);
 projectRoutes.post('/detail/:prId', protectRoute, addUserToProject);
-projectRoutes.get('/test/:prId', protectRoute, getUsersNotInProject)
+projectRoutes.get('/detail/:prId', protectRoute, getProjectDetail);
+projectRoutes.get('/pagos/:prId', protectRoute, getProjectPagos);
+projectRoutes.get('/tickets/:prId', protectRoute, getProjectTickets);
+projectRoutes.get('/users/:prId', protectRoute, getProjectUsers);
+projectRoutes.get('/usersNotInProject/:prId', protectRoute, getUsersNotInProject)
 
 export default projectRoutes;

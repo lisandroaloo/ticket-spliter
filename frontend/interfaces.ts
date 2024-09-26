@@ -54,19 +54,23 @@ export interface IUserByProjectForm {
 export interface IProjectMembersProps {
   setEditingPercentages: any
   editingPercentages: IPercentageByUser[]
-  project: IProjectDeep | undefined
-  getProject: any
+  projectUsers: IUserWrapper[]
+  getProjectUsersAsync: () => Promise<void>
   saldos: any
+  usersNotInProject: any
+  getUsersNotInProjectAsync: () => Promise<void>
+  monto: number
 }
 
 export interface IProjectPagosProps {
-  getProject: any
-  project: IProjectDeep | undefined
+  projectPagos: IPago[]
+  getProjectPagosAsync: () => Promise<void>
+  projectUsers: IUserWrapper[]
 }
 
 export interface IProjectTicketsProps {
-  project: IProjectDeep | undefined
-  getProject: any
+  projectTickets: IProjectTickets
+  getProjectTicketsAsync: () => Promise<void>
 }
 
 export interface ITicketByProjectCardProps {
@@ -77,7 +81,6 @@ export interface ITicketByProjectFormProps {
   ticket?: ITicketForm
   setIsAddingTicket: React.Dispatch<React.SetStateAction<boolean>>
   updateProject: () => Promise<void>
-  usersInProyect: IUserWrapper[]
 }
 
 export interface IUserByProjectCardProps {
@@ -141,6 +144,11 @@ export interface IProjectDeep {
   pr_nombre: string
   montoTotal: number
   usersNotInProject: IUser[]
+}
+
+export interface IProjectTickets {
+  Ticket: ITicket[]
+  montoTotal: number
 }
 
 export interface ITicket {
@@ -215,14 +223,14 @@ export interface IPago {
 }
 
 export interface IProjectHeaderProps {
-  project: IProjectDeep | undefined
-  getProject: any
-  loading: boolean
-
+  projectDetail: IProject | undefined
+  loadingDetail: boolean
+  getProjectDetailAsync: () => Promise<void>
+  monto: IProjectTickets | undefined
 }
 
 export interface IEditProjectFormProps {
-  project: IProjectDeep
+  project: IProject
   getProject: any
   setIsEditingProject: any
 }

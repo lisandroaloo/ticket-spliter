@@ -158,7 +158,7 @@ export const getProjectTickets = async (req: any, res: any) => {
     const montoTotal = tickets?.reduce((sum, ticket) => sum + ticket.ti_monto, 0)
 
     const ticketsYTotal = {
-      ...tickets,
+      Ticket: [...tickets],
       montoTotal
     }
 

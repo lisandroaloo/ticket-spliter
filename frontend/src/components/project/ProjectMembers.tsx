@@ -5,8 +5,9 @@ import UserByProjectForm from './UserByProjectForm'
 import { useParams } from 'react-router'
 import { IPercentageByUser, IProjectMembersProps, IUserWrapper } from '../../../interfaces'
 
-const ProjectMembers = ({ editingPercentages, setEditingPercentages, project
-  , getProject, saldos }: IProjectMembersProps) => {
+const ProjectMembers = ({ editingPercentages, setEditingPercentages, projectUsers
+  , getProjectUsersAsync, saldos,usersNotInProject,
+getUsersNotInProjectAsync, monto }: IProjectMembersProps) => {
   const { id } = useParams<{ id: string }>()
   const [isAddingUser, setIsAddingUser] = useState<boolean>(false)
   const [isEditingPercentages, setIsEditingPercentages] = useState<boolean>(false)
@@ -20,7 +21,7 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, project
     })
     setEditingPercentages(_editingPercentages)
     await editProjectPercentages(_editingPercentages, id!)
-    getProject()
+    getProjectUsersAsync()
   }
 
   const handleAddUser = () => {
@@ -40,7 +41,7 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, project
   const handleEditPercentages = async () => {
     if (verifyPercentages()) {
       await editProjectPercentages(editingPercentages, id!)
-      getProject()
+      getProjectUsersAsync()
       setIsEditingPercentages(!isEditingPercentages)
     } else {
       alert('Los porcentajes ingresados no acumulan 100%')
@@ -58,14 +59,12 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, project
 
   return (
     <>
-
-
       <div className="space-y-4 h-[30vh] overflow-y-scroll no-scrollbar">
-        {project?.UsuarioXProyecto.map((up: IUserWrapper, index: any) => (
+        {projectUsers.map((up: IUserWrapper, index: any) => (
           <UserByProjectCard
             key={index}
             up={up}
-            monto={project?.montoTotal * (up.uxp_porcentaje / 100)}
+            monto={monto * (up.uxp_porcentaje / 100)}
             isEditingPercentages={isEditingPercentages}
             editPercentage={editPercentage}
             index={index}
@@ -74,24 +73,22 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, project
           />
         ))}
       </div>
-      {isAddingUser && project && (
+      {isAddingUser && (
         <UserByProjectForm
           setIsAddingUser={setIsAddingUser}
-          updateProject={getProject}
-          usersNotInProject={project.usersNotInProject}
+          updateProject={getProjectUsersAsync}
+          usersNotInProject={usersNotInProject}
         />
       )}
 
-
-      <div className='flex justify-between'>
-
+      <div className="flex justify-between">
         <button
           className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
           onClick={handleAddUser}
         >
           {isAddingUser ? '➖' : '➕'}
         </button>
-        <div className='flex gap-x-4'>
+        <div className="flex gap-x-4">
           {isEditingPercentages ? (
             <button
               onClick={handleEditPercentages}

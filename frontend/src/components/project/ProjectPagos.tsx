@@ -3,8 +3,7 @@ import PagoByProjectCard from './PagoByProjectCard'
 import PagoByProjectForm from './PagoByProjectForm'
 import { IPago, IProjectPagosProps } from '../../../interfaces'
 
-const ProjectPagos = ({getProject,project}: IProjectPagosProps) => {
-  
+const ProjectPagos = ({ projectPagos, getProjectPagosAsync, projectUsers }: IProjectPagosProps) => {
   const [isAddingPago, setIsAddingPago] = useState<boolean>(false)
 
   const handleAddPago = () => {
@@ -12,20 +11,19 @@ const ProjectPagos = ({getProject,project}: IProjectPagosProps) => {
   }
   return (
     <>
-  
       <div className="space-y-4 h-[30vh] overflow-y-scroll no-scrollbar">
-        {project?.Pago.map((p: IPago, index: number) => (
+        {projectPagos.map((p: IPago, index: number) => (
           <PagoByProjectCard
             key={index}
             p={p}
           />
         ))}
       </div>
-      {isAddingPago && project && (
+      {isAddingPago && (
         <PagoByProjectForm
           setIsAddingPago={setIsAddingPago}
-          updateProject={getProject}
-          usersInProyect={project.UsuarioXProyecto}
+          updateProject={getProjectPagosAsync}
+          usersInProyect={projectUsers}
         />
       )}
       <button

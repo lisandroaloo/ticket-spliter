@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { ITicketForm } from '../../../interfaces'
+import { useAuthContext } from '../../context/AuthContext'
 
 const useCreateTicket = () => {
   const [loading, setLoading] = useState(false)
-
-  const createTicket = async ({ _pr_id,_us_email, _ti_monto, _ti_descripcion, _ti_fecha }: ITicketForm) => {
+  const { authUser } = useAuthContext()
+  
+  const createTicket = async ({ _pr_id, _ti_monto, _ti_descripcion, _ti_fecha }: ITicketForm) => {
     try {
         setLoading(true)
 
@@ -12,7 +14,7 @@ const useCreateTicket = () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            us_email: _us_email,
+            us_email: authUser,
             pr_id: _pr_id,
             ti_monto: _ti_monto,
             ti_descripcion: _ti_descripcion,
