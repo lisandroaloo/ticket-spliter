@@ -33,7 +33,7 @@ const UserByProjectCard = ({ up, monto, isEditingPercentages, index, editPercent
         <span>{up.Usuario.us_nombre}</span>
       </div>
       <div className="flex items-center space-x-3">
-        <span>Debe: ${(monto - spent).toFixed(2)}</span>
+        <span>{monto - spent >= 0 ? "Debe" : "Le deben"}: ${Math.abs((monto - spent)).toFixed(2)}</span>
         {isEditingPercentages ? (
           <TextInput
             name=""

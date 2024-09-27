@@ -48,23 +48,21 @@ const ProjectTickets = ({ projectTickets, getProjectTicketsAsync }: IProjectTick
                       type="file"
                     />
                   </div>
-                  <div>
+                  <div className="mt-3 flex justify-end items-end space-x-2">
                     <button
-                      type="button"
-                      className="bg-slate-500 px-3 py-2 rounded mt-4"
-                      onClick={handleUploadTicket}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="button"
-                      className="bg-slate-500 px-3 py-2 rounded mt-4"
+                      className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2"
                       onClick={() => {
                         alert('To do')
                         handleUploadTicket()
                       }}
                     >
-                      Confirmar
+                      Agregar
+                    </button>
+                    <button
+                      className="bg-slate-500 hover:bg-slate-600 text-white rounded-md px-4 py-2"
+                      onClick={handleUploadTicket}
+                    >
+                      Cancelar
                     </button>
                   </div>
                 </div>
@@ -74,25 +72,27 @@ const ProjectTickets = ({ projectTickets, getProjectTicketsAsync }: IProjectTick
         </div>
       )}
 
-
-      {!isAddingTicket ? <div className="flex gap-x-4">
-        <button
-          className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
-          onClick={handleAddTicket}
-        >
-          {isAddingTicket ? '➖' : '➕'}
-        </button>
-        <button
-          className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
-          onClick={handleUploadTicket}
-        >
-          Subir ticket
-        </button>
-      </div> : <TicketByProjectForm
-        setIsAddingTicket={setIsAddingTicket}
-        updateProject={getProjectTicketsAsync}
-      />}
-
+      {!isAddingTicket ? (
+        <div className="flex gap-x-4">
+          <button
+            className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
+            onClick={handleAddTicket}
+          >
+            {isAddingTicket ? '➖' : '➕'}
+          </button>
+          <button
+            className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
+            onClick={handleUploadTicket}
+          >
+            Subir ticket
+          </button>
+        </div>
+      ) : (
+        <TicketByProjectForm
+          setIsAddingTicket={setIsAddingTicket}
+          updateProject={getProjectTicketsAsync}
+        />
+      )}
     </>
   )
 }

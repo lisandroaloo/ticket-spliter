@@ -35,14 +35,15 @@ const EditProjectForm = ({ project, getProject, setIsEditingProject }: IEditProj
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       {/* Fondo oscuro */}
-      <div className="absolute inset-0 bg-black opacity-50" onClick={() => setIsEditingProject(false)}></div>
+      <div
+        className="absolute inset-0 bg-black opacity-50"
+        onClick={() => setIsEditingProject(false)}
+      ></div>
 
       {/* Contenedor del popup */}
       <div className="relative bg-[#1e293b] p-6 rounded-lg shadow-lg max-w-lg w-full z-10">
-
-
         <h2 className="text-2xl text-white font-bold mb-4">Editar Proyecto</h2>
-        <div className='flex flex-col'>
+        <div className="flex flex-col">
           <TextInput
             type="text"
             name="_pr_nombre"
@@ -59,21 +60,21 @@ const EditProjectForm = ({ project, getProject, setIsEditingProject }: IEditProj
           />
         </div>
 
-
-        <div className="flex justify-end mt-4">
+        <div className="mt-3 flex justify-end items-end space-x-2">
           <button
-            className="bg-red-500 text-white px-4 py-2 rounded mr-2"
-            onClick={() => setIsEditingProject(false)}
-          >
-            Cancelar
-          </button>
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2"
             onClick={handleEditProject}
           >
             Confirmar
           </button>
+          <button
+            className="bg-slate-500 hover:bg-slate-600 text-white rounded-md px-4 py-2"
+            onClick={() => setIsEditingProject(false)}
+          >
+            Cancelar
+          </button>
         </div>
+        
       </div>
     </div>
   )
