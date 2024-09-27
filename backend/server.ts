@@ -8,7 +8,6 @@ import ticketRoutes from './routes/ticketRoutes';
 import pagoRoutes from './routes/pagoRoutes';
 import cookieParser from "cookie-parser";
 
-
 dotenv.config();
 
 const PORT = process.env.PORT

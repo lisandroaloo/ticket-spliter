@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useSignUp from "../hooks/UseSignup";
 import { IRegisterInputs } from "../../interfaces";
+import useCheckEmail from "../hooks/UseCheckEmail";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const { signup, loading } = useSignUp();
+  const { checkEmail } = useCheckEmail()
 
   const [inputs, setInputs] = React.useState<IRegisterInputs>({
     us_nombre: "",
@@ -13,13 +16,30 @@ const SignUp = () => {
     confirmPassword: "",
   });
 
+
+  const checkUser = async () => {
+    const valid = await checkEmail(inputs.us_email)
+    return valid
+  }
+
   const formSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (inputs.us_password !== inputs.confirmPassword) {
-      alert("Las contraseñas no coinciden");
+      toast.error("Las contraseñas no coinciden")
       return;
     }
-    await signup(inputs);
+
+    const valid = await checkUser()
+
+    if (valid) {
+
+
+      await signup(inputs);
+    }
+    else {
+      toast.error("El email ya esta en uso")
+    }
+
   };
 
   return (
@@ -90,7 +110,7 @@ const SignUp = () => {
                 type="submit"
                 className="relative w-full h-10 rounded-md bg-slate-700 px-4 py-2 text-white transition-colors hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
-                
+
               >
                 <span className={`${loading ? 'invisible' : 'visible'}`}>
                   Registrarse

@@ -9,6 +9,7 @@ import NavBarNotLogged from './components/navbars/NavBarNotLogged'
 import UserProfile from './pages/UserProfile'
 import ProjectsList from './pages/ProjectsList'
 import ProjectDetail from './pages/ProjectDetail'
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { authUser } = useAuthContext()
@@ -46,6 +47,7 @@ function App() {
               element={authUser ? <ProjectDetail /> : <LogIn />}
             />
           </Routes>
+          <Toaster />
         </main>
       </div>
     </>

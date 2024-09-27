@@ -70,9 +70,9 @@ const LogIn = () => {
                 )}
               </button>
             </form>
-            <div className="text-sm text-gray-700">
-              No tenes una cuenta?{" "}
-              <Link to="/signup" className="font-medium hover:text-white">
+            <div className="text-sm text-white">
+              No tenes una cuenta?  
+              <Link to="/signup" className="font-medium ml-2  hover:text-white">
                 Registrarse
               </Link>
             </div>

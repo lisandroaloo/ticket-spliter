@@ -4,6 +4,7 @@ import UserByProjectCard from './UserByProjectCard'
 import UserByProjectForm from './UserByProjectForm'
 import { useParams } from 'react-router'
 import { IPercentageByUser, IProjectMembersProps, IUserWrapper } from '../../../interfaces'
+import toast from 'react-hot-toast'
 
 const ProjectMembers = ({ editingPercentages, setEditingPercentages, projectUsers
   , getProjectUsersAsync, saldos, usersNotInProject,
@@ -44,7 +45,7 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, projectUser
       getProjectUsersAsync()
       setIsEditingPercentages(!isEditingPercentages)
     } else {
-      alert('Los porcentajes ingresados no acumulan 100%')
+      toast.error('Los porcentajes ingresados no acumulan 100%')
     }
   }
   const verifyPercentages = () => {

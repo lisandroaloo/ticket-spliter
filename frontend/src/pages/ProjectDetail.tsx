@@ -33,19 +33,6 @@ const ProjectDetail = () => {
 
   const [activeSection, setActiveSection] = useState<string>('members')
 
-  // const getProject = async () => {
-  //   const _project: IProjectDeep = await getProjectsByIDDeep(+id!)
-
-  //   const _editingPercentages: IPercentageByUser[] = _project.UsuarioXProyecto.map((uxp) => {
-  //     return { us_email: uxp.Usuario.us_email, uxp_porcentaje: uxp.uxp_porcentaje }
-  //   })
-
-  //   const _saldos = await getSaldoPagosByUserAndProjectId(id!)
-  //   setSaldos(_saldos)
-
-  //   setEditingPercentages(_editingPercentages)
-  //   setProject(_project)
-  // }
 
   const getProjectDetailAsync = async () => {
     const _detail = await getProjectDetail(+id!)
@@ -97,7 +84,7 @@ const ProjectDetail = () => {
   }, [])
 
   return (
-    <section className="h-[92vh] bg-gray-900 overflow-hidden">
+    <section className="h-[92vh] bg-yellow-50 overflow-hidden">
       <>
         <ProjectHeader
           projectDetail={projectDetail}
@@ -105,7 +92,7 @@ const ProjectDetail = () => {
           getProjectDetailAsync={getProjectDetailAsync}
           monto={projectTickets}
         />
-        <div className="bg-[#1e293b] md:mx-4  rounded-t-lg shadow-lg p-4 h-full">
+        <div className="bg-sky-300 md:mx-4  rounded-t-lg shadow-lg p-4 h-full">
           <ProjectNavBar
             setActiveSection={setActiveSection}
             activeSection={activeSection}

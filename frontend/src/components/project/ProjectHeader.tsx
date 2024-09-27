@@ -12,7 +12,7 @@ const ProjectHeader = ({ projectDetail, loadingDetail, getProjectDetailAsync, mo
   return (
     <>
       <div
-        className="flex  flex-col items-center justify-center pt-2 mb-2 space-x-3 text-white cursor-text"
+        className="flex   flex-col items-center justify-center pt-2 mb-2 space-x-3 text-black cursor-text"
         onClick={handleClick}
       >
         {loadingDetail || !projectDetail ? (
@@ -34,14 +34,14 @@ const ProjectHeader = ({ projectDetail, loadingDetail, getProjectDetailAsync, mo
         />
       )}
 
-      <div className="bg-[#1e293b] md:mx-4 rounded-lg shadow-lg mb-6 p-4">
-        <h2 className="text-2xl font-bold text-white mb-2">Gastos</h2>
+      <div className="bg-yellow-100 md:mx-4 rounded-lg shadow-lg mb-6 p-4">
+        <h2 className="text-2xl font-bold text-slate-600 mb-2">Gastos</h2>
         {!monto ? (
           <div className="flex justify-center items-center h-full">
             <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
           </div>
         ) : (
-          <div className="text-3xl text-white font-bold">{monto.montoTotal}</div>
+          <div className="text-3xl text-slate-600 font-bold">{monto.montoTotal}</div>
         )}
       </div>
     </>

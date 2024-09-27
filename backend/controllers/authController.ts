@@ -9,7 +9,6 @@ export const signUp = async (req: any, res: any) => {
     if (us_password !== confirmPassword) {
       return res.status(400).json({ error: "Passwords don't match" })
     }
-
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(us_password, salt)
 
@@ -59,6 +58,26 @@ export const logout = async (req: any, res: any) => {
     res.status(200).json({ message: 'Logged out successfully' })
   } catch (error: any) {
     console.error('Error logout controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}
+
+
+export const checkEmail = async (req: any, res: any) => {
+  try {
+    const { us_email } = req.body
+
+
+    const checkUser = await prisma.usuario.findUnique({
+      where: {
+        us_email: us_email
+      },
+    })
+
+    
+    res.json(checkUser ? false : true)
+  } catch (error: any) {
+    console.error('Error signup controller', error.message)
     res.status(500).json({ error: 'internal Server Error' })
   }
 }

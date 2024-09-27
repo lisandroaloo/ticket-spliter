@@ -31,25 +31,11 @@ const ProjectsList = () => {
         </section>
       ) : (
         <>
-
-          <section className='min-h-screen bg-gray-900 text-white p-8'>
-            <div className='max-w-4xl mx-auto'>
-
+          <section className='h-[92vh]  bg-gray-900 text-white p-8'>
+            <div className='max-w-4xl  mx-auto'>
               <ProjectForm setProjects={setProjects} />
-
-
-
-
-
               <ProjectList projects={projects} onClickRow={onClickRow} />
-
-
-
-
-
             </div>
-
-
           </section>
 
         </>

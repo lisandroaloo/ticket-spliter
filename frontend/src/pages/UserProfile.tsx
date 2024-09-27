@@ -75,7 +75,7 @@ const UserProfile = () => {
                 </section>
             ) : (
                 <section className="md:h-[92vh] h-full bg-gray-900 relative">
-                    <div className="pt-2 md:pt-0 md:absolute md:inset-0 h-full md:top-[12%] bg-gray-900 px-3 mx-auto max-w-2xl text-white md:h-[50vh]">
+                    <div className="pt-2 md:pt-0 md:absolute md:inset-0 h-full md:top-[12%] bg-gray-900 px-3 mx-auto max-w-2xl md:max-w-4xl text-white md:h-[50vh]">
                         <h2 className="text-3xl font-bold tracking-tight">Perfil</h2>
                         <div className="mt-8 pb-2 grid grid-cols-1 gap-4 md:grid-cols-2 md:h-[50vh]">
                             <form onSubmit={handleEditUser} className="h-full">

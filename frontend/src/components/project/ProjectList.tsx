@@ -9,7 +9,7 @@ const ProjectList = ({projects, onClickRow}: IProjectList) => {
     return (
 
 
-        <div className="bg-gray-800 rounded-lg overflow-hidden">
+        <div className="bg-gray-800 rounded-lg h-[50vh] overflow-y-scroll no-scrollbar">
             <table className="w-full">
                 <thead>
                     <tr className="bg-gray-700">

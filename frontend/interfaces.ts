@@ -15,6 +15,7 @@ export interface ITextInput {
   classNames?: string
   handleInputChange?: (param: any) => void
   handleOnBlur?: (param: any) => void
+  required?: boolean
 }
 
 export interface IPagoByProjectCardProps {

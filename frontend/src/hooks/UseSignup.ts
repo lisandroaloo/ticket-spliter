@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { IRegisterInputs } from "../../interfaces";
+import toast from "react-hot-toast";
 
 const useSignUp = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -63,18 +64,18 @@ const handleInputErrors = ({
   confirmPassword,
 }: IRegisterInputs) => {
   if (!us_nombre || !us_email || !us_password || !confirmPassword) {
-    alert("Please fill all the fields");
+    toast.error("Todos los campos deben estar llenos")
     return false;
   }
 
   if (us_password !== confirmPassword) {
-    alert("Passwords don't match");
+    toast.error("Las contraseñas no coinciden")
 
     return false;
   }
 
   if (us_password.length < 6) {
-    alert("Passwords must be at least 6 characters long");
+    toast.error("Las contraseñas deben tener mas de 6 caracteres")
     return false;
   }
 
