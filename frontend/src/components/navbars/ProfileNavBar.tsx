@@ -27,7 +27,7 @@ const ProfileNavBar = ({ setActiveSection, activeSection }: IProjectNavbar) => {
                 onClick={() => setActiveSection('sent')}
             >
 
-                Sent Payments
+                Pagos enviados
             </button>
             <button
                 className={`flex items-center justify-center px-4 py-3 font-medium text-sm transition-all duration-300 ease-in-out flex-1
@@ -37,7 +37,7 @@ const ProfileNavBar = ({ setActiveSection, activeSection }: IProjectNavbar) => {
                 onClick={() => setActiveSection('received')}
             >
 
-                Received Payments
+                Pagos recibidos
             </button>
         </nav>
     )

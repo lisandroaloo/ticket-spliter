@@ -4,100 +4,82 @@ import useAddUserToProject from '../../hooks/project/useAddUserToProject'
 import { useParams } from 'react-router'
 import { IUserByProjectFormProps, IUserByProjectForm } from '../../../interfaces'
 
-const UserByProjectForm = ({ user, setIsAddingUser, updateProject, usersNotInProject }: IUserByProjectFormProps) => {
+export default function UserByProjectForm({ user, setIsAddingUser, updateProject, usersNotInProject }: IUserByProjectFormProps) {
   const { id } = useParams<{ id: string }>()
-
   const { loading, addUserToProject } = useAddUserToProject()
 
-  const instanciateFromUser = (): IUserByProjectForm => {
-    const form: IUserByProjectForm = {
-      _uxp_porcentaje: user!._uxp_porcentaje,
-      _uxp_us_id: user!._uxp_us_id,
+  const [formState, setFormState] = useState<IUserByProjectForm>(
+    user ? {
+      _uxp_porcentaje: user._uxp_porcentaje,
+      _uxp_us_id: user._uxp_us_id,
       _pr_id: id!,
-    }
-
-    return form
-  }
-
-  const initialize = (): IUserByProjectForm => {
-    const form = {
+    } : {
       _uxp_us_id: '',
       _pr_id: id!,
     }
-
-    return form
-  }
-
-  const [formState, setFormState] = useState<IUserByProjectForm>(user ? instanciateFromUser() : initialize())
+  )
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-
-    setFormState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
+    setFormState(prevState => ({ ...prevState, [name]: value }))
   }
 
   const handleUserDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target
-
-    setFormState((prevState) => ({
-      ...prevState,
-      _uxp_us_id: value,
-    }))
+    setFormState(prevState => ({ ...prevState, _uxp_us_id: e.target.value }))
   }
-  
+
   const handleAddUserToProject = async () => {
     await addUserToProject(formState)
-    setFormState(initialize())
+    setFormState({ _uxp_us_id: '', _pr_id: id! })
     setIsAddingUser(false)
     updateProject()
   }
 
   return (
-    <div className="flex bg-slate-500 rounded justify-around mt-3">
-      {/* <div className="w-3/12">
-        <TextInput
-          type="text"
-          name="_uxp_us_id"
-          value={formState._uxp_us_id}
-          handleInputChange={handleInputChange}
-          placeholder="Usuario"
-        />
-      </div> */}
-      <select
-        name="_uxp_us_id"
-        onChange={handleUserDropdownChange}
-        className="bg-slate-300 rounded p-2 my-1"
-      >
-        <option
-          value=""
-          selected
-        ></option>
-        {usersNotInProject.map((unip) => (
-          <option value={unip.us_email}>{unip.us_nombre}</option>
-        ))}
-      </select>
-      {user && (
-        <div className="w-3/12">
-          <TextInput
-            type="text"
-            name="_uxp_porcentaje"
-            value={formState._uxp_porcentaje || ''}
-            handleInputChange={handleInputChange}
-            placeholder="Porcentaje"
-          />
+    <div className="bg-slate-700 rounded-lg mt-3 p-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <select
+            name="_uxp_us_id"
+            onChange={handleUserDropdownChange}
+            className="bg-slate-600 text-white rounded-md p-2 w-full"
+          >
+            <option value="" disabled selected>Seleccionar usuario</option>
+            {usersNotInProject.map((unip) => (
+              <option key={unip.us_email} value={unip.us_email}>{unip.us_nombre}</option>
+            ))}
+          </select>
         </div>
-      )}
-      <button
-        className="bg-slate-300 rounded p-2 my-1"
-        onClick={handleAddUserToProject}
-      >
-        Crear
-      </button>
+        
+        {user && (
+          <div className="space-y-2">
+            <TextInput
+              type="text"
+              name="_uxp_porcentaje"
+              value={formState._uxp_porcentaje || ''}
+              handleInputChange={handleInputChange}
+              placeholder="Porcentaje"
+              classNames="bg-slate-600 text-white rounded-md p-2 w-full"
+            />
+          </div>
+        )}
+        
+        <div className="flex justify-end items-end space-x-2">
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2"
+            onClick={handleAddUserToProject}
+            disabled={loading}
+          >
+            {loading ? 'Cargando...' : 'Agregar'}
+          </button>
+          <button
+            className="bg-slate-500 hover:bg-slate-600 text-white rounded-md px-4 py-2"
+            onClick={() => setIsAddingUser(false)}
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
-
-export default UserByProjectForm

@@ -105,7 +105,7 @@ const ProjectDetail = () => {
           getProjectDetailAsync={getProjectDetailAsync}
           monto={projectTickets}
         />
-        <div className="bg-gray-800 rounded-t-lg shadow-lg p-4 mb-4">
+        <div className="bg-gray-800 rounded-t-lg shadow-lg p-4 h-full">
           <ProjectNavBar
             setActiveSection={setActiveSection}
             activeSection={activeSection}

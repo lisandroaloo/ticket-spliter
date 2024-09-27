@@ -21,13 +21,13 @@ const NavBarNotLogged = () => {
           to="/LogIn"
           className="text-sm font-medium text-white hover:text-gray-300 no-underline "
         >
-          Login
+         Iniciar Sesion
         </Link>
         <Link
           to="/SignUp"
           className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-sm no-underline"
         >
-          Sign Up
+          Registrarse
         </Link>
 
       </div>

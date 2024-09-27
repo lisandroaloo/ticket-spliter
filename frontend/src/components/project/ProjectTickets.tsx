@@ -27,12 +27,6 @@ const ProjectTickets = ({ projectTickets, getProjectTicketsAsync }: IProjectTick
           />
         ))}
       </div>
-      {isAddingTicket && (
-        <TicketByProjectForm
-          setIsAddingTicket={setIsAddingTicket}
-          updateProject={getProjectTicketsAsync}
-        />
-      )}
 
       {isUploadingTicket && (
         <div className="z-20">
@@ -79,7 +73,9 @@ const ProjectTickets = ({ projectTickets, getProjectTicketsAsync }: IProjectTick
           </div>
         </div>
       )}
-      <div className="flex gap-x-4">
+
+
+      {!isAddingTicket ? <div className="flex gap-x-4">
         <button
           className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
           onClick={handleAddTicket}
@@ -92,7 +88,11 @@ const ProjectTickets = ({ projectTickets, getProjectTicketsAsync }: IProjectTick
         >
           Subir ticket
         </button>
-      </div>
+      </div> : <TicketByProjectForm
+        setIsAddingTicket={setIsAddingTicket}
+        updateProject={getProjectTicketsAsync}
+      />}
+
     </>
   )
 }

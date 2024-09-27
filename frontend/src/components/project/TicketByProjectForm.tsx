@@ -1,106 +1,88 @@
 import React, { useState } from 'react'
-import TextInput from '../TextInput'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import useCreateTicket from '../../hooks/ticket/useCreateTicket'
 import { ITicketByProjectFormProps, ITicketForm } from '../../../interfaces'
 
-const TicketByProjectForm = ({ ticket, setIsAddingTicket, updateProject }: ITicketByProjectFormProps) => {
+export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateProject }: ITicketByProjectFormProps) {
   const { id } = useParams<{ id: string }>()
-
   const { loading, createTicket } = useCreateTicket()
 
-  const initialize = (): ITicketForm => {
-    const form: ITicketForm = {
-      _pr_id: id ? id : '',
+  const [formState, setFormState] = useState<ITicketForm>(
+    ticket || {
+      _pr_id: id || '',
       _ti_descripcion: '',
       _ti_fecha: new Date(),
       _ti_monto: '0',
       _us_email: '',
     }
-
-    return form
-  }
-
-  const [formState, setFormState] = useState<ITicketForm>(ticket ? ticket : initialize())
+  )
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-
-    setFormState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
+    setFormState(prevState => ({ ...prevState, [name]: value }))
   }
 
-  // const handleUserDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const { value } = e.target
-
-  //   setFormState((prevState) => ({
-  //     ...prevState,
-  //     _us_email: value,
-  //   }))
-  // }
-
   const handleAddTicketToProject = async () => {
-    await createTicket(formState)
-    setFormState(initialize())
-    setIsAddingTicket(false)
-    updateProject()
+    try {
+      await createTicket(formState)
+      setFormState({
+        _pr_id: id || '',
+        _ti_descripcion: '',
+        _ti_fecha: new Date(),
+        _ti_monto: '0',
+        _us_email: '',
+      })
+      setIsAddingTicket(false)
+      updateProject()
+    } catch (error) {
+      console.error('Error creating ticket:', error)
+      // Handle error (e.g., show error message to user)
+    }
   }
 
   return (
-    <div
-      className="flex bg-slate-500 justify-around rounded mt-3"
-    >
-      <div className="w-3/12">
-        <TextInput
-          type="text"
-          name="_pr_id"
-          value={formState._pr_id}
-          handleInputChange={handleInputChange}
-          placeholder="Proyecto"
-          readOnly={id !== undefined}
-        />
+    <div className="bg-slate-700 rounded-lg mt-3 p-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="space-y-2">
+          
+          <input
+            type="number"
+            id="_ti_monto"
+            name="_ti_monto"
+            value={formState._ti_monto}
+            onChange={handleInputChange}
+            placeholder="Monto"
+            className="bg-slate-600 text-white rounded-md p-2 w-full"
+          />
+        </div>
+        <div className="space-y-2">
+         
+          <input
+            type="text"
+            id="_ti_descripcion"
+            name="_ti_descripcion"
+            value={formState._ti_descripcion}
+            onChange={handleInputChange}
+            placeholder="Descripción"
+            className="bg-slate-600 text-white rounded-md p-2 w-full"
+          />
+        </div>
+        <div className="flex items-end space-x-2">
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2 disabled:opacity-50"
+            onClick={handleAddTicketToProject}
+            disabled={loading}
+          >
+            {loading ? 'Subiendo...' : 'Subir'}
+          </button>
+          <button
+            className="bg-slate-500 hover:bg-slate-600 text-white rounded-md px-4 py-2"
+            onClick={() => setIsAddingTicket(false)}
+          >
+            Cancelar
+          </button>
+        </div>
       </div>
-      {/* <select
-        name="_us_email"
-        onChange={handleUserDropdownChange}
-        className="bg-slate-300 rounded p-2 my-1"
-      >
-        <option
-          value=""
-          selected
-        ></option>
-        {usersInProyect.map((uip) => (
-          <option value={uip.Usuario.us_email}>{uip.Usuario.us_nombre}</option>
-        ))}
-      </select> */}
-      <div className="w-3/12">
-        <TextInput
-          type="text"
-          name="_ti_monto"
-          value={formState._ti_monto}
-          handleInputChange={handleInputChange}
-          placeholder="Monto"
-        />
-      </div>
-      <div className="w-3/12">
-        <TextInput
-          type="text"
-          name="_ti_descripcion"
-          value={formState._ti_descripcion}
-          handleInputChange={handleInputChange}
-          placeholder="Descripcion"
-        />
-      </div>
-      <button
-        className="bg-slate-300 rounded p-2 my-1"
-        onClick={handleAddTicketToProject}
-      >
-        Crear
-      </button>
     </div>
   )
 }
-
-export default TicketByProjectForm

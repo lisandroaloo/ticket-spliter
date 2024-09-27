@@ -6,8 +6,8 @@ import { useParams } from 'react-router'
 import { IPercentageByUser, IProjectMembersProps, IUserWrapper } from '../../../interfaces'
 
 const ProjectMembers = ({ editingPercentages, setEditingPercentages, projectUsers
-  , getProjectUsersAsync, saldos,usersNotInProject,
-getUsersNotInProjectAsync, monto }: IProjectMembersProps) => {
+  , getProjectUsersAsync, saldos, usersNotInProject,
+  getUsersNotInProjectAsync, monto }: IProjectMembersProps) => {
   const { id } = useParams<{ id: string }>()
   const [isAddingUser, setIsAddingUser] = useState<boolean>(false)
   const [isEditingPercentages, setIsEditingPercentages] = useState<boolean>(false)
@@ -73,15 +73,13 @@ getUsersNotInProjectAsync, monto }: IProjectMembersProps) => {
           />
         ))}
       </div>
-      {isAddingUser && (
+      {isAddingUser ? (
         <UserByProjectForm
           setIsAddingUser={setIsAddingUser}
           updateProject={getProjectUsersAsync}
           usersNotInProject={usersNotInProject}
         />
-      )}
-
-      <div className="flex justify-between">
+      ) : <div className="flex justify-between">
         <button
           className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
           onClick={handleAddUser}
@@ -111,7 +109,11 @@ getUsersNotInProjectAsync, monto }: IProjectMembersProps) => {
             ⚖️
           </button>
         </div>
-      </div>
+      </div>}
+
+
+
+
     </>
   )
 }

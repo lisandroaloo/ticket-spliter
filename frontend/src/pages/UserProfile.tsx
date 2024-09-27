@@ -21,7 +21,6 @@ const UserProfile = () => {
     const { getPagosByReceptor } = useGetPagosByReceptor()
     const [pagosReceptor, setPagosReceptor] = useState<IPago[]>([])
 
-
     const initializeUserForm = (): IUser => {
         return {
             us_email: '',
@@ -29,6 +28,7 @@ const UserProfile = () => {
             us_password: '',
         }
     }
+
     const [user, setUser] = useState<IUser>(initializeUserForm())
     const { getUser } = useGetUserById()
     const { editUser } = useEditUser()
@@ -75,8 +75,8 @@ const UserProfile = () => {
                 </section>
             ) : (
                 <section className="h-[92vh]  bg-gray-900 relative">
-                    <div className="absolute inset-0 top-[15%] mx-auto max-w-2xl text-white h-[50vh]">
-                        <h2 className="text-3xl font-bold tracking-tight">Profile</h2>
+                    <div className="absolute inset-0 top-[12%] mx-auto max-w-2xl text-white h-[50vh]">
+                        <h2 className="text-3xl font-bold tracking-tight">Perfil</h2>
                         <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 h-[50vh]">
                             <form onSubmit={handleEditUser} className="h-full">
                                 <div className="rounded-lg p-6 shadow-sm bg-gray-700 h-[50vh]">
@@ -92,7 +92,7 @@ const UserProfile = () => {
 
                                     <div className="grid gap-2">
                                         <div className="flex flex-col">
-                                            <label htmlFor="us_nombre">Name</label>
+                                            <label htmlFor="us_nombre">Nombre</label>
                                             <TextInput
                                                 type="text"
                                                 name="us_nombre"
@@ -103,7 +103,7 @@ const UserProfile = () => {
                                             />
                                         </div>
                                         <div className="flex flex-col">
-                                            <label htmlFor="us_email">Email</label>
+                                            <label htmlFor="us_email">Correo Electrónico</label>
                                             <TextInput
                                                 type="email"
                                                 name="us_email"
@@ -114,13 +114,13 @@ const UserProfile = () => {
                                             />
                                         </div>
                                         <div className="flex flex-col">
-                                            <label htmlFor="us_password">Password</label>
+                                            <label htmlFor="us_password">Contraseña</label>
                                             <TextInput
                                                 name="us_password"
                                                 value={user.us_password || ''}
                                                 classNames="rounded bg-gray-900 p-1"
                                                 type="password"
-                                                placeholder="Enter new password"
+                                                placeholder="Ingrese nueva contraseña"
                                                 handleInputChange={handleInputChange}
                                             />
                                         </div>
@@ -128,7 +128,7 @@ const UserProfile = () => {
                                             type="submit"
                                             className="rounded bg-white text-black p-1 mt-1"
                                         >
-                                            Update Profile
+                                            Actualizar Perfil
                                         </button>
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@ const UserProfile = () => {
                             <div className="h-[50vh] bg-gray-800">
                                 <ProfileNavBar setActiveSection={setActiveSection} activeSection={activeSection} />
 
-                                <div className="  h-4/5 overflow-y-scroll  no-scrollbar">
+                                <div className="h-4/5 overflow-y-scroll no-scrollbar">
                                     {activeSection === 'tickets' && <ProfileTickets tickets={tickets} />}
                                     {activeSection === 'sent' && <ProfilePayementSend pagosEmisor={pagosEmisor} />}
                                     {activeSection === 'received' && <ProfilePaymentReceive pagosReceptor={pagosReceptor} />}

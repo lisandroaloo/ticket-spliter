@@ -23,13 +23,13 @@ const SignUp = () => {
   };
 
   return (
-    <section className="h-[92vh] relative">
+    <section className="h-[92vh] bg-gray-900 text-white relative">
       <div className="absolute inset-0 top-[15%]">
         <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+          <h1 className="text-3xl font-bold tracking-tight ">
             Regístrate
           </h1>
-          <p className="mt-4 text-lg text-gray-700">
+          <p className="mt-4 text-lg ">
             Crea una cuenta para empezar a gestionar tus gastos.
           </p>
           <div className="mt-8 flex flex-col items-center gap-4">
@@ -44,7 +44,7 @@ const SignUp = () => {
                   onChange={(e) => {
                     setInputs({ ...inputs, us_nombre: e.target.value });
                   }}
-                  className="w-full rounded-md border border-gray-500 px-4 py-2 text-gray-900"
+                  className="w-full rounded-md border bg-slate-500 border-gray-500 px-4 py-2 text-gray-900"
                 />
               </div>
               <div>
@@ -57,7 +57,7 @@ const SignUp = () => {
                   onChange={(e) => {
                     setInputs({ ...inputs, us_email: e.target.value });
                   }}
-                  className="w-full rounded-md border border-gray-500 px-4 py-2 text-gray-900"
+                  className="w-full rounded-md border bg-slate-500 border-gray-500 px-4 py-2 text-gray-900"
                 />
               </div>
               <div>
@@ -70,7 +70,7 @@ const SignUp = () => {
                   onChange={(e) => {
                     setInputs({ ...inputs, us_password: e.target.value });
                   }}
-                  className="w-full rounded-md border border-gray-500 px-4 py-2 text-gray-900"
+                  className="w-full rounded-md border bg-slate-500 border-gray-500 px-4 py-2 text-gray-900"
                 />
               </div>
               <div>
@@ -83,12 +83,12 @@ const SignUp = () => {
                     setInputs({ ...inputs, confirmPassword: e.target.value });
                   }}
                   required
-                  className="w-full rounded-md border border-gray-500 px-4 py-2 text-gray-900"
+                  className="w-full rounded-md border bg-slate-500 border-gray-500 px-4 py-2 text-gray-900"
                 />
               </div>
               <button
                 type="submit"
-                className="relative w-full h-10 rounded-md bg-gray-900 px-4 py-2 text-white transition-colors hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="relative w-full h-10 rounded-md bg-slate-700 px-4 py-2 text-white transition-colors hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
                 
               >
@@ -105,7 +105,7 @@ const SignUp = () => {
             </form>
             <div className="text-sm text-gray-700">
               ¿Ya tienes una cuenta?{" "}
-              <Link to="/login" className="font-medium hover:text-gray-900">
+              <Link to="/login" className="font-medium hover:text-white">
                 Iniciar sesión
               </Link>
             </div>

@@ -19,19 +19,20 @@ const ProjectPagos = ({ projectPagos, getProjectPagosAsync, projectUsers }: IPro
           />
         ))}
       </div>
-      {isAddingPago && (
-        <PagoByProjectForm
-          setIsAddingPago={setIsAddingPago}
-          updateProject={getProjectPagosAsync}
-          usersInProyect={projectUsers}
-        />
-      )}
-      <button
+   
+      {!isAddingPago ? <button
         className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
         onClick={handleAddPago}
       >
         {isAddingPago ? '➖' : '➕'}
-      </button>
+      </button> : <PagoByProjectForm
+        setIsAddingPago={setIsAddingPago}
+        updateProject={getProjectPagosAsync}
+        usersInProyect={projectUsers}
+      />}
+
+
+
     </>
   )
 }

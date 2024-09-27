@@ -13,21 +13,21 @@ const ProjectNavBar = ({setActiveSection, activeSection}: IProjectNavbar) => {
                     ${activeSection === 'members' ? 'bg-gray-700 text-blue-400 shadow-lg transform' : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-blue-300'}`}
         onClick={() => setActiveSection('members')}
       >
-        Members
+        MIEMBROS
       </button>
       <button
         className={`flex items-center justify-center px-6 py-3 font-medium text-sm rounded-t-lg transition-all duration-300 ease-in-out mr-2
                     ${activeSection === 'tickets' ? 'bg-gray-700 text-blue-400 shadow-lg transform' : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-blue-300'}`}
         onClick={() => setActiveSection('tickets')}
       >
-        Tickets
+        TICKETS
       </button>
       <button
         className={`flex items-center justify-center px-6 py-3 font-medium text-sm rounded-t-lg transition-all duration-300 ease-in-out
                     ${activeSection === 'payments' ? 'bg-gray-700 text-blue-400 shadow-lg transform' : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-blue-300'}`}
         onClick={() => setActiveSection('payments')}
       >
-        Payments
+        PAGOS
       </button>
     </nav>
   )
