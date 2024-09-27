@@ -74,10 +74,10 @@ const UserProfile = () => {
                     <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
                 </section>
             ) : (
-                <section className="h-[92vh]  bg-gray-900 relative">
-                    <div className="absolute inset-0 top-[12%] mx-auto max-w-2xl text-white h-[50vh]">
+                <section className="md:h-[92vh] h-full bg-gray-900 relative">
+                    <div className="pt-2 md:pt-0 md:absolute md:inset-0 h-full md:top-[12%] bg-gray-900 px-3 mx-auto max-w-2xl text-white md:h-[50vh]">
                         <h2 className="text-3xl font-bold tracking-tight">Perfil</h2>
-                        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 h-[50vh]">
+                        <div className="mt-8 pb-2 grid grid-cols-1 gap-4 md:grid-cols-2 md:h-[50vh]">
                             <form onSubmit={handleEditUser} className="h-full">
                                 <div className="rounded-lg p-6 shadow-sm bg-gray-700 h-[50vh]">
                                     <div className="flex gap-3 items-center mb-3">
@@ -133,10 +133,10 @@ const UserProfile = () => {
                                     </div>
                                 </div>
                             </form>
-                            <div className="h-[50vh] bg-gray-800">
+                            <div className="h-[50vh] rounded-lg bg-gray-800">
                                 <ProfileNavBar setActiveSection={setActiveSection} activeSection={activeSection} />
 
-                                <div className="h-4/5 overflow-y-scroll no-scrollbar">
+                                <div className="h-4/5  overflow-y-scroll no-scrollbar">
                                     {activeSection === 'tickets' && <ProfileTickets tickets={tickets} />}
                                     {activeSection === 'sent' && <ProfilePayementSend pagosEmisor={pagosEmisor} />}
                                     {activeSection === 'received' && <ProfilePaymentReceive pagosReceptor={pagosReceptor} />}

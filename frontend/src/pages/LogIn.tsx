@@ -17,8 +17,8 @@ const LogIn = () => {
   };
 
   return (
-    <section className="h-[92vh] bg-gray-900 text-white relative">
-      <div className=" absolute  inset-0 top-[15%] ">
+    <section className="h-[92vh] bg-gray-900  text-white relative">
+      <div className=" absolute px-2 md:px-0 inset-0 top-[15%] ">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-3xl font-bold tracking-tight ">
             Inicia Sesion

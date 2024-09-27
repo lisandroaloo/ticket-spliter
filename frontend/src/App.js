@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       <header className="">{authUser ? <NavBarLogged /> : <NavBarNotLogged />}</header>
-      <div className="h-100%">
+      <div className="">
         {/* Nav */}
         <main className="">
           <Routes>

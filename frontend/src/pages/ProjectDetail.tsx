@@ -3,7 +3,7 @@ import { useParams } from 'react-router'
 import ProjectMembers from '../components/project/ProjectMembers'
 import ProjectTickets from '../components/project/ProjectTickets'
 import ProjectPagos from '../components/project/ProjectPagos'
-import {  IPago, IPercentageByUser, IProject, IProjectTickets, IUser, IUserWrapper } from '../../interfaces'
+import { IPago, IPercentageByUser, IProject, IProjectTickets, IUser, IUserWrapper } from '../../interfaces'
 import ProjectHeader from '../components/project/ProjectHeader'
 import ProjectNavBar from '../components/navbars/ProjectNavBar'
 import useGetSaldoPagosByUserAndProjectId from '../hooks/pagos/useGetSaldoPagosByUserAndProjectId'
@@ -78,7 +78,7 @@ const ProjectDetail = () => {
     setEditingPercentages(_editingPercentages)
 
     const _saldos = await getSaldoPagosByUserAndProjectId(id!)
-    setSaldos(_saldos)  
+    setSaldos(_saldos)
   }
 
   const getUsersNotInProjectAsync = async () => {
@@ -105,12 +105,12 @@ const ProjectDetail = () => {
           getProjectDetailAsync={getProjectDetailAsync}
           monto={projectTickets}
         />
-        <div className="bg-gray-800 rounded-t-lg shadow-lg p-4 h-full">
+        <div className="bg-[#1e293b] md:mx-4  rounded-t-lg shadow-lg p-4 h-full">
           <ProjectNavBar
             setActiveSection={setActiveSection}
             activeSection={activeSection}
           />
-          <div className="mt-4">
+          <div className="mt-4 ">
             {activeSection === 'members' &&
               (loadingUsers || loadingTickets || loadingUsersNotInProject || loadingSaldos || !projectTickets ? (
                 <div className="flex justify-center items-center h-full">
@@ -149,6 +149,7 @@ const ProjectDetail = () => {
                   projectPagos={projectPagos}
                   getProjectPagosAsync={getProjectPagosAsync}
                   projectUsers={projectUsers}
+                  getProjectUsersAsync={getProjectUsersAsync}
                 />
               ))}
           </div>

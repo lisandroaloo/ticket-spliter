@@ -33,6 +33,7 @@ export interface IPagoByProjectFormProps {
   setIsAddingPago: React.Dispatch<React.SetStateAction<boolean>>
   updateProject: () => Promise<void>
   usersInProyect: IUserWrapper[]
+  getProjectUsersAsync: () => Promise<void>
 }
 
 export interface IProjectFormProps {
@@ -66,6 +67,7 @@ export interface IProjectPagosProps {
   projectPagos: IPago[]
   getProjectPagosAsync: () => Promise<void>
   projectUsers: IUserWrapper[]
+  getProjectUsersAsync: () => Promise<void>
 }
 
 export interface IProjectTicketsProps {

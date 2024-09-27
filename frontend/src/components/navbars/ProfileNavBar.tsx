@@ -8,9 +8,9 @@ interface IProjectNavbar {
 
 const ProfileNavBar = ({ setActiveSection, activeSection }: IProjectNavbar) => {
     return (
-        <nav className="flex border-b h-1/5 border-gray-700">
+        <nav className="flex border-b  h-1/5 border-gray-700">
             <button
-                className={`flex items-center justify-center px-4 py-3 font-medium text-sm transition-all duration-300 ease-in-out flex-1
+                className={`flex items-center rounded-tl-lg justify-center px-4 py-3 font-medium text-sm transition-all duration-300 ease-in-out flex-1
                             ${activeSection === 'tickets'
                         ? 'bg-gray-700 text-blue-400'
                         : 'text-gray-400 hover:bg-gray-700 hover:text-blue-300'}`}
@@ -30,7 +30,7 @@ const ProfileNavBar = ({ setActiveSection, activeSection }: IProjectNavbar) => {
                 Pagos enviados
             </button>
             <button
-                className={`flex items-center justify-center px-4 py-3 font-medium text-sm transition-all duration-300 ease-in-out flex-1
+                className={`flex items-center justify-center rounded-tr-lg px-4 py-3 font-medium text-sm transition-all duration-300 ease-in-out flex-1
                             ${activeSection === 'received'
                         ? 'bg-gray-700 text-blue-400'
                         : 'text-gray-400 hover:bg-gray-700 hover:text-blue-300'}`}

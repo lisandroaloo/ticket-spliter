@@ -38,7 +38,7 @@ const Landing = () => {
         </div>
       </section>
       <section id="destino" className="w-full flex justify-center items-center  bg-gray-900">
-        <div  className="w-full  flex-col flex justify-center items-center my-28">
+        <div  className="w-full  flex-col flex justify-center text-center items-center my-28">
           <h1  className="text-3xl font-bold text-white">Características</h1>
           <p className="mt-4 text-white">Nuestra aplicación de seguimiento de gastos ofrece una variedad de características para hacer que la gestión de gastos compartidos sea fácil.</p>
 

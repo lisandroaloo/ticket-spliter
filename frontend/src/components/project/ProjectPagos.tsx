@@ -3,7 +3,7 @@ import PagoByProjectCard from './PagoByProjectCard'
 import PagoByProjectForm from './PagoByProjectForm'
 import { IPago, IProjectPagosProps } from '../../../interfaces'
 
-const ProjectPagos = ({ projectPagos, getProjectPagosAsync, projectUsers }: IProjectPagosProps) => {
+const ProjectPagos = ({ projectPagos, getProjectPagosAsync, projectUsers,getProjectUsersAsync }: IProjectPagosProps) => {
   const [isAddingPago, setIsAddingPago] = useState<boolean>(false)
 
   const handleAddPago = () => {
@@ -29,6 +29,8 @@ const ProjectPagos = ({ projectPagos, getProjectPagosAsync, projectUsers }: IPro
         setIsAddingPago={setIsAddingPago}
         updateProject={getProjectPagosAsync}
         usersInProyect={projectUsers}
+        getProjectUsersAsync={getProjectUsersAsync}
+        
       />}
 
 

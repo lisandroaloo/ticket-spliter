@@ -5,7 +5,7 @@ import useCreatePago from '../../hooks/pagos/useCreatePago'
 import { ICreatePago, IPagoByProjectFormProps, IPagoForm } from '../../../interfaces'
 import { useAuthContext } from '../../context/AuthContext'
 
-export default function PagoByProjectForm({ pago, setIsAddingPago, updateProject, usersInProyect }: IPagoByProjectFormProps) {
+export default function PagoByProjectForm({ pago, setIsAddingPago, updateProject, usersInProyect, getProjectUsersAsync }: IPagoByProjectFormProps) {
   const { id } = useParams<{ id: string }>()
   const { loading, createPago } = useCreatePago()
   const { authUser } = useAuthContext()
@@ -47,7 +47,8 @@ export default function PagoByProjectForm({ pago, setIsAddingPago, updateProject
         pa_pr_id: id || '',
       })
       setIsAddingPago(false)
-      updateProject()
+      await updateProject()
+      getProjectUsersAsync()
     } catch (error) {
       console.error('Error creating pago:', error)
       // Handle error (e.g., show error message to user)
