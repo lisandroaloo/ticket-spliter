@@ -82,7 +82,7 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, projectUser
         />
       ) : <div className="flex justify-between">
         <button
-          className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+          className="p-3 text-green-100 my-4 rounded-full bg-green-700 hover:bg-green-400"
           onClick={handleAddUser}
         >
           {isAddingUser ? '➖' : '➕'}
@@ -91,21 +91,21 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, projectUser
           {isEditingPercentages ? (
             <button
               onClick={handleEditPercentages}
-              className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+              className="p-3 text-green-100 my-4 rounded-full bg-green-700 hover:bg-green-400"
             >
               Confirmar
             </button>
           ) : (
             <button
               onClick={editPercentages}
-              className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+              className="p-3 text-green-100 my-4 rounded-full bg-green-700 hover:bg-green-400"
             >
               ✎
             </button>
           )}
           <button
             onClick={handleDividirEquitativamente}
-            className="p-3 text-white my-4 rounded-full bg-gray-700 hover:bg-gray-400"
+            className="p-3 text-white my-4 rounded-full bg-green-700 hover:bg-green-400"
           >
             ⚖️
           </button>

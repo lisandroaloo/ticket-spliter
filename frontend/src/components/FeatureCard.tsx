@@ -3,8 +3,8 @@ import {ICard} from "../../interfaces"
 
 const FeatureCard = ({ icon, title, description }: ICard) => {
   return (
-    <div className="bg-gray-400  flex flex-col p-4 gap-4 rounded-xl shadow-md ">
-      <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+    <div className="bg-green-300 text-green-950 flex flex-col p-4 gap-4 rounded-xl shadow-md ">
+      <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
         <i className={`${icon} text-black text-xl`}></i>
       </div>
       <h3 className="text-xl2">{title}</h3>

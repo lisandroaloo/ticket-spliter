@@ -31,8 +31,6 @@ const ProjectForm = ({ setProjects }: IProjectFormProps) => {
   }
 
   const handleCreateProject = async () => {
-    console.log("hola");
-    
     if (!formState._pr_nombre) {
       toast.error("El nombre es obligatorio")
     }
@@ -49,7 +47,7 @@ const ProjectForm = ({ setProjects }: IProjectFormProps) => {
   }
 
   return (
-    <div className="mb-8 space-y-4 bg-gray-800 p-6 rounded-lg">
+    <div className="mb-8 space-y-4 bg-green-400 p-6 rounded-lg">
       <TextInput
         type="text"
         required
@@ -57,7 +55,7 @@ const ProjectForm = ({ setProjects }: IProjectFormProps) => {
         value={formState._pr_nombre}
         handleInputChange={handleInputChange}
         placeholder="Nombre"
-        classNames="w-full bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        classNames="w-full bg-green-700 text-white placeholder-green-400 border border-green-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <TextInput
         type="text"
@@ -66,12 +64,12 @@ const ProjectForm = ({ setProjects }: IProjectFormProps) => {
         value={formState._pr_descripcion}
         handleInputChange={handleInputChange}
         placeholder="Descripcion"
-        classNames="w-full bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        classNames="w-full bg-green-700 text-white placeholder-green-400 border border-green-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <button
 
         onClick={handleCreateProject}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="w-full bg-green-800 hover:bg-green-700 text-green-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
         Crear
       </button>

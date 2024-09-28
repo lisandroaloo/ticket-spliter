@@ -10,6 +10,7 @@ import ProfileTickets from '../components/profile/ProfileTickets'
 import ProfilePayementSend from '../components/profile/ProfilePayementSend'
 import ProfilePaymentReceive from '../components/profile/ProfilePaymentReceive'
 import ProfileNavBar from '../components/navbars/ProfileNavBar'
+import toast from 'react-hot-toast'
 
 const UserProfile = () => {
     const { getTicketsByUserId } = useGetTicketsByUserId()
@@ -47,7 +48,7 @@ const UserProfile = () => {
     const handleEditUser = async (e: React.FormEvent) => {
         e.preventDefault()
         await editUser(user)
-        alert('USUARIO EDITADO')
+        toast.success("Usuario editado con exito")
     }
 
     const getData = async () => {
@@ -70,19 +71,19 @@ const UserProfile = () => {
     return (
         <>
             {loading ? (
-                <section className="h-[92vh] bg-gray-900 flex justify-center items-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+                <section className="h-[92vh] bg-green-900 flex justify-center items-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
                 </section>
             ) : (
-                <section className="md:h-[92vh] h-full bg-gray-900 relative">
-                    <div className="pt-2 md:pt-0 md:absolute md:inset-0 h-full md:top-[12%] bg-gray-900 px-3 mx-auto max-w-2xl md:max-w-4xl text-white md:h-[50vh]">
+                <section className="md:h-[92vh] h-full bg-green-900 relative">
+                    <div className="pt-2 md:pt-0 md:absolute md:inset-0 h-full md:top-[12%] bg-green-900 px-3 mx-auto max-w-2xl md:max-w-4xl text-green-100 md:h-[50vh]">
                         <h2 className="text-3xl font-bold tracking-tight">Perfil</h2>
                         <div className="mt-8 pb-2 grid grid-cols-1 gap-4 md:grid-cols-2 md:h-[50vh]">
                             <form onSubmit={handleEditUser} className="h-full">
-                                <div className="rounded-lg p-6 shadow-sm bg-gray-700 h-[50vh]">
+                                <div className="rounded-lg p-6 shadow-sm bg-green-700 h-[50vh]">
                                     <div className="flex gap-3 items-center mb-3">
-                                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                                            <i className="bi bi-person text-black text-xl"></i>
+                                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                            <i className="bi bi-person text-green-800 text-xl"></i>
                                         </div>
                                         <div>
                                             <p className="text-lg font-semibold m-0">{user.us_nombre}</p>
@@ -98,7 +99,7 @@ const UserProfile = () => {
                                                 name="us_nombre"
                                                 value={user.us_nombre || ''}
                                                 placeholder=""
-                                                classNames="rounded bg-gray-900 p-1"
+                                                classNames="rounded bg-green-900 p-1"
                                                 handleInputChange={handleInputChange}
                                             />
                                         </div>
@@ -107,7 +108,7 @@ const UserProfile = () => {
                                             <TextInput
                                                 type="email"
                                                 name="us_email"
-                                                classNames="rounded bg-gray-900 p-1"
+                                                classNames="rounded bg-green-900 p-1"
                                                 placeholder=""
                                                 readOnly
                                                 value={user.us_email || ''}
@@ -118,7 +119,7 @@ const UserProfile = () => {
                                             <TextInput
                                                 name="us_password"
                                                 value={user.us_password || ''}
-                                                classNames="rounded bg-gray-900 p-1"
+                                                classNames="rounded bg-green-900 p-1"
                                                 type="password"
                                                 placeholder="Ingrese nueva contraseña"
                                                 handleInputChange={handleInputChange}
@@ -126,14 +127,14 @@ const UserProfile = () => {
                                         </div>
                                         <button
                                             type="submit"
-                                            className="rounded bg-white text-black p-1 mt-1"
+                                            className="rounded bg-green-100 text-green-800 p-1 mt-1"
                                         >
                                             Actualizar Perfil
                                         </button>
                                     </div>
                                 </div>
                             </form>
-                            <div className="h-[50vh] rounded-lg bg-gray-800">
+                            <div className="h-[50vh] rounded-lg bg-green-800">
                                 <ProfileNavBar setActiveSection={setActiveSection} activeSection={activeSection} />
 
                                 <div className="h-4/5  overflow-y-scroll no-scrollbar">

@@ -84,7 +84,7 @@ const ProjectDetail = () => {
   }, [])
 
   return (
-    <section className="h-[92vh] bg-yellow-50 overflow-hidden">
+    <section className="h-[92vh] bg-green-800 overflow-hidden">
       <>
         <ProjectHeader
           projectDetail={projectDetail}
@@ -92,7 +92,7 @@ const ProjectDetail = () => {
           getProjectDetailAsync={getProjectDetailAsync}
           monto={projectTickets}
         />
-        <div className="bg-sky-300 md:mx-4  rounded-t-lg shadow-lg p-4 h-full">
+        <div className="bg-green-300 md:mx-4 rounded-t-lg shadow-lg p-4 h-full">
           <ProjectNavBar
             setActiveSection={setActiveSection}
             activeSection={activeSection}
@@ -101,7 +101,7 @@ const ProjectDetail = () => {
             {activeSection === 'members' &&
               (loadingUsers || loadingTickets || loadingUsersNotInProject || loadingSaldos || !projectTickets ? (
                 <div className="flex justify-center items-center h-full">
-                  <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
                 </div>
               ) : (
                 <ProjectMembers
@@ -118,7 +118,7 @@ const ProjectDetail = () => {
             {activeSection === 'tickets' &&
               (loadingTickets || !projectTickets ? (
                 <div className="flex justify-center items-center h-full">
-                  <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
                 </div>
               ) : (
                 <ProjectTickets
@@ -129,7 +129,7 @@ const ProjectDetail = () => {
             {activeSection === 'payments' &&
               (loadingPagos ? (
                 <div className="flex justify-center items-center h-full">
-                  <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
                 </div>
               ) : (
                 <ProjectPagos

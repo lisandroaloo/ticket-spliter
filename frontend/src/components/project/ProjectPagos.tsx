@@ -21,7 +21,7 @@ const ProjectPagos = ({ projectPagos, getProjectPagosAsync, projectUsers,getProj
       </div>
    
       {!isAddingPago ? <button
-        className="p-3 text-white mt-4 rounded-full bg-gray-700 hover:bg-gray-400"
+        className="p-3 text-white mt-4 rounded-full bg-green-700 hover:bg-green-400"
         onClick={handleAddPago}
       >
         {isAddingPago ? '➖' : '➕'}

@@ -41,10 +41,9 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
   }
 
   return (
-    <div className="bg-slate-700 rounded-lg mt-3 p-3">
+    <div className="bg-green-700 rounded-lg mt-3 p-3">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="space-y-2">
-          
           <input
             type="number"
             id="_ti_monto"
@@ -52,11 +51,10 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
             value={formState._ti_monto}
             onChange={handleInputChange}
             placeholder="Monto"
-            className="bg-slate-600 text-white rounded-md p-2 w-full"
+            className="bg-green-600 text-green-100 rounded-md p-2 w-full placeholder-green-300"
           />
         </div>
         <div className="space-y-2">
-         
           <input
             type="text"
             id="_ti_descripcion"
@@ -64,19 +62,19 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
             value={formState._ti_descripcion}
             onChange={handleInputChange}
             placeholder="Descripción"
-            className="bg-slate-600 text-white rounded-md p-2 w-full"
+            className="bg-green-600 text-green-100 rounded-md p-2 w-full placeholder-green-300"
           />
         </div>
-        <div className="flex items-end space-x-2">
+        <div className="flex justify-end items-end space-x-2">
           <button
-            className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2 disabled:opacity-50"
+            className="bg-green-500 hover:bg-green-600 text-green-100 rounded-md px-4 py-2 disabled:opacity-50"
             onClick={handleAddTicketToProject}
             disabled={loading}
           >
             {loading ? 'Subiendo...' : 'Subir'}
           </button>
           <button
-            className="bg-slate-500 hover:bg-slate-600 text-white rounded-md px-4 py-2"
+            className="bg-green-300 hover:bg-green-100 text-green-800 rounded-md px-4 py-2"
             onClick={() => setIsAddingTicket(false)}
           >
             Cancelar

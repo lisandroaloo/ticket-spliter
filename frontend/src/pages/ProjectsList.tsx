@@ -26,12 +26,12 @@ const ProjectsList = () => {
   return (
     <>
       {loading ? (
-        <section className="h-[92vh] bg-gray-900 flex justify-center items-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+        <section className="h-[92vh] bg-green-300 flex justify-center items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
         </section>
       ) : (
         <>
-          <section className='h-[92vh]  bg-gray-900 text-white p-8'>
+          <section className='h-[92vh]  bg-green-300 text-white p-8'>
             <div className='max-w-4xl  mx-auto'>
               <ProjectForm setProjects={setProjects} />
               <ProjectList projects={projects} onClickRow={onClickRow} />

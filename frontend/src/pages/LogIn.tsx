@@ -17,14 +17,15 @@ const LogIn = () => {
   };
 
   return (
-    <section className="h-[92vh] bg-gray-900  text-white relative">
+    <section className="h-[92vh] bg-green-100 text-green-950 placeholder-green-100 relative">
       <div className=" absolute px-2 md:px-0 inset-0 top-[15%] ">
         <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-3xl font-bold tracking-tight ">
-            Inicia Sesion
-          </h1>
+          <h1 className="text-3xl font-bold tracking-tight ">Inicia Sesion</h1>
           <div className="mt-8 flex flex-col items-center gap-4">
-            <form className="w-full max-w-md space-y-4" onSubmit={formSubmit}>
+            <form
+              className="w-full max-w-md space-y-4"
+              onSubmit={formSubmit}
+            >
               <div>
                 <input
                   id="name"
@@ -33,9 +34,9 @@ const LogIn = () => {
                   required
                   value={inputs.us_email}
                   onChange={(e) => {
-                    setInputs({ ...inputs, us_email: e.target.value });
+                    setInputs({ ...inputs, us_email: e.target.value })
                   }}
-                  className="w-full rounded-md bg-slate-500 border border-gray-500 px-4 py-2 text-gray-900"
+                  className="w-full rounded-md bg-green-300 border border-green-800 px-4 py-2 text-green-950 placeholder-green-100"
                 />
               </div>
 
@@ -47,21 +48,18 @@ const LogIn = () => {
                   required
                   value={inputs.us_password}
                   onChange={(e) => {
-                    setInputs({ ...inputs, us_password: e.target.value });
+                    setInputs({ ...inputs, us_password: e.target.value })
                   }}
-                  className="w-full rounded-md bg-slate-500 border border-gray-500 px-4 py-2 text-gray-900 "
+                  className="w-full rounded-md bg-green-300 border border-green-800 px-4 py-2 text-green-950 placeholder-green-100"
                 />
               </div>
 
               <button
                 type="submit"
-                className="relative w-full h-10 rounded-md bg-slate-700 px-4 py-2 text-white transition-colors hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="relative w-full h-10 rounded-md bg-green-400 px-4 py-2 text-green-950 transition-colors hover:bg-green-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
-                
               >
-                <span className={`${loading ? 'invisible' : 'visible'}`}>
-                  Iniciar Sesión
-                </span>
+                <span className={`${loading ? 'invisible' : 'visible'}`}>Iniciar Sesión</span>
                 {loading && (
                   <span className="absolute inset-0 flex items-center justify-center">
                     <span className="sr-only">Cargando...</span>
@@ -70,9 +68,12 @@ const LogIn = () => {
                 )}
               </button>
             </form>
-            <div className="text-sm text-white">
-              No tenes una cuenta?  
-              <Link to="/signup" className="font-medium ml-2  hover:text-white">
+            <div className="text-sm text-green-950">
+              No tenes una cuenta?
+              <Link
+                to="/signup"
+                className="font-medium ml-2 text-green-950 hover:text-green-500"
+              >
                 Registrarse
               </Link>
             </div>
@@ -80,7 +81,7 @@ const LogIn = () => {
         </div>
       </div>
     </section>
-  );
+  )
 };
 
 export default LogIn;

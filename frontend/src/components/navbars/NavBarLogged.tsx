@@ -7,35 +7,37 @@ const NavBarLogged = () => {
     const { logout } = useLogOut();
 
     return (
-        <nav className="w-full bg-yellow-200 h-[8vh] top-0 flex items-center justify-between ">
-            <div className="pl-4">
-                <Link to="/" className="flex items-center">
-                    <WalletIcon className="text-white" />
-                </Link>
-            </div>
-            <div className="flex gap-4 items-center pr-6">
-                <Link
-                    to="/userprofile"
-                    className="text-sm font-medium text-white hover:text-gray-300 no-underline "
-                >
-                    Perfil
-                </Link>
+      <nav className="w-full bg-green-200 text-green-950 h-[8vh] top-0 flex items-center justify-between ">
+        <div className="pl-4">
+          <Link
+            to="/"
+            className="flex items-center"
+          >
+            <WalletIcon className="text-green-950 hover:text-green-500" />
+          </Link>
+        </div>
+        <div className="flex gap-4 items-center pr-6">
+          <Link
+            to="/userprofile"
+            className="text-sm font-medium hover:text-green-500 no-underline text-green-950"
+          >
+            Perfil
+          </Link>
 
-                <Link
-                    to="/projects"
-                    className="text-sm font-medium text-white hover:text-gray-300 no-underline "
-                >
-                    Proyectos
-                </Link>
-                <button
-                    className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-sm "
-                    onClick={logout}
-                >
-                    Cerrar sesion
-                </button>
-
-            </div>
-        </nav>
+          <Link
+            to="/projects"
+            className="text-sm font-medium hover:text-green-500 no-underline text-green-950"
+          >
+            Proyectos
+          </Link>
+          <button
+            className="rounded-md bg-green-100 px-4 py-2 text-sm font-medium text-green-950 shadow-sm hover:text-green-500"
+            onClick={logout}
+          >
+            Cerrar sesion
+          </button>
+        </div>
+      </nav>
     )
 }
 
