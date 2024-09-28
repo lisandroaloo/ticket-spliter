@@ -47,7 +47,7 @@ const ProjectForm = ({ setProjects }: IProjectFormProps) => {
   }
 
   return (
-    <div className="mb-8 space-y-4 bg-green-400 p-6 rounded-lg">
+    <div className="mb-8 space-y-4 bg-green-800 p-6 rounded-lg">
       <TextInput
         type="text"
         required
@@ -69,7 +69,7 @@ const ProjectForm = ({ setProjects }: IProjectFormProps) => {
       <button
 
         onClick={handleCreateProject}
-        className="w-full bg-green-800 hover:bg-green-700 text-green-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="w-full hover:bg-green-900 bg-green-700 text-green-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
         Crear
       </button>

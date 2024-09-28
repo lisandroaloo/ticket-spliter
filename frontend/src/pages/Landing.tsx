@@ -15,10 +15,11 @@ const Landing = () => {
   return (
     <>
       <section className="w-full flex justify-around items-center h-[50vh] bg-green-100">
-        <div>
+        <div className="w-2/5">
           <img
-            src="../../public/landing1.png"
+            src="/landing1.png"
             alt="Imagen ilustrativa del uso de la app"
+            
           />
         </div>
         <div className="text-center p-8">
@@ -44,10 +45,10 @@ const Landing = () => {
         </div>
       </section>
       <section
-        id="destino"
+        
         className="w-full flex justify-around items-center bg-green-900"
       >
-        <div className="w-3/5 flex-col flex justify-center text-center items-center my-28">
+        <div id="destino" className="w-3/5 flex-col flex justify-center text-center items-center my-28">
           <h1 className="text-3xl font-bold text-green-200">Características</h1>
           <p className="mt-4 text-green-200">Nuestra aplicación de seguimiento de gastos ofrece una variedad de características para hacer que la gestión de gastos compartidos sea fácil.</p>
 
@@ -70,9 +71,15 @@ const Landing = () => {
             />
           </div>
         </div>
-        <div>
+        <div className="w-2/5 h-50 ">
           <img
-            src="../../public/landing1.png"
+            src="/landing2.png"
+            
+            alt="Imagen ilustrativa del uso de la app"
+          />
+          <img
+            src="/landing2.png"
+          
             alt="Imagen ilustrativa del uso de la app"
           />
         </div>

@@ -12,7 +12,7 @@ const ProjectHeader = ({ projectDetail, loadingDetail, getProjectDetailAsync, mo
   return (
     <>
       <div
-        className="flex   flex-col items-center justify-center pt-2 mb-2 space-x-3 text-green-100 cursor-text"
+        className="flex   flex-col items-center justify-center pt-2 mb-2 space-x-3 text-green-600 cursor-text"
         onClick={handleClick}
       >
         {loadingDetail || !projectDetail ? (

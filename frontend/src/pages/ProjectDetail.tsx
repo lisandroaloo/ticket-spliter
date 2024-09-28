@@ -84,7 +84,7 @@ const ProjectDetail = () => {
   }, [])
 
   return (
-    <section className="h-[92vh] bg-green-800 overflow-hidden">
+    <section className="h-[92vh] bg-green-100 overflow-hidden">
       <>
         <ProjectHeader
           projectDetail={projectDetail}
