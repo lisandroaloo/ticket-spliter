@@ -1,14 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import FeatureCard from "../components/FeatureCard";
-import Footer from "../components/Footer";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import FeatureCard from '../components/FeatureCard'
+import Footer from '../components/Footer'
 
 const Landing = () => {
-
   const scrollDown = () => {
-    const destino = document.getElementById("destino");
+    const destino = document.getElementById('destino')
     if (destino) {
-      destino.scrollIntoView({ behavior: 'smooth' });
+      destino.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
@@ -19,7 +18,10 @@ const Landing = () => {
           <img
             src="/landing1.png"
             alt="Imagen ilustrativa del uso de la app"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 46f0cf8886125c64235a4beb61914ad599fc1d37
           />
         </div>
         <div className="text-center p-8">
@@ -44,6 +46,7 @@ const Landing = () => {
           </div>
         </div>
       </section>
+<<<<<<< HEAD
       <section className="w-full flex justify-center items-center bg-gradient-to-br from-emerald-800 to-green-900 py-28">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-center">
@@ -52,6 +55,15 @@ const Landing = () => {
               <p className="mt-4 text-green-200 max-w-md">
                 Nuestra aplicación de seguimiento de gastos ofrece una variedad de características para hacer que la gestión de gastos compartidos sea fácil.
               </p>
+=======
+      <section className="w-full flex justify-around items-center bg-green-900">
+        <div
+          id="destino"
+          className="w-3/5 flex-col flex justify-center text-center items-center my-28"
+        >
+          <h1 className="text-3xl font-bold text-green-200">Características</h1>
+          <p className="mt-4 text-green-200">Nuestra aplicación de seguimiento de gastos ofrece una variedad de características para hacer que la gestión de gastos compartidos sea fácil.</p>
+>>>>>>> 46f0cf8886125c64235a4beb61914ad599fc1d37
 
               <div className="mt-8 w-full  flex flex-col gap-4">
                 <FeatureCard
@@ -85,10 +97,23 @@ const Landing = () => {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
+=======
+        <div className="w-2/5 h-50 ">
+          <img
+            src="/landing2.png"
+            alt="Imagen ilustrativa del uso de la app"
+          />
+          <img
+            src="/landing3.png"
+            alt="Imagen ilustrativa del uso de la app"
+          />
+        </div>
+>>>>>>> 46f0cf8886125c64235a4beb61914ad599fc1d37
       </section>
       <Footer />
     </>
   )
-};
+}
 
-export default Landing;
+export default Landing
