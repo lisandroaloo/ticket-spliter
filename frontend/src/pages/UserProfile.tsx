@@ -77,10 +77,10 @@ const UserProfile = () => {
             ) : (
                 <section className="md:h-[92vh] h-full bg-green-100 relative">
                     <div className="pt-2 md:pt-0 md:absolute md:inset-0 h-full md:top-[12%] bg-green-100 px-3 mx-auto max-w-2xl md:max-w-4xl text-green-100 md:h-[50vh]">
-                        <h2 className="text-3xl font-bold tracking-tight">Perfil</h2>
+                        <h2 className="text-3xl font-bold tracking-tight text-black">Perfil</h2>
                         <div className="mt-8 pb-2 grid grid-cols-1 gap-4 md:grid-cols-2 md:h-[50vh]">
                             <form onSubmit={handleEditUser} className="h-full">
-                                <div className="rounded-lg p-6 shadow-sm bg-green-700 h-[50vh]">
+                                <div className="rounded-lg p-6 shadow-sm bg-gradient-to-br from-emerald-700 to-green-800 h-[50vh]">
                                     <div className="flex gap-3 items-center mb-3">
                                         <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                                             <i className="bi bi-person text-green-800 text-xl"></i>
@@ -134,7 +134,7 @@ const UserProfile = () => {
                                     </div>
                                 </div>
                             </form>
-                            <div className="h-[50vh] rounded-lg bg-green-800">
+                            <div className="h-[50vh] rounded-lg bg-gradient-to-br from-emerald-700 to-green-800">
                                 <ProfileNavBar setActiveSection={setActiveSection} activeSection={activeSection} />
 
                                 <div className="h-4/5  overflow-y-scroll no-scrollbar">

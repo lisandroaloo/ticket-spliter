@@ -56,14 +56,14 @@ export default function PagoByProjectForm({ pago, setIsAddingPago, updateProject
   }
 
   return (
-    <div className="bg-green-700 rounded-lg mt-3 p-3">
+    <div className="bg-gradient-to-br from-emerald-500 to-green-700 rounded-lg mt-3 p-3">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="space-y-2">
           <select
             name="pa_us_receptor_id"
             value={formState.pa_us_receptor_id}
             onChange={handleUserDropdownChange}
-            className="bg-green-600 text-green-100 rounded-md p-2 w-full"
+            className="bg-green-700 text-green-100 rounded-md p-2 w-full"
           >
             <option
               className="bg-green-200 text-green-950"
@@ -91,12 +91,12 @@ export default function PagoByProjectForm({ pago, setIsAddingPago, updateProject
             value={formState.pa_monto}
             handleInputChange={handleInputChange}
             placeholder="Monto"
-            classNames="bg-green-600 text-green-100 rounded-md p-2 w-full placeholder-green-300"
+            classNames="bg-green-700 text-green-100 rounded-md p-2 w-full placeholder-green-300"
           />
         </div>
         <div className="flex justify-end items-end space-x-2">
           <button
-            className="bg-green-500 hover:bg-green-600 text-green-100 rounded-md px-4 py-2 disabled:opacity-50"
+            className="bg-green-700 hover:bg-green-800 text-green-100 rounded-md px-4 py-2 disabled:opacity-50"
             onClick={handleAddPagoToProject}
             disabled={loading}
           >

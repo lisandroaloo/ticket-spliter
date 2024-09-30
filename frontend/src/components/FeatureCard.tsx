@@ -1,14 +1,14 @@
 import React from "react";
-import {ICard} from "../../interfaces"
+import { ICard } from "../../interfaces"
 
 const FeatureCard = ({ icon, title, description }: ICard) => {
   return (
-    <div className="bg-green-300 text-green-950 flex flex-col p-4 gap-4 rounded-xl shadow-md ">
-      <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-        <i className={`${icon} text-black text-xl`}></i>
+    <div className="bg-gradient-to-br items-center from-emerald-400 to-green-500 text-emerald-50 flex flex-col p-6 gap-4 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 ">
+      <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center shadow-inner">
+        <i className={`${icon} text-emerald-600 text-2xl`}></i>
       </div>
-      <h3 className="text-xl2">{title}</h3>
-      <h4 className="text-xl">{description}</h4>
+      <h3 className="text-2xl font-bold tracking-tight">{title}</h3>
+      <p className="text-lg text-emerald-100 leading-relaxed">{description}</p>
     </div>
   );
 };

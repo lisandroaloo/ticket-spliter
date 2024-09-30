@@ -87,7 +87,7 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, projectUser
         >
           {isAddingUser ? '➖' : '➕'}
         </button>
-        <div className="flex gap-x-4">
+        <div className="flex  gap-x-4">
           {isEditingPercentages ? (
             <button
               onClick={handleEditPercentages}

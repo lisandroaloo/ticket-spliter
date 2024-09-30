@@ -28,7 +28,7 @@ const UserByProjectCard = ({ up, monto, isEditingPercentages, index, editPercent
   }, [monto])
 
   return (
-    <div className="flex justify-between items-center bg-green-700 text-white p-3 rounded-lg">
+    <div className="flex justify-between items-center bg-gradient-to-br from-emerald-500 to-green-700 text-white p-3 rounded-lg">
       <div className="flex items-center space-x-3">
         <span>{up.Usuario.us_nombre}</span>
       </div>
