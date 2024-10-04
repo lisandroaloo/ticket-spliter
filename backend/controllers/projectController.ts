@@ -1,4 +1,4 @@
-import { log } from 'console'
+
 import prisma from '../models/prismaClient'
 
 export const getProjects = async (req: any, res: any) => {
