@@ -4,6 +4,7 @@ import {
     createProject,
     editProject,
     editProjectPercentages,
+    generateDetailedPaymentPlan,
     getProjectByIDDeep,
     getProjectDetail,
     getProjectPagos,
@@ -28,5 +29,6 @@ projectRoutes.get('/pagos/:prId', protectRoute, getProjectPagos);
 projectRoutes.get('/tickets/:prId', protectRoute, getProjectTickets);
 projectRoutes.get('/users/:prId', protectRoute, getProjectUsers);
 projectRoutes.get('/usersNotInProject/:prId', protectRoute, getUsersNotInProject)
+projectRoutes.get('/detailedPlan/:prId', protectRoute, generateDetailedPaymentPlan)
 
 export default projectRoutes;

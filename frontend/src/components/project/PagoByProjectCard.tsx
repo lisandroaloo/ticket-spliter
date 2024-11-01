@@ -3,7 +3,7 @@ import {IPagoByProjectCardProps} from "../../../interfaces"
 
 const PagoByProjectCard = ({ p }: IPagoByProjectCardProps) => {
   return (
-    <div className="flex justify-between items-center bg-gradient-to-br from-emerald-500 to-green-700 text-green-100 p-3 rounded-lg">
+    <div className="flex justify-between mb-2 items-center bg-gradient-to-br from-emerald-500 to-green-700 text-green-100 p-3 rounded-lg">
       <div className="flex items-center space-x-3">
         <span>{p.emisor?.us_nombre + ' --> ' + p.receptor?.us_nombre}</span>
       </div>
