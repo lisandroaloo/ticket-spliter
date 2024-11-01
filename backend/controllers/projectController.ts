@@ -1,4 +1,5 @@
 
+import { log } from 'console'
 import prisma from '../models/prismaClient'
 
 export const getProjects = async (req: any, res: any) => {
@@ -65,8 +66,8 @@ export const getProjectByIDDeep = async (req: any, res: any) => {
         },
         Pago: {
           include: {
-            emisor:true,
-            receptor:true
+            emisor: true,
+            receptor: true
           }
         }
       },
@@ -131,7 +132,7 @@ export const getProjectUsers = async (req: any, res: any) => {
       },
       select: {
         uxp_porcentaje: true,
-        Usuario:true
+        Usuario: true
       }
     })
 
@@ -178,8 +179,8 @@ export const getProjectPagos = async (req: any, res: any) => {
         pa_pr_id: +prId,
       },
       include: {
-        emisor:true,
-        receptor:true
+        emisor: true,
+        receptor: true
       }
     })
 
@@ -323,6 +324,103 @@ export const editProjectPercentages = async (req: any, res: any) => {
     res.json(updatedProjects);
   } catch (error: any) {
     console.error('Error editProjectPercentages controller', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+export const generateDetailedPaymentPlan = async (req: any, res: any) => {
+  try {
+    const { prId } = req.params;
+
+    // 1. Obtener los usuarios del proyecto con sus porcentajes y calcular contribuciones esperadas
+    const usuariosConPorcentajes = await prisma.usuarioXProyecto.findMany({
+      where: { uxp_pr_id: +prId },
+      select: {
+        Usuario: {
+          select: { us_nombre: true, us_email: true },
+        },
+        uxp_porcentaje: true,
+      },
+    });
+
+    // 2. Calcular el monto total del proyecto sumando los montos de los tickets
+    const tickets = await prisma.ticket.findMany({
+      where: { ti_pr_id: +prId },
+      select: {
+        ti_monto: true,
+        ti_us_id: true
+      },
+    });
+    const montoTotal = tickets.reduce((sum, ticket) => sum + ticket.ti_monto, 0);
+
+    // 3. Definir cuánto debería pagar cada usuario según su porcentaje
+    const contribuciones = usuariosConPorcentajes.map((uxp) => ({
+      usuario: uxp.Usuario,
+      montoEsperado: Math.floor((montoTotal * uxp.uxp_porcentaje) / 100),
+    }));
+
+    // 4. Obtener los pagos ya realizados entre los usuarios
+    const pagosRealizados = await prisma.pago.findMany({
+      where: { pa_pr_id: +prId },
+      select: {
+        pa_monto: true,
+        emisor: { select: { us_email: true, us_nombre: true } },
+        receptor: { select: { us_email: true, us_nombre: true } },
+      },
+    });
+
+    // 5. Calcular el saldo final de cada usuario teniendo en cuenta pagos y contribución esperada
+    const saldoUsuarios: { [email: string]: number } = {};
+    contribuciones.forEach((contrib) => {
+      saldoUsuarios[contrib.usuario.us_email] = -contrib.montoEsperado;
+    });
+
+    tickets.forEach((ticket) => {
+      saldoUsuarios[ticket.ti_us_id] += ticket.ti_monto
+    })
+
+
+    pagosRealizados.forEach((pago) => {
+      saldoUsuarios[pago.receptor.us_email] -= pago.pa_monto; // Reduce el saldo del emisor
+      saldoUsuarios[pago.emisor.us_email] += pago.pa_monto; // Aumenta el saldo del receptor
+    });
+
+    // 6. Separar usuarios que deben pagar y los que deben recibir
+    const deudores: any[] = [];
+    const acreedores: any[] = [];
+
+    Object.entries(saldoUsuarios).forEach(([email, saldo]) => {
+      if (saldo < 0) {
+        deudores.push({ email, saldo: Math.abs(saldo) });
+      } else if (saldo > 0) {
+        acreedores.push({ email, saldo });
+      }
+    });
+
+    // 7. Crear el plan de pagos para equilibrar las deudas
+    const planDePago: any[] = [];
+
+    for (const deudor of deudores) {
+      for (const acreedor of acreedores) {
+        if (deudor.saldo === 0) break;
+
+        const pago = Math.min(deudor.saldo, acreedor.saldo);
+
+        planDePago.push({
+          deudor: deudor.email,
+          acreedor: acreedor.email,
+          monto: pago,
+        });
+
+        deudor.saldo -= pago;
+        acreedor.saldo -= pago;
+      }
+    }
+
+    res.json( planDePago );
+  } catch (error: any) {
+    console.error('Error generateDetailedPaymentPlan controller', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };

@@ -3,7 +3,7 @@ import TicketByProjectCard from './TicketByProjectCard'
 import TicketByProjectForm from './TicketByProjectForm'
 import { IProjectTicketsProps, ITicket } from '../../../interfaces'
 
-const ProjectTickets = ({ projectTickets, getProjectTicketsAsync }: IProjectTicketsProps) => {
+const ProjectTickets = ({ projectTickets, updateProject }: IProjectTicketsProps) => {
   const [isAddingTicket, setIsAddingTicket] = useState<boolean>(false)
   const [isUploadingTicket, setIsUploadingTicket] = useState<boolean>(false)
 
@@ -90,7 +90,7 @@ const ProjectTickets = ({ projectTickets, getProjectTicketsAsync }: IProjectTick
       ) : (
         <TicketByProjectForm
           setIsAddingTicket={setIsAddingTicket}
-          updateProject={getProjectTicketsAsync}
+          updateProject={updateProject}
         />
       )}
     </>

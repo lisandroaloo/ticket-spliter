@@ -3,7 +3,7 @@ import { useParams } from 'react-router'
 import ProjectMembers from '../components/project/ProjectMembers'
 import ProjectTickets from '../components/project/ProjectTickets'
 import ProjectPagos from '../components/project/ProjectPagos'
-import { IPago, IPercentageByUser, IProject, IProjectTickets, IUser, IUserWrapper } from '../../interfaces'
+import { IPago, IPercentageByUser, IPlanPagos, IProject, IProjectTickets, IUser, IUserWrapper } from '../../interfaces'
 import ProjectHeader from '../components/project/ProjectHeader'
 import ProjectNavBar from '../components/navbars/ProjectNavBar'
 import useGetSaldoPagosByUserAndProjectId from '../hooks/pagos/useGetSaldoPagosByUserAndProjectId'
@@ -12,15 +12,18 @@ import useGetProjectPagos from '../hooks/project/useGetProjectPagos'
 import useGetProjectTickets from '../hooks/project/useGetProjectTickets'
 import useGetProjectUsers from '../hooks/project/useGetProjectUsers'
 import useGetUsersNotInProject from '../hooks/project/useGetUsersNotInProject'
+import useGetPlanPagos from '../hooks/pagos/useGetPlanPagos'
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>()
   const [projectDetail, setProjectDetail] = useState<IProject | undefined>()
   const [projectPagos, setProjectPagos] = useState<IPago[]>([])
+  const [planPagos, setPlanPagos] = useState<IPlanPagos[]>([])
   const [projectTickets, setProjectTickets] = useState<IProjectTickets | undefined>(undefined)
   const [projectUsers, setProjectUsers] = useState<IUserWrapper[]>([])
   const [usersNotInProject, setUsersNotInProject] = useState<IUser[]>([])
   const [editingPercentages, setEditingPercentages] = useState<IPercentageByUser[]>([])
+
   // const { loading, getProjectsByIDDeep } = useGetProjectByIDDeep()
   const { loading: loadingDetail, getProjectDetail } = useGetProjectDetail()
   const { loading: loadingPagos, getProjectPagos } = useGetProjectPagos()
@@ -28,6 +31,8 @@ const ProjectDetail = () => {
   const { loading: loadingUsers, getProjectUsers } = useGetProjectUsers()
   const { loading: loadingUsersNotInProject, getUsersNotInProject } = useGetUsersNotInProject()
   const { loading: loadingSaldos, getSaldoPagosByUserAndProjectId } = useGetSaldoPagosByUserAndProjectId()
+  const { getPlanPagos } = useGetPlanPagos()
+
 
   const [saldos, setSaldos] = useState<any>({})
 
@@ -41,10 +46,21 @@ const ProjectDetail = () => {
 
   }
 
+  const updateProject = async () => {
+    getProjectDetailAsync()
+    getProjectPagosAsync()
+    getProjectTicketsAsync()
+    getProjectUsersAsync()
+    getUsersNotInProjectAsync()
+  }
+
   const getProjectPagosAsync = async () => {
     const _pagos = await getProjectPagos(+id!)
+    const _planPagos = await getPlanPagos(+id!)
 
     setProjectPagos(_pagos)
+    setPlanPagos(_planPagos)
+
 
   }
 
@@ -76,11 +92,7 @@ const ProjectDetail = () => {
   }
 
   useEffect(() => {
-    getProjectDetailAsync()
-    getProjectPagosAsync()
-    getProjectTicketsAsync()
-    getProjectUsersAsync()
-    getUsersNotInProjectAsync()
+    updateProject()
   }, [])
 
   return (
@@ -123,7 +135,7 @@ const ProjectDetail = () => {
               ) : (
                 <ProjectTickets
                   projectTickets={projectTickets}
-                  getProjectTicketsAsync={getProjectTicketsAsync}
+                  updateProject={updateProject}
                 />
               ))}
             {activeSection === 'payments' &&
@@ -134,7 +146,8 @@ const ProjectDetail = () => {
               ) : (
                 <ProjectPagos
                   projectPagos={projectPagos}
-                  getProjectPagosAsync={getProjectPagosAsync}
+                  planPagos={planPagos}
+                  updateProject={updateProject}
                   projectUsers={projectUsers}
                   getProjectUsersAsync={getProjectUsersAsync}
                 />

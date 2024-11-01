@@ -41,7 +41,7 @@ const ProjectHeader = ({ projectDetail, loadingDetail, getProjectDetailAsync, mo
             <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
           </div>
         ) : (
-          <div className="text-3xl text-green-600 font-bold">{monto.montoTotal}</div>
+          <div className="text-3xl text-green-600 font-bold">${monto.montoTotal}</div>
         )}
       </div>
     </>

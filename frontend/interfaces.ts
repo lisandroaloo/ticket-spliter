@@ -66,14 +66,16 @@ export interface IProjectMembersProps {
 
 export interface IProjectPagosProps {
   projectPagos: IPago[]
-  getProjectPagosAsync: () => Promise<void>
+  planPagos: IPlanPagos[]
+  updateProject: () => Promise<void>
+ 
   projectUsers: IUserWrapper[]
   getProjectUsersAsync: () => Promise<void>
 }
 
 export interface IProjectTicketsProps {
   projectTickets: IProjectTickets
-  getProjectTicketsAsync: () => Promise<void>
+  updateProject: () => Promise<void>
 }
 
 export interface ITicketByProjectCardProps {
@@ -241,4 +243,11 @@ export interface IEditProjectFormProps {
 export interface IProjectList {
   projects: IProject[]
   onClickRow: (id: string) => void
+}
+
+export interface IPlanPagos{
+  deudor: string,
+  acreedor: string,
+  monto: number
+
 }
