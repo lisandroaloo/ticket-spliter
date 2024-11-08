@@ -280,10 +280,11 @@ export const addUserToProject = async (req: any, res: any) => {
         uxp_porcentaje: 100 - (totalPercentage._sum.uxp_porcentaje || 0),
       },
     })
+
     await sendMail({
       email: us_email,
-      subject: "Se te ha añadido a un nuevo proyecto",
-      htmlTemplate: `Hola, te hemos añadido al proyecto con ID ${prId}`,
+      subject: "Te han añadido a un nuevo proyecto",
+      htmlTemplate: `Hola, has sido añadido al proyecto ${prId}`,
     });
 
     res.json(uxp)

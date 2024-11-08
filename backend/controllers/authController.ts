@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
 import prisma from '../models/prismaClient'
 import generateTokenAndSetCookie from '../utils/generateTokenAndSetCookie'
+import { sendMail } from '../services/mail'
 
 export const signUp = async (req: any, res: any) => {
   try {
@@ -21,6 +22,12 @@ export const signUp = async (req: any, res: any) => {
         us_estado: 'Activo',
       },
     })
+
+    await sendMail({
+      email: us_email,
+      subject: "Bienvenido a Ticket Spliter",
+      htmlTemplate: `Hola, ${us_nombre}, nos alegra que seas parte de la comunidad spliteadora`,
+    });
 
     generateTokenAndSetCookie(newUser.us_email, res)
 

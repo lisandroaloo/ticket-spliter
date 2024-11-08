@@ -158,13 +158,13 @@ export interface IProjectTickets {
 }
 
 export interface ITicket {
-  map(arg0: (t: any) => import("react/jsx-runtime").JSX.Element): ReactNode
   ti_descripcion: string
   ti_fecha: string
   ti_id: number
   ti_monto: number
   ti_pr_id: number
   ti_us_id: string
+  ti_image_url: string | undefined
   Usuario: IUsername
 }
 
