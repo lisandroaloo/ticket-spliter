@@ -6,25 +6,14 @@ import useUploadTicket from "../../hooks/ticket/useUploadTicket";
 
 const ProjectTickets = ({ projectTickets, updateProject }: IProjectTicketsProps) => {
   const [isAddingTicket, setIsAddingTicket] = useState<boolean>(false);
-  const [isUploadingTicket, setIsUploadingTicket] = useState<boolean>(false);
-  const { uploadFile, isUploading, uploadUrl, error } = useUploadTicket(); // Usa el hook
+
+
 
   const handleAddTicket = () => {
     setIsAddingTicket(!isAddingTicket);
-    setIsUploadingTicket(false);
+
   };
 
-  const handleUploadTicket = () => {
-    setIsUploadingTicket(!isUploadingTicket);
-    setIsAddingTicket(false);
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      uploadFile(file); // Usamos el hook para subir el archivo
-    }
-  };
 
   return (
     <>
@@ -34,51 +23,6 @@ const ProjectTickets = ({ projectTickets, updateProject }: IProjectTicketsProps)
         ))}
       </div>
 
-      {isUploadingTicket && (
-        <div className="z-20">
-          <div className="fixed w-full h-full flex inset-0 bg-green-500 bg-opacity-75 transition-opacity">
-            <div className="fixed z-10 w-screen h-screen">
-              <div className="flex flex-col min-h-full justify-center p-4 text-center sm:items-center sm:p-0">
-                <div className="h-60 w-96 bg-green-900 rounded p-4">
-                  <h3 className="text-white">Subir ticket</h3>
-                  <div className="mt-4">
-                    <label
-                      className="block mb-2 text-sm font-medium text-green-900"
-                      htmlFor="file_input"
-                    >
-                      Upload file
-                    </label>
-                    <input
-                      className="block w-full text-sm text-green-900 border border-green-300 rounded-lg cursor-pointer bg-green-50 dark:text-green-400 focus:outline-none dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400"
-                      id="file_input"
-                      type="file"
-                      onChange={handleFileChange} // Llamamos a la función cuando el archivo cambia
-                    />
-                  </div>
-                  <div className="mt-3 flex justify-end items-end space-x-2">
-                    <button
-                      className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2"
-                      onClick={handleUploadTicket}
-                    >
-                      Agregar
-                    </button>
-                    <button
-                      className="bg-slate-500 hover:bg-slate-600 text-white rounded-md px-4 py-2"
-                      onClick={handleUploadTicket}
-                    >
-                      Cancelar
-                    </button>
-                  </div>
-                  {isUploading && <p>Uploading...</p>} {/* Mostrar estado de carga */}
-                  {uploadUrl && <p>Imagen subida: {uploadUrl}</p>} {/* Mostrar URL de imagen */}
-                  {error && <p className="text-red-500">{error}</p>} {/* Mostrar errores */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
       {!isAddingTicket ? (
         <div className="flex gap-x-4">
           <button
@@ -87,12 +31,7 @@ const ProjectTickets = ({ projectTickets, updateProject }: IProjectTicketsProps)
           >
             {isAddingTicket ? "➖" : "➕"}
           </button>
-          <button
-            className="p-3 text-white mt-4 rounded-full bg-green-700 hover:bg-green-400"
-            onClick={handleUploadTicket}
-          >
-            Subir ticket
-          </button>
+
         </div>
       ) : (
         <TicketByProjectForm

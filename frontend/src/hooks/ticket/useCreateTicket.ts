@@ -6,7 +6,7 @@ const useCreateTicket = () => {
   const [loading, setLoading] = useState(false)
   const { authUser } = useAuthContext()
   
-  const createTicket = async ({ _pr_id, _ti_monto, _ti_descripcion, _ti_fecha }: ITicketForm) => {
+  const createTicket = async ({ _pr_id, _ti_monto, _ti_descripcion, _ti_fecha, _ti_image_url }: ITicketForm) => {
     try {
         setLoading(true)
 
@@ -19,6 +19,7 @@ const useCreateTicket = () => {
             ti_monto: _ti_monto,
             ti_descripcion: _ti_descripcion,
             ti_fecha: _ti_fecha,
+            ti_image_url: _ti_image_url
           }),
         })
 

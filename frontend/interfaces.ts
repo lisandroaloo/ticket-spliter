@@ -128,6 +128,7 @@ export interface ITicketForm {
   _ti_monto: string
   _ti_descripcion: string
   _ti_fecha: Date
+  _ti_image_url: string
 }
 
 export interface IGetSpentByProjectId {

@@ -2,7 +2,7 @@ import prisma from "../models/prismaClient"
 
 export const createTicket = async (req: any, res: any) => {
   try {
-    const { us_email, pr_id, ti_monto, ti_descripcion,ti_fecha } = req.body
+    const { us_email, pr_id, ti_monto, ti_descripcion, ti_fecha, ti_image_url } = req.body
 
     const ticket = await prisma.ticket.create({
       data: {
@@ -10,7 +10,8 @@ export const createTicket = async (req: any, res: any) => {
         ti_pr_id: +pr_id,
         ti_monto: +ti_monto,
         ti_descripcion: ti_descripcion,
-        ti_fecha: ti_fecha
+        ti_fecha: ti_fecha,
+        ti_image_url: ti_image_url
       },
     })
 

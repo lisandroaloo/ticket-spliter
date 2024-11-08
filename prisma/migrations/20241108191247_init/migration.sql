@@ -47,6 +47,7 @@ CREATE TABLE `Ticket` (
     `ti_us_id` VARCHAR(191) NOT NULL,
     `ti_monto` DOUBLE NOT NULL,
     `ti_descripcion` VARCHAR(191) NOT NULL,
+    `ti_image_url` VARCHAR(191) NOT NULL,
     `ti_fecha` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`ti_id`)

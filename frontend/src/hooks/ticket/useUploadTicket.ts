@@ -2,13 +2,12 @@ import { useState } from "react";
 
 const useUploadTicket = () => {
     const [isUploading, setIsUploading] = useState(false);
-    const [uploadUrl, setUploadUrl] = useState<string | null>(null);
+
     const [error, setError] = useState<string | null>(null);
 
     const uploadFile = async (file: File) => {
         setIsUploading(true);
         setError(null);
-        setUploadUrl(null);
 
         const formData = new FormData();
         formData.append("file", file);
@@ -27,8 +26,10 @@ const useUploadTicket = () => {
                 throw new Error(errorMessage || "Error uploading file");
             }
 
+
+
             const result = await response.json();
-            setUploadUrl(result.url); // Guarda la URL de la imagen subida
+            return result
         } catch (err: unknown) {
             setIsUploading(false); // Asegúrate de resetear el estado si ocurre un error
 
@@ -44,7 +45,7 @@ const useUploadTicket = () => {
         }
     };
 
-    return { uploadFile, isUploading, uploadUrl, error };
+    return { uploadFile, isUploading, error };
 };
 
 export default useUploadTicket;

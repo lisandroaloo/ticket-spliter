@@ -64,6 +64,7 @@ model Ticket {
   ti_us_id        String
   ti_monto        Float
   ti_descripcion  String
+  ti_image_url    String
   ti_fecha        DateTime
   Proyecto        Proyecto  @relation(fields: [ti_pr_id], references: [pr_id])
   Usuario         Usuario   @relation(fields: [ti_us_id], references: [us_email])
