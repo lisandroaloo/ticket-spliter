@@ -8,11 +8,13 @@ import ticketRoutes from './routes/ticketRoutes';
 import pagoRoutes from './routes/pagoRoutes';
 import cookieParser from "cookie-parser";
 
+
 dotenv.config();
 
 const PORT = process.env.PORT
 
 const app = express();
+
 
 app.use(express.json())
 app.use(
@@ -31,5 +33,5 @@ app.use("/api/pagos", pagoRoutes);
 
 
 app.listen(PORT, () => {
-    console.log(`alleluyah - ${PORT}`);
+  console.log(`alleluyah - ${PORT}`);
 });

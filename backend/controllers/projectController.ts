@@ -2,6 +2,8 @@
 import { log } from 'console'
 import prisma from '../models/prismaClient'
 
+import { sendMail } from "../services/mail"
+
 export const getProjects = async (req: any, res: any) => {
   try {
     const { userId: us_email } = req.params
@@ -278,6 +280,11 @@ export const addUserToProject = async (req: any, res: any) => {
         uxp_porcentaje: 100 - (totalPercentage._sum.uxp_porcentaje || 0),
       },
     })
+    await sendMail({
+      email: us_email,
+      subject: "Se te ha añadido a un nuevo proyecto",
+      htmlTemplate: `Hola, te hemos añadido al proyecto con ID ${prId}`,
+    });
 
     res.json(uxp)
   } catch (error: any) {
@@ -418,7 +425,7 @@ export const generateDetailedPaymentPlan = async (req: any, res: any) => {
       }
     }
 
-    res.json( planDePago );
+    res.json(planDePago);
   } catch (error: any) {
     console.error('Error generateDetailedPaymentPlan controller', error.message);
     res.status(500).json({ error: 'Internal Server Error' });

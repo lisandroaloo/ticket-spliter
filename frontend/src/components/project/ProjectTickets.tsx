@@ -1,30 +1,36 @@
-import React, { useState } from 'react'
-import TicketByProjectCard from './TicketByProjectCard'
-import TicketByProjectForm from './TicketByProjectForm'
-import { IProjectTicketsProps, ITicket } from '../../../interfaces'
+import React, { useState } from "react";
+import TicketByProjectCard from "./TicketByProjectCard";
+import TicketByProjectForm from "./TicketByProjectForm";
+import { IProjectTicketsProps, ITicket } from "../../../interfaces";
+import useUploadTicket from "../../hooks/ticket/useUploadTicket";
 
 const ProjectTickets = ({ projectTickets, updateProject }: IProjectTicketsProps) => {
-  const [isAddingTicket, setIsAddingTicket] = useState<boolean>(false)
-  const [isUploadingTicket, setIsUploadingTicket] = useState<boolean>(false)
+  const [isAddingTicket, setIsAddingTicket] = useState<boolean>(false);
+  const [isUploadingTicket, setIsUploadingTicket] = useState<boolean>(false);
+  const { uploadFile, isUploading, uploadUrl, error } = useUploadTicket(); // Usa el hook
 
   const handleAddTicket = () => {
-    setIsAddingTicket(!isAddingTicket)
-    setIsUploadingTicket(false)
-  }
+    setIsAddingTicket(!isAddingTicket);
+    setIsUploadingTicket(false);
+  };
 
   const handleUploadTicket = () => {
-    setIsUploadingTicket(!isUploadingTicket)
-    setIsAddingTicket(false)
-  }
+    setIsUploadingTicket(!isUploadingTicket);
+    setIsAddingTicket(false);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      uploadFile(file); // Usamos el hook para subir el archivo
+    }
+  };
 
   return (
     <>
       <div className="space-y-4 h-[30vh] overflow-y-scroll no-scrollbar">
         {projectTickets.Ticket.map((t: ITicket, index: number) => (
-          <TicketByProjectCard
-            key={index}
-            t={t}
-          />
+          <TicketByProjectCard key={index} t={t} />
         ))}
       </div>
 
@@ -46,15 +52,13 @@ const ProjectTickets = ({ projectTickets, updateProject }: IProjectTicketsProps)
                       className="block w-full text-sm text-green-900 border border-green-300 rounded-lg cursor-pointer bg-green-50 dark:text-green-400 focus:outline-none dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400"
                       id="file_input"
                       type="file"
+                      onChange={handleFileChange} // Llamamos a la función cuando el archivo cambia
                     />
                   </div>
                   <div className="mt-3 flex justify-end items-end space-x-2">
                     <button
                       className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2"
-                      onClick={() => {
-                        alert('To do')
-                        handleUploadTicket()
-                      }}
+                      onClick={handleUploadTicket}
                     >
                       Agregar
                     </button>
@@ -65,6 +69,9 @@ const ProjectTickets = ({ projectTickets, updateProject }: IProjectTicketsProps)
                       Cancelar
                     </button>
                   </div>
+                  {isUploading && <p>Uploading...</p>} {/* Mostrar estado de carga */}
+                  {uploadUrl && <p>Imagen subida: {uploadUrl}</p>} {/* Mostrar URL de imagen */}
+                  {error && <p className="text-red-500">{error}</p>} {/* Mostrar errores */}
                 </div>
               </div>
             </div>
@@ -78,7 +85,7 @@ const ProjectTickets = ({ projectTickets, updateProject }: IProjectTicketsProps)
             className="p-3 text-white mt-4 rounded-full bg-green-700 hover:bg-green-400"
             onClick={handleAddTicket}
           >
-            {isAddingTicket ? '➖' : '➕'}
+            {isAddingTicket ? "➖" : "➕"}
           </button>
           <button
             className="p-3 text-white mt-4 rounded-full bg-green-700 hover:bg-green-400"
@@ -94,7 +101,7 @@ const ProjectTickets = ({ projectTickets, updateProject }: IProjectTicketsProps)
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default ProjectTickets
+export default ProjectTickets;
