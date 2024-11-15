@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PagoByProjectCard from './PagoByProjectCard'
 import PagoByProjectForm from './PagoByProjectForm'
 import { IPago, IPlanPagos, IProjectPagosProps } from '../../../interfaces'
-import useGetPlanPagos from '../../hooks/pagos/useGetPlanPagos'
+//import useGetPlanPagos from '../../hooks/pagos/useGetPlanPagos'
 import ProjectPagosCardPend from './ProjectPagosCardPend'
 
 

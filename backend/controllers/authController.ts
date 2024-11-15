@@ -18,7 +18,6 @@ export const signUp = async (req: any, res: any) => {
         us_nombre,
         us_email,
         us_password: hashedPassword,
-        us_role: 'usuario_general',
         us_estado: 'Activo',
       },
     })

@@ -12,10 +12,10 @@ model Usuario {
   us_nombre    String
   us_password  String
   us_estado    String
-  us_role      String
   PagoPago_us_emisor_id   Pago[]  @relation("PagoPago_us_emisor_id")
   PagoPago_us_receptor_id Pago[]  @relation("PagoPago_us_receptor_id")
   UsuarioXProyecto UsuarioXProyecto[]
+  UsuarioXTicket UsuarioXTicket[] // Relación con los tickets
   Ticket       Ticket[]
 
   @@map("Usuario")
@@ -28,14 +28,13 @@ model Pago {
   pa_monto           Float
   pa_fecha           DateTime
   pa_estado          String
-  pa_pr_id       Int
-  Proyecto        Proyecto  @relation(fields: [pa_pr_id], references: [pr_id])
-  emisor             Usuario  @relation("PagoPago_us_emisor_id", fields: [pa_us_emisor_id], references: [us_email])
-  receptor           Usuario  @relation("PagoPago_us_receptor_id", fields: [pa_us_receptor_id], references: [us_email])
+  pa_pr_id           Int
+  Proyecto           Proyecto  @relation(fields: [pa_pr_id], references: [pr_id])
+  emisor             Usuario   @relation("PagoPago_us_emisor_id", fields: [pa_us_emisor_id], references: [us_email], map: "FK_Pago_us_emisor")
+  receptor           Usuario   @relation("PagoPago_us_receptor_id", fields: [pa_us_receptor_id], references: [us_email], map: "FK_Pago_us_receptor")
 
   @@map("Pago")
 }
-
 model Proyecto {
   pr_id           Int              @id @default(autoincrement())
   pr_nombre       String
@@ -50,7 +49,6 @@ model Proyecto {
 model UsuarioXProyecto {
   uxp_us_id       String
   uxp_pr_id       Int
-  uxp_porcentaje  Float
   Usuario         Usuario   @relation(fields: [uxp_us_id], references: [us_email])
   Proyecto        Proyecto  @relation(fields: [uxp_pr_id], references: [pr_id])
 
@@ -68,6 +66,19 @@ model Ticket {
   ti_fecha        DateTime
   Proyecto        Proyecto  @relation(fields: [ti_pr_id], references: [pr_id])
   Usuario         Usuario   @relation(fields: [ti_us_id], references: [us_email])
+  UsuarioXTicket  UsuarioXTicket[] // Relación con usuarios y porcentajes
 
   @@map("Ticket")
 }
+
+model UsuarioXTicket {
+  uxt_us_id       String
+  uxt_ti_id       Int
+  uxt_porcentaje  Float
+  Usuario         Usuario @relation(fields: [uxt_us_id], references: [us_email])
+  Ticket          Ticket  @relation(fields: [uxt_ti_id], references: [ti_id])
+
+  @@id([uxt_us_id, uxt_ti_id]) // Clave compuesta
+  @@map("UsuarioXTicket") // Nombre real de la tabla
+}
+

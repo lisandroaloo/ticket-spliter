@@ -2,7 +2,7 @@ import prisma from "../models/prismaClient"
 
 export const createTicket = async (req: any, res: any) => {
   try {
-    const { us_email, pr_id, ti_monto, ti_descripcion, ti_fecha, ti_image_url } = req.body
+    const { us_email, pr_id, ti_monto, ti_descripcion, ti_fecha, ti_image_url, userPercentage } = req.body
 
     const ticket = await prisma.ticket.create({
       data: {
@@ -14,6 +14,21 @@ export const createTicket = async (req: any, res: any) => {
         ti_image_url: ti_image_url
       },
     })
+
+ 
+    
+
+    const usuariosConPorcentajePromises = userPercentage.map(async (usuario: any) => {
+      await prisma.usuarioXTicket.create({
+        data: {
+          uxt_us_id: usuario.us_email, // Asumiendo que `us_email` es el identificador de usuario
+          uxt_ti_id: ticket.ti_id, // El ID del ticket recién creado
+          uxt_porcentaje: +usuario.percentage, // El porcentaje que debe pagar este usuario
+        },
+      });
+    });
+
+    await Promise.all(usuariosConPorcentajePromises)
 
     res.json(ticket)
   } catch (error: any) {

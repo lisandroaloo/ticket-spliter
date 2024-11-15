@@ -12,7 +12,7 @@ import useGetProjectPagos from '../hooks/project/useGetProjectPagos'
 import useGetProjectTickets from '../hooks/project/useGetProjectTickets'
 import useGetProjectUsers from '../hooks/project/useGetProjectUsers'
 import useGetUsersNotInProject from '../hooks/project/useGetUsersNotInProject'
-import useGetPlanPagos from '../hooks/pagos/useGetPlanPagos'
+
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>()
@@ -31,7 +31,7 @@ const ProjectDetail = () => {
   const { loading: loadingUsers, getProjectUsers } = useGetProjectUsers()
   const { loading: loadingUsersNotInProject, getUsersNotInProject } = useGetUsersNotInProject()
   const { loading: loadingSaldos, getSaldoPagosByUserAndProjectId } = useGetSaldoPagosByUserAndProjectId()
-  const { getPlanPagos } = useGetPlanPagos()
+  //const { getPlanPagos } = useGetPlanPagos()
 
 
   const [saldos, setSaldos] = useState<any>({})
@@ -56,10 +56,10 @@ const ProjectDetail = () => {
 
   const getProjectPagosAsync = async () => {
     const _pagos = await getProjectPagos(+id!)
-    const _planPagos = await getPlanPagos(+id!)
+    //const _planPagos = await getPlanPagos(+id!)
 
     setProjectPagos(_pagos)
-    setPlanPagos(_planPagos)
+    //setPlanPagos(_planPagos)
 
 
   }
@@ -76,7 +76,7 @@ const ProjectDetail = () => {
     setProjectUsers(_users)
 
     const _editingPercentages: IPercentageByUser[] = _users.map((uxp: IUserWrapper) => {
-      return { us_email: uxp.Usuario.us_email, uxp_porcentaje: uxp.uxp_porcentaje }
+      return { us_email: uxp.Usuario.us_email }
     })
     setEditingPercentages(_editingPercentages)
 
@@ -117,8 +117,8 @@ const ProjectDetail = () => {
                 </div>
               ) : (
                 <ProjectMembers
-                  editingPercentages={editingPercentages}
-                  setEditingPercentages={setEditingPercentages}
+                  // editingPercentages={editingPercentages}
+                  // setEditingPercentages={setEditingPercentages}
                   projectUsers={projectUsers}
                   getProjectUsersAsync={getProjectUsersAsync}
                   saldos={saldos}
@@ -135,6 +135,7 @@ const ProjectDetail = () => {
               ) : (
                 <ProjectTickets
                   projectTickets={projectTickets}
+                  projectUsers={projectUsers}
                   updateProject={updateProject}
                 />
               ))}

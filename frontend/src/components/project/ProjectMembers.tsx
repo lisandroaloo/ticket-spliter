@@ -1,62 +1,64 @@
 import { useState } from 'react'
-import useEditProjectPercentages from '../../hooks/project/useEditPercentages'
+
 import UserByProjectCard from './UserByProjectCard'
 import UserByProjectForm from './UserByProjectForm'
 import { useParams } from 'react-router'
 import { IPercentageByUser, IProjectMembersProps, IUserWrapper } from '../../../interfaces'
 import toast from 'react-hot-toast'
 
-const ProjectMembers = ({ editingPercentages, setEditingPercentages, projectUsers
+const ProjectMembers = ({ 
+  // editingPercentages, setEditingPercentages, 
+  projectUsers
   , getProjectUsersAsync, saldos, usersNotInProject,
   getUsersNotInProjectAsync, monto }: IProjectMembersProps) => {
   const { id } = useParams<{ id: string }>()
   const [isAddingUser, setIsAddingUser] = useState<boolean>(false)
-  const [isEditingPercentages, setIsEditingPercentages] = useState<boolean>(false)
-  const { editProjectPercentages } = useEditProjectPercentages()
+  // const [isEditingPercentages, setIsEditingPercentages] = useState<boolean>(false)
+ 
 
-  const handleDividirEquitativamente = async () => {
-    const procentajeEquitativo = 100 / editingPercentages.length
-    const _editingPercentages: IPercentageByUser[] = []
-    editingPercentages.forEach((ep: IPercentageByUser) => {
-      _editingPercentages.push({ us_email: ep.us_email, uxp_porcentaje: procentajeEquitativo })
-    })
-    setEditingPercentages(_editingPercentages)
-    await editProjectPercentages(_editingPercentages, id!)
-    getProjectUsersAsync()
-  }
+  // const handleDividirEquitativamente = async () => {
+  //   const procentajeEquitativo = 100 / editingPercentages.length
+  //   const _editingPercentages: IPercentageByUser[] = []
+  //   editingPercentages.forEach((ep: IPercentageByUser) => {
+  //     _editingPercentages.push({ us_email: ep.us_email, uxp_porcentaje: procentajeEquitativo })
+  //   })
+  //   setEditingPercentages(_editingPercentages)
+   
+  //   getProjectUsersAsync()
+  // }
 
   const handleAddUser = () => {
     setIsAddingUser(!isAddingUser)
   }
 
-  const editPercentages = () => {
-    setIsEditingPercentages(!isEditingPercentages)
-  }
+  // const editPercentages = () => {
+  //   setIsEditingPercentages(!isEditingPercentages)
+  // }
 
-  const editPercentage = (index: number, newPercentage: number) => {
-    const _editingPercentages: IPercentageByUser[] = [...editingPercentages]
-    _editingPercentages[index].uxp_porcentaje = newPercentage
-    setEditingPercentages(_editingPercentages)
-  }
+  // const editPercentage = (index: number, newPercentage: number) => {
+  //   const _editingPercentages: IPercentageByUser[] = [...editingPercentages]
+  //   _editingPercentages[index].uxp_porcentaje = newPercentage
+  //   setEditingPercentages(_editingPercentages)
+  // }
 
-  const handleEditPercentages = async () => {
-    if (verifyPercentages()) {
-      await editProjectPercentages(editingPercentages, id!)
-      getProjectUsersAsync()
-      setIsEditingPercentages(!isEditingPercentages)
-    } else {
-      toast.error('Los porcentajes ingresados no acumulan 100%')
-    }
-  }
-  const verifyPercentages = () => {
-    let totalPercentage = 0
+  // const handleEditPercentages = async () => {
+  //   if (verifyPercentages()) {
+      
+  //     getProjectUsersAsync()
+  //     setIsEditingPercentages(!isEditingPercentages)
+  //   } else {
+  //     toast.error('Los porcentajes ingresados no acumulan 100%')
+  //   }
+  // }
+  // const verifyPercentages = () => {
+  //   let totalPercentage = 0
 
-    for (let i = 0; i < editingPercentages.length; i++) {
-      totalPercentage += editingPercentages[i].uxp_porcentaje
-    }
+  //   for (let i = 0; i < editingPercentages.length; i++) {
+  //     totalPercentage += editingPercentages[i].uxp_porcentaje
+  //   }
 
-    return totalPercentage === 100
-  }
+  //   return totalPercentage === 100
+  // }
 
   return (
     <>
@@ -65,12 +67,12 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, projectUser
           <UserByProjectCard
             key={index}
             up={up}
-            monto={monto * (up.uxp_porcentaje / 100)}
-            isEditingPercentages={isEditingPercentages}
-            editPercentage={editPercentage}
-            index={index}
-            value={editingPercentages[index].uxp_porcentaje}
-            saldo={saldos[up.Usuario.us_email]}
+            // monto={monto * (up.uxp_porcentaje / 100)}
+            // isEditingPercentages={isEditingPercentages}
+            // editPercentage={editPercentage}
+            // index={index}
+            // value={editingPercentages[index].uxp_porcentaje}
+            //saldo={saldos[up.Usuario.us_email]}
           />
         ))}
       </div>
@@ -87,7 +89,7 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, projectUser
         >
           {isAddingUser ? '➖' : '➕'}
         </button>
-        <div className="flex  gap-x-4">
+        {/* <div className="flex  gap-x-4">
           {isEditingPercentages ? (
             <button
               onClick={handleEditPercentages}
@@ -109,7 +111,7 @@ const ProjectMembers = ({ editingPercentages, setEditingPercentages, projectUser
           >
             ⚖️
           </button>
-        </div>
+        </div> */}
       </div>}
 
 

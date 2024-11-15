@@ -10,7 +10,7 @@ export default function UserByProjectForm({ user, setIsAddingUser, updateProject
 
   const [formState, setFormState] = useState<IUserByProjectForm>(
     user ? {
-      _uxp_porcentaje: user._uxp_porcentaje,
+      
       _uxp_us_id: user._uxp_us_id,
       _pr_id: id!,
     } : {
@@ -85,7 +85,7 @@ export default function UserByProjectForm({ user, setIsAddingUser, updateProject
             <TextInput
               type="text"
               name="_uxp_porcentaje"
-              value={formState._uxp_porcentaje || ''}
+              value=""//{formState._uxp_porcentaje || ''}
               handleInputChange={handleInputChange}
               placeholder="Porcentaje"
               classNames="bg-green-600 text-white rounded-md p-2 w-full placeholder-green-300"

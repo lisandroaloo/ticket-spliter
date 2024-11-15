@@ -49,13 +49,10 @@ export interface IProjectForm {
 
 export interface IUserByProjectForm {
   _uxp_us_id: string
-  _uxp_porcentaje?: string
   _pr_id: string
 }
 
 export interface IProjectMembersProps {
-  setEditingPercentages: any
-  editingPercentages: IPercentageByUser[]
   projectUsers: IUserWrapper[]
   getProjectUsersAsync: () => Promise<void>
   saldos: any
@@ -75,6 +72,7 @@ export interface IProjectPagosProps {
 
 export interface IProjectTicketsProps {
   projectTickets: IProjectTickets
+  projectUsers: IUserWrapper[]
   updateProject: () => Promise<void>
 }
 
@@ -86,16 +84,14 @@ export interface ITicketByProjectFormProps {
   ticket?: ITicketForm
   setIsAddingTicket: React.Dispatch<React.SetStateAction<boolean>>
   updateProject: () => Promise<void>
+  projectUsers: IUserWrapper[]
 }
 
 export interface IUserByProjectCardProps {
   up: IUserWrapper
-  monto: number
-  isEditingPercentages: boolean
-  index: number
-  editPercentage: (index: number, newPercentage: number) => void
-  value: number
-  saldo: number
+
+
+
 }
 
 export interface IUserByProjectFormProps {
@@ -129,6 +125,12 @@ export interface ITicketForm {
   _ti_descripcion: string
   _ti_fecha: Date
   _ti_image_url: string
+  userPercentage: IUserPercentage[]
+}
+
+export interface IUserPercentage {
+  user: IUser
+  percentage: string;
 }
 
 export interface IGetSpentByProjectId {
@@ -170,7 +172,6 @@ export interface ITicket {
 
 export interface IUserWrapper {
   Usuario: IUser
-  uxp_porcentaje: number
 }
 
 export interface IUsername {
@@ -184,7 +185,6 @@ export interface IUser {
 
 export interface IPercentageByUser {
   us_email: string
-  uxp_porcentaje: number
 }
 
 export interface IGetProjects {
@@ -200,7 +200,6 @@ export interface IProject {
 export interface IUserByProject {
   uxp_us_id: string
   uxp_pr_id: string
-  uxp_porcentaje: string
 }
 
 export interface IRegisterInputs {
