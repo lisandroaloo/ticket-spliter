@@ -81,6 +81,12 @@ export const getProjectTickets = async (req: any, res: any) => {
       },
       include: {
         Usuario: true,
+        UsuarioXTicket: {
+          select: {
+            uxt_porcentaje: true,
+            Usuario: true
+          }
+        }
       },
     })
 

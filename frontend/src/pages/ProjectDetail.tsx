@@ -22,7 +22,7 @@ const ProjectDetail = () => {
   const [projectTickets, setProjectTickets] = useState<IProjectTickets | undefined>(undefined)
   const [projectUsers, setProjectUsers] = useState<IUserWrapper[]>([])
   const [usersNotInProject, setUsersNotInProject] = useState<IUser[]>([])
-  const [editingPercentages, setEditingPercentages] = useState<IPercentageByUser[]>([])
+  // const [editingPercentages, setEditingPercentages] = useState<IPercentageByUser[]>([])
 
   // const { loading, getProjectsByIDDeep } = useGetProjectByIDDeep()
   const { loading: loadingDetail, getProjectDetail } = useGetProjectDetail()
@@ -67,6 +67,7 @@ const ProjectDetail = () => {
   const getProjectTicketsAsync = async () => {
     const _tickets = await getProjectTickets(+id!)
 
+
     setProjectTickets(_tickets)
 
   }
@@ -75,10 +76,10 @@ const ProjectDetail = () => {
     const _users = await getProjectUsers(+id!)
     setProjectUsers(_users)
 
-    const _editingPercentages: IPercentageByUser[] = _users.map((uxp: IUserWrapper) => {
-      return { us_email: uxp.Usuario.us_email }
-    })
-    setEditingPercentages(_editingPercentages)
+    // const _editingPercentages: IPercentageByUser[] = _users.map((uxp: IUserWrapper) => {
+    //   return { us_email: uxp.Usuario.us_email }
+    // })
+    // setEditingPercentages(_editingPercentages)
 
     const _saldos = await getSaldoPagosByUserAndProjectId(id!)
     setSaldos(_saldos)

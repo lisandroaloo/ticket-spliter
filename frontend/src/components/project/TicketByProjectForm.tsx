@@ -3,15 +3,15 @@ import { useParams } from 'react-router-dom'
 import useCreateTicket from '../../hooks/ticket/useCreateTicket'
 import useUploadTicket from '../../hooks/ticket/useUploadTicket'
 import { ITicketByProjectFormProps, ITicketForm, IUser, IUserPercentage } from '../../../interfaces'
+import toast from 'react-hot-toast'
 
 
 
-export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateProject, projectUsers }: ITicketByProjectFormProps) {
+export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateProject, projectUsers, setEditingTicket }: ITicketByProjectFormProps) {
   const { id } = useParams<{ id: string }>()
   const { loading, createTicket } = useCreateTicket()
   const { uploadFile, isUploading, error } = useUploadTicket()
   const [file, setFile] = useState<File | undefined>(undefined)
-  
 
   const [formState, setFormState] = useState<ITicketForm>(
     ticket || {
@@ -23,16 +23,14 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
       _ti_image_url: '',
       userPercentage: projectUsers.map((user) => ({
         user: user.Usuario,
-        percentage: '0' // inicializar todos los porcentajes a '0'
-      }))
+        percentage: '0', // inicializar todos los porcentajes a '0'
+      })),
     }
-
   )
-
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormState(prevState => ({ ...prevState, [name]: value }))
+    setFormState((prevState) => ({ ...prevState, [name]: value }))
   }
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,42 +41,50 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
   }
 
   const handleAddTicketToProject = async () => {
-    try {
+    let total = 0
     
-
-      if (file) {
-        const res = await uploadFile(file)
-        await createTicket({ ...formState, _ti_image_url: res.url })
-      } else {
-        console.log("FORM", formState);
-
-        await createTicket({ ...formState })
-      }
-
-      setFormState({
-        _pr_id: id || '',
-        _ti_descripcion: '',
-        _ti_fecha: new Date(),
-        _ti_monto: '0',
-        _us_email: '',
-        _ti_image_url: '',
-        userPercentage: projectUsers.map((user) => ({
-          user: user.Usuario,
-          percentage: '0' // inicializar todos los porcentajes a '0'
-        }))
-      })
-      setIsAddingTicket(false)
-      updateProject()
-    } catch (error) {
-      console.error('Error creating ticket:', error)
+    formState.userPercentage.forEach(percentage => {
+      total += parseFloat(percentage.percentage)
+    })
+    if (total !== 100) {
+      toast.error('Los porcentajes deben sumar 100%')
     }
+    else {
+try {
+  if (file) {
+    const res = await uploadFile(file)
+
+    await createTicket({ ...formState, _ti_image_url: res.url })
+  } else {
+    await createTicket({ ...formState })
+  }
+
+  setFormState({
+    _pr_id: id || '',
+    _ti_descripcion: '',
+    _ti_fecha: new Date(),
+    _ti_monto: '0',
+    _us_email: '',
+    _ti_image_url: '',
+    userPercentage: projectUsers.map((user) => ({
+      user: user.Usuario,
+      percentage: '0', // inicializar todos los porcentajes a '0'
+    })),
+  })
+  setEditingTicket(undefined)
+  setIsAddingTicket(false)
+  updateProject()
+} catch (error) {
+  console.error('Error creating ticket:', error)
+}
+    }
+    
   }
 
   const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const newPercentages = [...formState.userPercentage]
     newPercentages[index].percentage = e.target.value
-    setFormState(prevState => ({ ...prevState, userPercentages: newPercentages }))
-
+    setFormState((prevState) => ({ ...prevState, userPercentages: newPercentages }))
   }
 
   return (
@@ -126,7 +132,10 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
             </thead>
             <tbody>
               {formState.userPercentage.map((user, index) => (
-                <tr key={index} className="border-t">
+                <tr
+                  key={index}
+                  className="border-t"
+                >
                   <td className="px-4 py-2">{user.user.us_nombre}</td>
                   <td className="px-4 py-2">
                     <input
@@ -151,7 +160,20 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
           </button>
           <button
             className="bg-green-300 hover:bg-green-100 text-green-800 rounded-md px-4 py-2"
-            onClick={() => setIsAddingTicket(false)}
+            onClick={() => {setFormState({
+              _pr_id: id || '',
+              _ti_descripcion: '',
+              _ti_fecha: new Date(),
+              _ti_monto: '0',
+              _us_email: '',
+              _ti_image_url: '',
+              userPercentage: projectUsers.map((user) => ({
+                user: user.Usuario,
+                percentage: '0', // inicializar todos los porcentajes a '0'
+              })),
+            })
+            setEditingTicket(undefined)
+            setIsAddingTicket(false)}}
           >
             Cancelar
           </button>

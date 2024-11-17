@@ -6,7 +6,7 @@ const useCreateTicket = () => {
   const [loading, setLoading] = useState(false)
   const { authUser } = useAuthContext()
 
-  const createTicket = async ({ _pr_id, _ti_monto, _ti_descripcion, _ti_fecha, _ti_image_url, userPercentage }: ITicketForm) => {
+  const createTicket = async ({ _pr_id, _ti_monto, _ti_descripcion, _ti_fecha, _ti_image_url, userPercentage, _ti_id }: ITicketForm) => {
     try {
       setLoading(true)
 
@@ -20,6 +20,7 @@ const useCreateTicket = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          ti_id: _ti_id,
           us_email: authUser,
           pr_id: _pr_id,
           ti_monto: _ti_monto,

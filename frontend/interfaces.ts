@@ -78,6 +78,7 @@ export interface IProjectTicketsProps {
 
 export interface ITicketByProjectCardProps {
   t: ITicket
+  onClickRow: (t: ITicket) => void
 }
 
 export interface ITicketByProjectFormProps {
@@ -85,6 +86,7 @@ export interface ITicketByProjectFormProps {
   setIsAddingTicket: React.Dispatch<React.SetStateAction<boolean>>
   updateProject: () => Promise<void>
   projectUsers: IUserWrapper[]
+  setEditingTicket: React.Dispatch<React.SetStateAction<ITicketForm | undefined>>
 }
 
 export interface IUserByProjectCardProps {
@@ -119,6 +121,7 @@ export interface ICreatePago {
 }
 
 export interface ITicketForm {
+  _ti_id?: number
   _pr_id: string
   _us_email: string
   _ti_monto: string
@@ -131,6 +134,11 @@ export interface ITicketForm {
 export interface IUserPercentage {
   user: IUser
   percentage: string;
+}
+
+export interface IUserPercentageBack {
+  Usuario: IUser
+  uxt_porcentaje: string;
 }
 
 export interface IGetSpentByProjectId {
@@ -168,7 +176,9 @@ export interface ITicket {
   ti_us_id: string
   ti_image_url: string | undefined
   Usuario: IUsername
+  UsuarioXTicket: IUserPercentageBack[]
 }
+
 
 export interface IUserWrapper {
   Usuario: IUser
