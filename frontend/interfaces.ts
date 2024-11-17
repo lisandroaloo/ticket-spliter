@@ -58,7 +58,8 @@ export interface IProjectMembersProps {
   saldos: any
   usersNotInProject: any
   getUsersNotInProjectAsync: () => Promise<void>
-  monto: number
+  monto: number,
+  projectAbierto: boolean
 }
 
 export interface IProjectPagosProps {
@@ -74,6 +75,7 @@ export interface IProjectTicketsProps {
   projectTickets: IProjectTickets
   projectUsers: IUserWrapper[]
   updateProject: () => Promise<void>
+  projectAbierto: boolean
 }
 
 export interface ITicketByProjectCardProps {
@@ -205,6 +207,7 @@ export interface IProject {
   pr_id: string
   pr_nombre: string
   pr_descripcion: string
+  pr_abierto: boolean
 }
 
 export interface IUserByProject {
@@ -242,6 +245,7 @@ export interface IProjectHeaderProps {
   loadingDetail: boolean
   getProjectDetailAsync: () => Promise<void>
   monto: IProjectTickets | undefined
+  updateProject: () => Promise<void>
 }
 
 export interface IEditProjectFormProps {

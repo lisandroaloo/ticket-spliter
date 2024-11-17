@@ -42,43 +42,57 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
 
   const handleAddTicketToProject = async () => {
     let total = 0
-    
-    formState.userPercentage.forEach(percentage => {
-      total += parseFloat(percentage.percentage)
-    })
-    if (total !== 100) {
-      toast.error('Los porcentajes deben sumar 100%')
-    }
-    else {
-try {
-  if (file) {
-    const res = await uploadFile(file)
 
-    await createTicket({ ...formState, _ti_image_url: res.url })
-  } else {
-    await createTicket({ ...formState })
-  }
+    try {
+      formState.userPercentage.forEach(percentage => {
+        if (parseFloat(percentage.percentage) < 0) {
+         
+          throw new Error()
+        }
+        total += parseFloat(percentage.percentage)
+      })
 
-  setFormState({
-    _pr_id: id || '',
-    _ti_descripcion: '',
-    _ti_fecha: new Date(),
-    _ti_monto: '0',
-    _us_email: '',
-    _ti_image_url: '',
-    userPercentage: projectUsers.map((user) => ({
-      user: user.Usuario,
-      percentage: '0', // inicializar todos los porcentajes a '0'
-    })),
-  })
-  setEditingTicket(undefined)
-  setIsAddingTicket(false)
-  updateProject()
-} catch (error) {
-  console.error('Error creating ticket:', error)
-}
+      if (total !== 100) {
+        toast.error('Los porcentajes deben sumar 100%')
+      }
+
+
+      else {
+        try {
+          if (file) {
+            const res = await uploadFile(file)
+
+            await createTicket({ ...formState, _ti_image_url: res.url })
+          } else {
+            await createTicket({ ...formState })
+          }
+
+          setFormState({
+            _pr_id: id || '',
+            _ti_descripcion: '',
+            _ti_fecha: new Date(),
+            _ti_monto: '0',
+            _us_email: '',
+            _ti_image_url: '',
+            userPercentage: projectUsers.map((user) => ({
+              user: user.Usuario,
+              percentage: '0', // inicializar todos los porcentajes a '0'
+            })),
+          })
+          setEditingTicket(undefined)
+          setIsAddingTicket(false)
+          updateProject()
+        } catch (error) {
+          console.error('Error creating ticket:', error)
+        }
+      }
+
+    } catch (e) {
+      toast.error('Los porcentajes no pueden ser negativos')
     }
-    
+
+
+
   }
 
   const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -160,20 +174,22 @@ try {
           </button>
           <button
             className="bg-green-300 hover:bg-green-100 text-green-800 rounded-md px-4 py-2"
-            onClick={() => {setFormState({
-              _pr_id: id || '',
-              _ti_descripcion: '',
-              _ti_fecha: new Date(),
-              _ti_monto: '0',
-              _us_email: '',
-              _ti_image_url: '',
-              userPercentage: projectUsers.map((user) => ({
-                user: user.Usuario,
-                percentage: '0', // inicializar todos los porcentajes a '0'
-              })),
-            })
-            setEditingTicket(undefined)
-            setIsAddingTicket(false)}}
+            onClick={() => {
+              setFormState({
+                _pr_id: id || '',
+                _ti_descripcion: '',
+                _ti_fecha: new Date(),
+                _ti_monto: '0',
+                _us_email: '',
+                _ti_image_url: '',
+                userPercentage: projectUsers.map((user) => ({
+                  user: user.Usuario,
+                  percentage: '0', // inicializar todos los porcentajes a '0'
+                })),
+              })
+              setEditingTicket(undefined)
+              setIsAddingTicket(false)
+            }}
           >
             Cancelar
           </button>

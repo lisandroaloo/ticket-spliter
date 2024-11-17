@@ -3,33 +3,45 @@ import TicketByProjectCard from "./TicketByProjectCard";
 import TicketByProjectForm from "./TicketByProjectForm";
 import { IProjectTicketsProps, ITicket, ITicketForm } from "../../../interfaces";
 import useUploadTicket from "../../hooks/ticket/useUploadTicket";
+import toast from "react-hot-toast";
 
-const ProjectTickets = ({ projectTickets, updateProject, projectUsers }: IProjectTicketsProps) => {
+const ProjectTickets = ({ projectTickets, updateProject, projectUsers, projectAbierto }: IProjectTicketsProps) => {
   const [isAddingTicket, setIsAddingTicket] = useState<boolean>(false);
   const [editingTicket, setEditingTicket] = useState<ITicketForm | undefined>(undefined)
 
 
 
   const handleAddTicket = () => {
-    setIsAddingTicket(!isAddingTicket);
+    if (projectAbierto) {
+
+      setIsAddingTicket(!isAddingTicket);
+    }else {
+      toast.error("El proyecto esta cerrado")
+    }
 
   };
 
   const handleEditTicket = (ticket: ITicket) => {
-    const ticketForm: ITicketForm = {
-      _ti_id: ticket.ti_id,
-      _pr_id: ticket.ti_pr_id.toString(),
-      _us_email: ticket.ti_us_id,
-      _ti_monto: ticket.ti_monto.toString(),
-      _ti_descripcion: ticket.ti_descripcion,
-      _ti_fecha: new Date(ticket.ti_fecha),
-      _ti_image_url: ticket.ti_image_url ? ticket.ti_image_url : "",
-      userPercentage: ticket.UsuarioXTicket.map(up => { return { user: up.Usuario, percentage: up.uxt_porcentaje.toString() } })
+    if (projectAbierto) {
+
+      const ticketForm: ITicketForm = {
+        _ti_id: ticket.ti_id,
+        _pr_id: ticket.ti_pr_id.toString(),
+        _us_email: ticket.ti_us_id,
+        _ti_monto: ticket.ti_monto.toString(),
+        _ti_descripcion: ticket.ti_descripcion,
+        _ti_fecha: new Date(ticket.ti_fecha),
+        _ti_image_url: ticket.ti_image_url ? ticket.ti_image_url : "",
+        userPercentage: ticket.UsuarioXTicket.map(up => { return { user: up.Usuario, percentage: up.uxt_porcentaje.toString() } })
+      }
+
+
+      setEditingTicket(ticketForm)
+      setIsAddingTicket(true);
+    }else {
+      toast.error("El proyecto esta cerrado")
     }
 
-
-    setEditingTicket(ticketForm)
-    setIsAddingTicket(true);
   }
 
 

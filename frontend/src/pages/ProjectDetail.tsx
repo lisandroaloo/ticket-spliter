@@ -41,6 +41,7 @@ const ProjectDetail = () => {
 
   const getProjectDetailAsync = async () => {
     const _detail = await getProjectDetail(+id!)
+    console.log(_detail);
 
     setProjectDetail(_detail)
 
@@ -104,6 +105,7 @@ const ProjectDetail = () => {
           loadingDetail={loadingDetail}
           getProjectDetailAsync={getProjectDetailAsync}
           monto={projectTickets}
+          updateProject={updateProject}
         />
         <div className="bg-gradient-to-br from-emerald-200 to-green-300 md:mx-4 rounded-t-lg shadow-lg p-4 h-full">
           <ProjectNavBar
@@ -126,6 +128,7 @@ const ProjectDetail = () => {
                   usersNotInProject={usersNotInProject}
                   getUsersNotInProjectAsync={getUsersNotInProjectAsync}
                   monto={projectTickets!.montoTotal}
+                  projectAbierto={projectDetail?.pr_abierto!}
                 />
               ))}
             {activeSection === 'tickets' &&
@@ -135,6 +138,7 @@ const ProjectDetail = () => {
                 </div>
               ) : (
                 <ProjectTickets
+                  projectAbierto={projectDetail?.pr_abierto!}
                   projectTickets={projectTickets}
                   projectUsers={projectUsers}
                   updateProject={updateProject}
