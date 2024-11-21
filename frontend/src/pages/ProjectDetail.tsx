@@ -41,7 +41,6 @@ const ProjectDetail = () => {
 
   const getProjectDetailAsync = async () => {
     const _detail = await getProjectDetail(+id!)
-    console.log(_detail);
 
     setProjectDetail(_detail)
 

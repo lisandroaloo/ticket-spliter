@@ -265,3 +265,8 @@ export interface IPlanPagos{
   monto: number
 
 }
+
+export interface ICloseProject {
+  cerrar: () => void,
+  cancelar: () => void
+}

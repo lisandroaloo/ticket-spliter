@@ -2,17 +2,24 @@ import React, { useState } from 'react'
 import { IProjectHeaderProps } from '../../../interfaces'
 import EditProjectForm from './EditProjectForm'
 import useCloseProject from '../../hooks/project/useCloseProject'
+import CloseProjectPopUp from './CloseProjectPopUp'
 
 const ProjectHeader = ({ projectDetail, loadingDetail, getProjectDetailAsync, monto, updateProject }: IProjectHeaderProps) => {
   const [isEditingProject, setIsEditingProject] = useState<boolean>(false)
+  const [isClosingProject, setIsClosingProject] = useState<boolean>(false)
   const {closeProject} = useCloseProject()
 
   const handleClick = () => {
     setIsEditingProject(!isEditingProject)
   }
   const handleCloseProject = async () => {
+    setIsClosingProject(true)
+  }
+  
+  const cerrar = async () => {
     await closeProject(projectDetail?.pr_id!)
     await updateProject()
+    setIsClosingProject(false)
   }
 
 
@@ -58,7 +65,9 @@ const ProjectHeader = ({ projectDetail, loadingDetail, getProjectDetailAsync, mo
 
             <button onClick={handleCloseProject} className="bg-red-700 hover:bg-red-600 opacity-70 hover:opacity-100 text-green-100 rounded-md px-4 py-2">CERRAR</button>
           </div>
-        )}
+        )}{
+isClosingProject && <CloseProjectPopUp cerrar={cerrar} cancelar={() => setIsClosingProject(false)} />
+        }
 
       </div>
     </>
