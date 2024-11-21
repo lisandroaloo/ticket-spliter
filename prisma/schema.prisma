@@ -35,11 +35,13 @@ model Pago {
 
   @@map("Pago")
 }
+
 model Proyecto {
   pr_id           Int              @id @default(autoincrement())
   pr_nombre       String
   pr_descripcion  String?
   UsuarioXProyecto UsuarioXProyecto[]
+  pr_abierto   Boolean          @default(true)
   Ticket          Ticket[]
   Pago Pago[]
 
@@ -81,4 +83,3 @@ model UsuarioXTicket {
   @@id([uxt_us_id, uxt_ti_id]) // Clave compuesta
   @@map("UsuarioXTicket") // Nombre real de la tabla
 }
-

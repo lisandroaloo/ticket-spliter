@@ -1,6 +1,7 @@
 import express from 'express';
 import {
     addUserToProject,
+    closeProject,
     createProject,
     editProject,
     // editProjectPercentages,
@@ -22,6 +23,7 @@ projectRoutes.post('/', createProject);
 projectRoutes.patch('/', editProject);
 // projectRoutes.patch('/percentage/:prId', protectRoute, editProjectPercentages);
 projectRoutes.post('/detail/:prId', protectRoute, addUserToProject);
+projectRoutes.patch('/detail/:prId', protectRoute, closeProject);
 projectRoutes.get('/detail/:prId', protectRoute, getProjectDetail);
 projectRoutes.get('/pagos/:prId', protectRoute, getProjectPagos);
 projectRoutes.get('/tickets/:prId', protectRoute, getProjectTickets);

@@ -13,11 +13,13 @@ export const getProjects = async (req: any, res: any) => {
         UsuarioXProyecto: {
           some: { uxp_us_id: us_email },
         },
+
       },
       select: {
         pr_id: true,
         pr_nombre: true,
         pr_descripcion: true,
+        pr_abierto:true
       },
     })
 
@@ -27,6 +29,30 @@ export const getProjects = async (req: any, res: any) => {
     res.status(500).json({ error: 'internal Server Error' })
   }
 }
+
+export const closeProject = async (req: any, res: any) => {
+  try {
+    const { prId } = req.params
+
+    const updatedProject = await prisma.proyecto.update({
+      where: {
+        pr_id: +prId,
+      },
+      data: {
+        pr_abierto: false,
+      },
+    })
+
+    res.json(
+
+      updatedProject,
+    )
+  } catch (error: any) {
+    console.error('Error in closeProject controller', error.message)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+}
+
 
 export const getProjectDetail = async (req: any, res: any) => {
   try {
@@ -40,6 +66,7 @@ export const getProjectDetail = async (req: any, res: any) => {
         pr_id: true,
         pr_nombre: true,
         pr_descripcion: true,
+        pr_abierto: true
       },
     })
 
@@ -160,7 +187,7 @@ export const createProject = async (req: any, res: any) => {
         UsuarioXProyecto: {
           create: {
             uxp_us_id: us_email,
-            
+
           },
         },
       },
