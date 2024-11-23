@@ -1,10 +1,17 @@
 import prisma from '../models/prismaClient'
 import { sendMail } from '../services/mail'
 
+
+
+// ========================================
+// SERVICIO DE CREACION / EDICION DE TICKET
+// ========================================
+
 export const createTicket = async (req: any, res: any) => {
   try {
     const { us_email, pr_id, ti_monto, ti_descripcion, ti_fecha, ti_image_url, userPercentage, ti_id } = req.body
 
+    // Dependiendo si recibe un id edita o crea un ticket
     const ticket = ti_id
       ? await prisma.ticket.update({
           where: {
@@ -30,42 +37,43 @@ export const createTicket = async (req: any, res: any) => {
           },
         })
 
+    // Dependiendo si recibe un id edita o crea los porcentajes
     const usuariosConPorcentajePromises = userPercentage.map(async (usuario: any) => {
       ti_id
         ? await prisma.usuarioXTicket.update({
             where: {
               uxt_us_id_uxt_ti_id: {
-                uxt_us_id: usuario.us_email, // Asumiendo que `us_email` es el identificador de usuario
-                uxt_ti_id: ticket.ti_id, // El ID del ticket recién creado
+                uxt_us_id: usuario.us_email,
+                uxt_ti_id: ticket.ti_id,
               },
             },
             data: {
-              uxt_porcentaje: +usuario.percentage, // El porcentaje que debe pagar este usuario
+              uxt_porcentaje: +usuario.percentage,
             },
           })
         : await prisma.usuarioXTicket.create({
             data: {
-              uxt_us_id: usuario.us_email, // Asumiendo que `us_email` es el identificador de usuario
-              uxt_ti_id: ticket.ti_id, // El ID del ticket recién creado
-              uxt_porcentaje: +usuario.percentage, // El porcentaje que debe pagar este usuario
+              uxt_us_id: usuario.us_email,
+              uxt_ti_id: ticket.ti_id,
+              uxt_porcentaje: +usuario.percentage,
             },
           })
     })
 
-    const usuariosEnElProyecto = await prisma.usuario.findMany(
-      {
-        where: {
-          UsuarioXProyecto: {
-            some: {
-              uxp_pr_id: +pr_id
-            }
-          }
-        }
-      }
-    )
+    // Listado de usuarios en el proyecto para enviarles mails
+    const usuariosEnElProyecto = await prisma.usuario.findMany({
+      where: {
+        UsuarioXProyecto: {
+          some: {
+            uxp_pr_id: +pr_id,
+          },
+        },
+      },
+    })
 
-    const _proyecto = await prisma.proyecto.findUnique({where: {pr_id: +pr_id}, select:{pr_nombre: true}})
+    const _proyecto = await prisma.proyecto.findUnique({ where: { pr_id: +pr_id }, select: { pr_nombre: true } })
 
+    // Envio de mails
     ti_id
       ? usuariosEnElProyecto.forEach((us) => {
           sendMail({
@@ -74,11 +82,13 @@ export const createTicket = async (req: any, res: any) => {
             htmlTemplate: `Hola, se edito el ticket ${ti_id} en el proyecto ${_proyecto!.pr_nombre}`,
           })
         })
-      : usuariosEnElProyecto.forEach((us) => {sendMail({
-          email: us.us_email,
-          subject: `Se añadio un ticket en el proyecto ${_proyecto!.pr_nombre}`,
-          htmlTemplate: `Hola, se añadio un ticket de $${ti_monto} en el proyecto ${_proyecto!.pr_nombre}`,
-        })})
+      : usuariosEnElProyecto.forEach((us) => {
+          sendMail({
+            email: us.us_email,
+            subject: `Se añadio un ticket en el proyecto ${_proyecto!.pr_nombre}`,
+            htmlTemplate: `Hola, se añadio un ticket de $${ti_monto} en el proyecto ${_proyecto!.pr_nombre}`,
+          })
+        })
 
     await Promise.all(usuariosConPorcentajePromises)
 
@@ -89,10 +99,17 @@ export const createTicket = async (req: any, res: any) => {
   }
 }
 
+
+
+// ===============================
+// SERVICIO DE TICKETS POR USUARIO
+// ===============================
+
 export const getTicketsByUserId = async (req: any, res: any) => {
   try {
     const { usId } = req.params
 
+    // Trae los tickets del usuario
     const tickets = await prisma.ticket.findMany({
       where: {
         ti_us_id: usId,

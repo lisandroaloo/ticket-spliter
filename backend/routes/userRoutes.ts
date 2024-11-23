@@ -5,8 +5,11 @@ import { editUser, getSpentByProjectId, getUserById, getUsersByProjectId } from 
 const userRoutes = express.Router();
 
 userRoutes.get("/byProjectId/:prId", getUsersByProjectId)
+
 userRoutes.post("/spentByProjectId/:prId", getSpentByProjectId)
+
 userRoutes.get("/:usId", getUserById)
+
 userRoutes.patch("/", editUser)
 
 

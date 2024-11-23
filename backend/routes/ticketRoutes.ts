@@ -11,9 +11,9 @@ const storage = multer.memoryStorage();
 // Instancia de multer configurada para almacenar los archivos en memoria
 const upload = multer({ storage: storage });
 
-// Definir las rutas
-ticketRoutes.post('/', createTicket); // Ruta para crear un ticket
-ticketRoutes.get('/getList/:usId', getTicketsByUserId); // Ruta para obtener tickets por ID de usuario
+ticketRoutes.post('/', createTicket); 
+
+ticketRoutes.get('/getList/:usId', getTicketsByUserId); 
 
 // Ruta para subir imágenes usando el middleware de multer
 ticketRoutes.post('/upload', upload.single('file'), uploadImage);

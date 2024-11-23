@@ -4,10 +4,18 @@ import prisma from '../models/prismaClient'
 
 import { sendMail } from "../services/mail"
 
+
+
+// ==============================
+// SERVICIO DE LISTA DE PROYECTOS
+// ==============================
+
 export const getProjects = async (req: any, res: any) => {
   try {
     const { userId: us_email } = req.params
 
+
+    // Trae los proyectos del usuario loggeadoo
     const projects = await prisma.proyecto.findMany({
       where: {
         UsuarioXProyecto: {
@@ -30,10 +38,16 @@ export const getProjects = async (req: any, res: any) => {
   }
 }
 
+
+// ===============================
+// SERVICIO DE CERRADO DE PROYECTO
+// ===============================
+
 export const closeProject = async (req: any, res: any) => {
   try {
     const { prId } = req.params
 
+    // Cambio de estado del proyecto
     const updatedProject = await prisma.proyecto.update({
       where: {
         pr_id: +prId,
@@ -54,10 +68,16 @@ export const closeProject = async (req: any, res: any) => {
 }
 
 
+// ===============================
+// SERVICIO DE DETALLE DE PROYECTO
+// ===============================
+
+
 export const getProjectDetail = async (req: any, res: any) => {
   try {
     const { prId } = req.params
 
+    // Trae el proyecto que coincide con el id 
     const project = await prisma.proyecto.findUnique({
       where: {
         pr_id: +prId,
@@ -77,10 +97,16 @@ export const getProjectDetail = async (req: any, res: any) => {
   }
 }
 
+
+// ================================
+// SERVICIO DE USUARIOS DE PROYECTO
+// ================================
+
 export const getProjectUsers = async (req: any, res: any) => {
   try {
     const { prId } = req.params
 
+    // Trae los usuarios del proyecto
     const uxp = await prisma.usuarioXProyecto.findMany({
       where: {
         uxp_pr_id: +prId,
@@ -98,10 +124,15 @@ export const getProjectUsers = async (req: any, res: any) => {
   }
 }
 
+// ===============================
+// SERVICIO DE TICKETS DE PROYECTO
+// ===============================
+
 export const getProjectTickets = async (req: any, res: any) => {
   try {
     const { prId } = req.params
 
+    // Trae los tickets del proyecto
     const tickets = await prisma.ticket.findMany({
       where: {
         ti_pr_id: +prId,
@@ -111,17 +142,18 @@ export const getProjectTickets = async (req: any, res: any) => {
         UsuarioXTicket: {
           select: {
             uxt_porcentaje: true,
-            Usuario: true
-          }
-        }
+            Usuario: true,
+          },
+        },
       },
     })
 
+    // Calcula el monto total de los tickets del proyecto
     const montoTotal = tickets?.reduce((sum, ticket) => sum + ticket.ti_monto, 0)
 
     const ticketsYTotal = {
       Ticket: [...tickets],
-      montoTotal
+      montoTotal,
     }
 
     res.json(ticketsYTotal)
@@ -152,10 +184,16 @@ export const getProjectPagos = async (req: any, res: any) => {
   }
 }
 
+
+// ==================================================
+// SERVICIO DE USUARIOS QUE NO PERTENECEN AL PROYECTO
+// ==================================================
+
 export const getUsersNotInProject = async (req: any, res: any) => {
   try {
     const { prId } = req.params
 
+    // Trae los usuarios que no pertenecen al proyecto
     const usersNotInProject = await prisma.usuario.findMany({
       where: {
         UsuarioXProyecto: {
@@ -175,10 +213,16 @@ export const getUsersNotInProject = async (req: any, res: any) => {
   }
 }
 
+// ================================
+// SERVICIO DE CREACION DE PROYECTO
+// ================================
+
 export const createProject = async (req: any, res: any) => {
   try {
     const { us_email, pr_id, pr_nombre, pr_descripcion } = req.body
 
+
+    // Creacion de proyecto
     const project = await prisma.proyecto.create({
       data: {
         pr_id: pr_id,
@@ -200,10 +244,16 @@ export const createProject = async (req: any, res: any) => {
   }
 }
 
+
+// ===============================
+// SERVICIO DE EDICION DE PROYECTO
+// ===============================
+
 export const editProject = async (req: any, res: any) => {
   try {
     const { pr_id, pr_nombre, pr_descripcion } = req.body
 
+    // Edicion de proyecto
     const project = await prisma.proyecto.update({
       where: { pr_id },
       data: {
@@ -220,12 +270,17 @@ export const editProject = async (req: any, res: any) => {
   }
 }
 
+
+// ===========================================
+// SERVICIO DE AGREGADO DE USUARIO AL PROYECTO
+// ===========================================
+
 export const addUserToProject = async (req: any, res: any) => {
   try {
     const { us_email } = req.body;
     const { prId } = req.params;
 
-    // Crea la entrada en UsuarioXProyecto sin asignar un porcentaje
+    // Crea el usuario_x_proyecto
     const uxp = await prisma.usuarioXProyecto.create({
       data: {
         uxp_us_id: us_email,
