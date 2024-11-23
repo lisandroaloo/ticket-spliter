@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
-const useGetSaldoPagosByUserAndProjectId = () => {
+const useGetPagosByProjectId = () => {
   const [loading, setLoading] = useState(false)
 
-  const getSaldoPagosByUserAndProjectId = async (pr_id: string) => {
+  const getPagosByProjectId = async (pr_id: string) => {
     try {
       setLoading(true)
-      const _res = await fetch(`http://localhost:5000/api/pagos/saldoByUserAndProjectId/${pr_id}`, {
+      const _res = await fetch(`http://localhost:5000/api/pagos/byProyectoId/${pr_id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -25,7 +25,7 @@ const useGetSaldoPagosByUserAndProjectId = () => {
       setLoading(false)
     }
   }
-  return { loading, getSaldoPagosByUserAndProjectId }
+  return { loading, getPagosByProjectId }
 }
 
-export default useGetSaldoPagosByUserAndProjectId
+export default useGetPagosByProjectId

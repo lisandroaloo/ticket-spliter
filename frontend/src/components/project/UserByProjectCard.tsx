@@ -12,8 +12,7 @@ const UserByProjectCard = ({ up, updateProject, hasTickets }: IUserByProjectCard
 
   const { id } = useParams<{ id: string }>()
 
-  const handleAddUserToProject = async () => {
-
+  const handleDeleteUser = async () => {
     await deleteUserFromProject({ _pr_id: id!, _uxp_us_id: up.Usuario.us_email })
 
     updateProject()
@@ -26,7 +25,7 @@ const UserByProjectCard = ({ up, updateProject, hasTickets }: IUserByProjectCard
         <span>{up.Usuario.us_nombre}</span>
         {!hasTickets && authUser != up.Usuario.us_email &&
 
-          <button onClick={handleAddUserToProject}>X</button>
+          <button onClick={handleDeleteUser}>X</button>
         }
 
       </div>

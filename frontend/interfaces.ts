@@ -55,10 +55,7 @@ export interface IUserByProjectForm {
 export interface IProjectMembersProps {
   projectUsers: IUserWrapper[]
   getProjectUsersAsync: () => Promise<void>
-  saldos: any
   usersNotInProject: any
-  getUsersNotInProjectAsync: () => Promise<void>
-  monto: number,
   projectAbierto: boolean
   hasTickets: boolean
   updateProject: () => Promise<void>
@@ -66,9 +63,7 @@ export interface IProjectMembersProps {
 
 export interface IProjectPagosProps {
   projectPagos: IPago[]
-  planPagos: IPlanPagos[]
   updateProject: () => Promise<void>
- 
   projectUsers: IUserWrapper[]
   getProjectUsersAsync: () => Promise<void>
 }
@@ -233,15 +228,16 @@ export interface IUser {
 }
 
 export interface IPago {
-  pa_estado: string
   pa_fecha: string
   pa_id: number
   pa_monto: number
   pa_pr_id: number
   pa_us_emisor_id: string
   pa_us_receptor_id: string
-  emisor?: IUsername
-  receptor?: IUsername
+  Emisor?: IUsername
+  Receptor?: IUsername
+  pa_is_enviado: boolean
+  pa_is_recibido: boolean
 }
 
 export interface IProjectHeaderProps {
