@@ -270,3 +270,20 @@ export interface ICloseProject {
   cerrar: () => void,
   cancelar: () => void
 }
+
+export interface IPaymentCards {
+  pagos: IPago[]
+  emisor?: boolean
+}
+
+export interface IProfilePaymentSend {
+  pagosEmisor: IPago[]
+}
+
+export interface IProfilePaymentReceive {
+  pagosReceptor: IPago[]
+}
+
+export interface IProfileTickets {
+  tickets: ITicket[]
+}

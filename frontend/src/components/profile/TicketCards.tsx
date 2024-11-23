@@ -1,6 +1,5 @@
 import React from 'react'
-import { ITicket } from '../../../interfaces'
-import { IProfileTickets } from './ProfileTickets'
+import { IProfileTickets } from '../../../interfaces'
 
 const TicketCards = ({ tickets }: IProfileTickets) => {
     return (

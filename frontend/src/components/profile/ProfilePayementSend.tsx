@@ -1,12 +1,7 @@
 import React from 'react'
-import { IPago } from '../../../interfaces'
+import { IProfilePaymentSend } from '../../../interfaces'
 import PaymentCards from './PaymentCards'
 
-export interface IProfilePaymentSend {
-
-    pagosEmisor: IPago[]
-
-}
 
 const ProfilePayementSend = ({ pagosEmisor }: IProfilePaymentSend) => {
     return (

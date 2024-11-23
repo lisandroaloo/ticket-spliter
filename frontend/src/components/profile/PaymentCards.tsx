@@ -1,11 +1,6 @@
 import React from 'react'
-import { IProfilePaymentReceive } from './ProfilePaymentReceive'
-import { IPago } from '../../../interfaces'
+import { IPaymentCards } from '../../../interfaces'
 
-export interface IPaymentCards{
-    pagos: IPago[]
-    emisor?: boolean
-}
 
 const PaymentCards = ({ pagos, emisor }: IPaymentCards) => {
     return (
