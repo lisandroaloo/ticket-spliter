@@ -69,85 +69,91 @@ const UserProfile = () => {
     }, [])
 
     return (
-        <>
-            {loading ? (
-                <section className="h-[92vh] bg-green-100 flex justify-center items-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
-                </section>
-            ) : (
-                <section className="md:h-[92vh] h-full bg-green-100 relative">
-                    <div className="pt-2 md:pt-0 md:absolute md:inset-0 h-full md:top-[12%] bg-green-100 px-3 mx-auto max-w-2xl md:max-w-4xl text-green-100 md:h-[50vh]">
-                        <h2 className="text-3xl font-bold tracking-tight text-black">Perfil</h2>
-                        <div className="mt-8 pb-2 grid grid-cols-1 gap-4 md:grid-cols-2 md:h-[50vh]">
-                            <form onSubmit={handleEditUser} className="h-full">
-                                <div className="rounded-lg p-6 shadow-sm bg-gradient-to-br from-emerald-700 to-green-800 h-[50vh]">
-                                    <div className="flex gap-3 items-center mb-3">
-                                        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                            <i className="bi bi-person text-green-800 text-xl"></i>
-                                        </div>
-                                        <div>
-                                            <p className="text-lg font-semibold m-0">{user.us_nombre}</p>
-                                            <p className="text-muted-foreground m-0">{user.us_email}</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="grid gap-2">
-                                        <div className="flex flex-col">
-                                            <label htmlFor="us_nombre">Nombre</label>
-                                            <TextInput
-                                                type="text"
-                                                name="us_nombre"
-                                                value={user.us_nombre || ''}
-                                                placeholder=""
-                                                classNames="rounded bg-green-900 p-1"
-                                                handleInputChange={handleInputChange}
-                                            />
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <label htmlFor="us_email">Correo Electrónico</label>
-                                            <TextInput
-                                                type="email"
-                                                name="us_email"
-                                                classNames="rounded bg-green-900 p-1"
-                                                placeholder=""
-                                                readOnly
-                                                value={user.us_email || ''}
-                                            />
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <label htmlFor="us_password">Contraseña</label>
-                                            <TextInput
-                                                name="us_password"
-                                                value={user.us_password || ''}
-                                                classNames="rounded bg-green-900 p-1"
-                                                type="password"
-                                                placeholder="Ingrese nueva contraseña"
-                                                handleInputChange={handleInputChange}
-                                            />
-                                        </div>
-                                        <button
-                                            type="submit"
-                                            className="rounded bg-green-100 text-green-800 p-1 mt-1"
-                                        >
-                                            Actualizar Perfil
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                            <div className="h-[50vh] rounded-lg bg-gradient-to-br from-emerald-700 to-green-800">
-                                <ProfileNavBar setActiveSection={setActiveSection} activeSection={activeSection} />
-
-                                <div className="h-4/5  overflow-y-scroll no-scrollbar">
-                                    {activeSection === 'tickets' && <ProfileTickets tickets={tickets} />}
-                                    {activeSection === 'sent' && <ProfilePayementSend pagosEmisor={pagosEmisor} />}
-                                    {activeSection === 'received' && <ProfilePaymentReceive pagosReceptor={pagosReceptor} />}
-                                </div>
-                            </div>
-                        </div>
+      <>
+        {loading ? (
+          <section className="h-[92vh] bg-green-100 flex justify-center items-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
+          </section>
+        ) : (
+          <section className="md:h-[92vh] h-full bg-green-100 relative">
+            <div className="pt-2 md:pt-0 md:absolute md:inset-0 h-full md:top-[12%] bg-green-100 px-3 mx-auto max-w-2xl md:max-w-4xl text-green-100 md:h-[50vh]">
+              <h2 className="text-3xl font-bold tracking-tight text-black">Perfil</h2>
+              <div className="mt-8 pb-2 grid grid-cols-1 gap-4 md:grid-cols-2 md:h-[50vh]">
+                <form
+                  onSubmit={handleEditUser}
+                  className="h-full"
+                >
+                  <div className="rounded-lg p-6 shadow-sm bg-gradient-to-br from-emerald-700 to-green-800 h-[50vh]">
+                    <div className="flex gap-3 items-center mb-3">
+                      <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                        <i className="bi bi-person text-green-800 text-xl"></i>
+                      </div>
+                      <div>
+                        <p className="text-lg font-semibold m-0">{user.us_nombre}</p>
+                        <p className="text-muted-foreground m-0">{user.us_email}</p>
+                      </div>
                     </div>
-                </section>
-            )}
-        </>
+
+                    <div className="grid gap-2">
+                      <div className="flex flex-col">
+                        <label htmlFor="us_nombre">Nombre</label>
+                        <TextInput
+                          type="text"
+                          name="us_nombre"
+                          value={user.us_nombre || ''}
+                          placeholder=""
+                          classNames="rounded bg-green-900 p-1"
+                          handleInputChange={handleInputChange}
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <label htmlFor="us_email">Correo Electrónico</label>
+                        <TextInput
+                          type="email"
+                          name="us_email"
+                          classNames="rounded bg-green-900 p-1"
+                          placeholder=""
+                          readOnly
+                          value={user.us_email || ''}
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <label htmlFor="us_password">Contraseña</label>
+                        <TextInput
+                          name="us_password"
+                          value={user.us_password || ''}
+                          classNames="rounded bg-green-900 p-1"
+                          type="password"
+                          placeholder="Ingrese nueva contraseña"
+                          handleInputChange={handleInputChange}
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        className="rounded bg-green-100 text-green-800 p-1 mt-1"
+                      >
+                        Actualizar Perfil
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <div className="h-[50vh] rounded-lg bg-gradient-to-br from-emerald-700 to-green-800">
+                  <ProfileNavBar
+                    setActiveSection={setActiveSection}
+                    activeSection={activeSection}
+                  />
+
+                  <div className="h-4/5  overflow-y-scroll no-scrollbar">
+                    {activeSection === 'tickets' && <ProfileTickets tickets={tickets} />}
+                    {activeSection === 'sent' && <ProfilePayementSend pagosEmisor={pagosEmisor.filter((pago) => pago.pa_is_enviado)} />}
+                    {activeSection === 'received' && <ProfilePaymentReceive pagosReceptor={pagosReceptor.filter((pago) => pago.pa_is_recibido)} />}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+      </>
     )
 }
 
