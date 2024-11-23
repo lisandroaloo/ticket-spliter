@@ -60,6 +60,8 @@ export interface IProjectMembersProps {
   getUsersNotInProjectAsync: () => Promise<void>
   monto: number,
   projectAbierto: boolean
+  hasTickets: boolean
+  updateProject: () => Promise<void>
 }
 
 export interface IProjectPagosProps {
@@ -93,6 +95,8 @@ export interface ITicketByProjectFormProps {
 
 export interface IUserByProjectCardProps {
   up: IUserWrapper
+  updateProject: () => Promise<void>
+  hasTickets: boolean
 
 
 

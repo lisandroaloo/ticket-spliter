@@ -57,6 +57,85 @@ export const closeProject = async (req: any, res: any) => {
       },
     })
 
+    // 1. Obtener los tickets del proyecto junto con los usuarios relacionados y sus porcentajes
+    const ticketsConUsuarios = await prisma.ticket.findMany({
+      where: { ti_pr_id: +prId },
+      include: {
+        UsuarioXTicket: {
+          select: {
+            Usuario: {
+              select: { us_nombre: true, us_email: true },
+            },
+            uxt_porcentaje: true,
+          },
+        },
+      },
+    });
+
+    // 2. Calcular la contribución esperada de cada usuario según su porcentaje por ticket
+    const contribuciones: { [email: string]: number } = {};
+
+    ticketsConUsuarios.forEach((ticket) => {
+      ticket.UsuarioXTicket.forEach((uxt) => {
+        const contribucion = (ticket.ti_monto * uxt.uxt_porcentaje) / 100;
+        contribuciones[uxt.Usuario.us_email] =
+          (contribuciones[uxt.Usuario.us_email] || 0) - contribucion; // Monto esperado negativo
+      });
+    });
+
+    // 3. Calcular cuánto ha contribuido cada usuario directamente con tickets
+    ticketsConUsuarios.forEach((ticket) => {
+      const usuarioCreador = ticket.ti_us_id;
+      contribuciones[usuarioCreador] =
+        (contribuciones[usuarioCreador] || 0) + ticket.ti_monto; // Suma su contribución real
+    });
+
+    // 4. Separar usuarios que deben pagar y los que deben recibir
+    const deudores: any[] = [];
+    const acreedores: any[] = [];
+
+    Object.entries(contribuciones).forEach(([email, saldo]) => {
+      if (saldo < 0) {
+        deudores.push({ email, saldo: Math.abs(saldo) }); // Saldo negativo, debe pagar
+      } else if (saldo > 0) {
+        acreedores.push({ email, saldo }); // Saldo positivo, debe recibir
+      }
+    });
+
+   // 5. Crear los pagos necesarios en la base de datos
+const pagosCreados: any[] = [];
+
+for (const deudor of deudores) {
+  for (const acreedor of acreedores) {
+    if (deudor.saldo === 0) break;
+
+    const monto = Math.min(deudor.saldo, acreedor.saldo);
+
+    // Solo crear el pago si el monto es mayor que 0
+    if (monto > 0) {
+      // Crear el registro de pago en la base de datos
+      const nuevoPago = await prisma.pago.create({
+        data: {
+          pa_us_emisor_id: deudor.email,
+          pa_us_receptor_id: acreedor.email,
+          pa_monto: monto,
+          pa_fecha: new Date(),
+          pa_pr_id: +prId,
+          pa_isEnviado: false,
+          pa_isRecibido: false,
+        },
+      });
+
+      pagosCreados.push(nuevoPago);
+
+      deudor.saldo -= monto;
+      acreedor.saldo -= monto;
+    }
+  }
+}
+
+
+
     res.json(
 
       updatedProject,
@@ -163,26 +242,6 @@ export const getProjectTickets = async (req: any, res: any) => {
   }
 }
 
-export const getProjectPagos = async (req: any, res: any) => {
-  try {
-    const { prId } = req.params
-
-    const pagos = await prisma.pago.findMany({
-      where: {
-        pa_pr_id: +prId,
-      },
-      include: {
-        emisor: true,
-        receptor: true
-      }
-    })
-
-    res.json(pagos)
-  } catch (error: any) {
-    console.error('Error getProjectPagos controller', error.message)
-    res.status(500).json({ error: 'internal Server Error' })
-  }
-}
 
 
 // ==================================================
@@ -302,6 +361,38 @@ export const addUserToProject = async (req: any, res: any) => {
   }
 };
 
+// ===============================================
+// SERVICIO DE ELIMINADO DE USUARIO DE UN PROYECTO
+// ===============================================
+
+export const deleteUserFromProject = async (req: any, res: any) => {
+  try {
+    const { us_email } = req.body;
+    const { prId } = req.params;
+
+    // Elimina el usuario_x_proyecto
+    const deleted = await prisma.usuarioXProyecto.deleteMany({
+      where: {
+        uxp_us_id: us_email,
+        uxp_pr_id: +prId,   
+      },
+    });
+    
+
+    // Enviar un correo al usuario eliminado del proyecto
+    await sendMail({
+      email: us_email,
+      subject: "Se te ha eliminado de un proyecto",
+      htmlTemplate: `Hola, has sido eliminado del proyecto ${prId}`,
+    });
+
+    res.json(deleted);
+  } catch (error: any) {
+    console.error('Error deleteUserFromProject controller', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
 // export const editProjectPercentages = async (req: any, res: any) => {
 //   try {
@@ -346,98 +437,3 @@ export const addUserToProject = async (req: any, res: any) => {
 // };
 
 
-// export const generateDetailedPaymentPlan = async (req: any, res: any) => {
-//   try {
-//     const { prId } = req.params;
-
-//     // 1. Obtener los usuarios del proyecto con sus porcentajes y calcular contribuciones esperadas
-//     const usuariosConPorcentajes = await prisma.usuarioXProyecto.findMany({
-//       where: { uxp_pr_id: +prId },
-//       select: {
-//         Usuario: {
-//           select: { us_nombre: true, us_email: true },
-//         },
-//         uxp_porcentaje: true,
-//       },
-//     });
-
-//     // 2. Calcular el monto total del proyecto sumando los montos de los tickets
-//     const tickets = await prisma.ticket.findMany({
-//       where: { ti_pr_id: +prId },
-//       select: {
-//         ti_monto: true,
-//         ti_us_id: true
-//       },
-//     });
-//     const montoTotal = tickets.reduce((sum, ticket) => sum + ticket.ti_monto, 0);
-
-//     // 3. Definir cuánto debería pagar cada usuario según su porcentaje
-//     const contribuciones = usuariosConPorcentajes.map((uxp) => ({
-//       usuario: uxp.Usuario,
-//       montoEsperado: Math.floor((montoTotal * uxp.uxp_porcentaje) / 100),
-//     }));
-
-//     // 4. Obtener los pagos ya realizados entre los usuarios
-//     const pagosRealizados = await prisma.pago.findMany({
-//       where: { pa_pr_id: +prId },
-//       select: {
-//         pa_monto: true,
-//         emisor: { select: { us_email: true, us_nombre: true } },
-//         receptor: { select: { us_email: true, us_nombre: true } },
-//       },
-//     });
-
-//     // 5. Calcular el saldo final de cada usuario teniendo en cuenta pagos y contribución esperada
-//     const saldoUsuarios: { [email: string]: number } = {};
-//     contribuciones.forEach((contrib) => {
-//       saldoUsuarios[contrib.usuario.us_email] = -contrib.montoEsperado;
-//     });
-
-//     tickets.forEach((ticket) => {
-//       saldoUsuarios[ticket.ti_us_id] += ticket.ti_monto
-//     })
-
-
-//     pagosRealizados.forEach((pago) => {
-//       saldoUsuarios[pago.receptor.us_email] -= pago.pa_monto; // Reduce el saldo del emisor
-//       saldoUsuarios[pago.emisor.us_email] += pago.pa_monto; // Aumenta el saldo del receptor
-//     });
-
-//     // 6. Separar usuarios que deben pagar y los que deben recibir
-//     const deudores: any[] = [];
-//     const acreedores: any[] = [];
-
-//     Object.entries(saldoUsuarios).forEach(([email, saldo]) => {
-//       if (saldo < 0) {
-//         deudores.push({ email, saldo: Math.abs(saldo) });
-//       } else if (saldo > 0) {
-//         acreedores.push({ email, saldo });
-//       }
-//     });
-
-//     // 7. Crear el plan de pagos para equilibrar las deudas
-//     const planDePago: any[] = [];
-
-//     for (const deudor of deudores) {
-//       for (const acreedor of acreedores) {
-//         if (deudor.saldo === 0) break;
-
-//         const pago = Math.min(deudor.saldo, acreedor.saldo);
-
-//         planDePago.push({
-//           deudor: deudor.email,
-//           acreedor: acreedor.email,
-//           monto: pago,
-//         });
-
-//         deudor.saldo -= pago;
-//         acreedor.saldo -= pago;
-//       }
-//     }
-
-//     res.json(planDePago);
-//   } catch (error: any) {
-//     console.error('Error generateDetailedPaymentPlan controller', error.message);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// };

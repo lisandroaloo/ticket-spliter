@@ -10,7 +10,7 @@ const ProjectMembers = ({
 
   projectUsers
   , getProjectUsersAsync, saldos, usersNotInProject,
-  getUsersNotInProjectAsync, monto, projectAbierto }: IProjectMembersProps) => {
+  getUsersNotInProjectAsync, monto, projectAbierto, hasTickets, updateProject }: IProjectMembersProps) => {
   const { id } = useParams<{ id: string }>()
   const [isAddingUser, setIsAddingUser] = useState<boolean>(false)
 
@@ -23,6 +23,17 @@ const ProjectMembers = ({
     }
   }
 
+  
+  const handleDeleteUser = () => {
+    if (projectAbierto) {
+
+      setIsAddingUser(!isAddingUser)
+    } else {
+      toast.error("El proyecto esta cerrado")
+    }
+  }
+
+
 
 
   return (
@@ -32,6 +43,8 @@ const ProjectMembers = ({
           <UserByProjectCard
             key={index}
             up={up}
+            updateProject={updateProject}
+            hasTickets={hasTickets}
 
           />
         ))}
@@ -41,13 +54,16 @@ const ProjectMembers = ({
           setIsAddingUser={setIsAddingUser}
           updateProject={getProjectUsersAsync}
           usersNotInProject={usersNotInProject}
+
         />
-      ) : <div className="flex justify-between">
+      ) : !hasTickets && <div className="flex justify-between">
         <button
           className="p-3 text-green-100 my-4 rounded-full bg-green-700 hover:bg-green-400"
           onClick={handleAddUser}
+
         >
           {isAddingUser ? '➖' : '➕'}
+
         </button>
 
       </div>}

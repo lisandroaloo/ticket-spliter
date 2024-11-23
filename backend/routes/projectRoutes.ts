@@ -3,11 +3,11 @@ import {
     addUserToProject,
     closeProject,
     createProject,
+    deleteUserFromProject,
     editProject,
     // editProjectPercentages,
     // generateDetailedPaymentPlan,
     getProjectDetail,
-    getProjectPagos,
     getProjects,
     getProjectTickets,
     getProjectUsers,
@@ -27,11 +27,13 @@ projectRoutes.patch('/', editProject);
 
 projectRoutes.post('/detail/:prId', protectRoute, addUserToProject);
 
+projectRoutes.post('/detail/delete/:prId', protectRoute, deleteUserFromProject);
+
 projectRoutes.patch('/detail/:prId', protectRoute, closeProject);
 
 projectRoutes.get('/detail/:prId', protectRoute, getProjectDetail);
 
-projectRoutes.get('/pagos/:prId', protectRoute, getProjectPagos);
+
 
 projectRoutes.get('/tickets/:prId', protectRoute, getProjectTickets);
 

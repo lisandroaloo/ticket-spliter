@@ -22,19 +22,23 @@ model Usuario {
 }
 
 model Pago {
-  pa_id              Int      @id @default(autoincrement())
-  pa_us_emisor_id    String
-  pa_us_receptor_id  String
-  pa_monto           Float
-  pa_fecha           DateTime
-  pa_estado          String
-  pa_pr_id           Int
-  Proyecto           Proyecto  @relation(fields: [pa_pr_id], references: [pr_id])
-  emisor             Usuario   @relation("PagoPago_us_emisor_id", fields: [pa_us_emisor_id], references: [us_email], map: "FK_Pago_us_emisor")
-  receptor           Usuario   @relation("PagoPago_us_receptor_id", fields: [pa_us_receptor_id], references: [us_email], map: "FK_Pago_us_receptor")
+  pa_id           Int      @id @default(autoincrement())
+  pa_us_emisor_id String
+  pa_us_receptor_id String
+  pa_monto        Float
+  pa_fecha        DateTime
+  pa_pr_id        Int
+  pa_isEnviado    Boolean  @default(false)
+  pa_isRecibido   Boolean  @default(false)
+
+  // Relaciones
+  Emisor          Usuario  @relation("PagoPago_us_emisor_id", fields: [pa_us_emisor_id], references: [us_email])
+  Receptor        Usuario  @relation("PagoPago_us_receptor_id", fields: [pa_us_receptor_id], references: [us_email])
+  Proyecto        Proyecto @relation(fields: [pa_pr_id], references: [pr_id])
 
   @@map("Pago")
 }
+
 
 model Proyecto {
   pr_id           Int              @id @default(autoincrement())

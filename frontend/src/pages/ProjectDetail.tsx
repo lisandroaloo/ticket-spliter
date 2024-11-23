@@ -8,7 +8,7 @@ import ProjectHeader from '../components/project/ProjectHeader'
 import ProjectNavBar from '../components/navbars/ProjectNavBar'
 import useGetSaldoPagosByUserAndProjectId from '../hooks/pagos/useGetSaldoPagosByUserAndProjectId'
 import useGetProjectDetail from '../hooks/project/useGetProjectDetail'
-import useGetProjectPagos from '../hooks/project/useGetProjectPagos'
+
 import useGetProjectTickets from '../hooks/project/useGetProjectTickets'
 import useGetProjectUsers from '../hooks/project/useGetProjectUsers'
 import useGetUsersNotInProject from '../hooks/project/useGetUsersNotInProject'
@@ -22,11 +22,12 @@ const ProjectDetail = () => {
   const [projectTickets, setProjectTickets] = useState<IProjectTickets | undefined>(undefined)
   const [projectUsers, setProjectUsers] = useState<IUserWrapper[]>([])
   const [usersNotInProject, setUsersNotInProject] = useState<IUser[]>([])
+  
   // const [editingPercentages, setEditingPercentages] = useState<IPercentageByUser[]>([])
 
   // const { loading, getProjectsByIDDeep } = useGetProjectByIDDeep()
   const { loading: loadingDetail, getProjectDetail } = useGetProjectDetail()
-  const { loading: loadingPagos, getProjectPagos } = useGetProjectPagos()
+  // const { loading: loadingPagos, getProjectPagos } = useGetProjectPagos()
   const { loading: loadingTickets, getProjectTickets } = useGetProjectTickets()
   const { loading: loadingUsers, getProjectUsers } = useGetProjectUsers()
   const { loading: loadingUsersNotInProject, getUsersNotInProject } = useGetUsersNotInProject()
@@ -55,10 +56,10 @@ const ProjectDetail = () => {
   }
 
   const getProjectPagosAsync = async () => {
-    const _pagos = await getProjectPagos(+id!)
+     // const _pagos = await getProjectPagos(+id!)
     //const _planPagos = await getPlanPagos(+id!)
 
-    setProjectPagos(_pagos)
+   // setProjectPagos(_pagos)
     //setPlanPagos(_planPagos)
 
 
@@ -128,6 +129,8 @@ const ProjectDetail = () => {
                   getUsersNotInProjectAsync={getUsersNotInProjectAsync}
                   monto={projectTickets!.montoTotal}
                   projectAbierto={projectDetail?.pr_abierto!}
+                  hasTickets={projectTickets.Ticket?.length > 0 }
+                  updateProject={updateProject}
                 />
               ))}
             {activeSection === 'tickets' &&
@@ -143,20 +146,24 @@ const ProjectDetail = () => {
                   updateProject={updateProject}
                 />
               ))}
-            {activeSection === 'payments' &&
-              (loadingPagos ? (
-                <div className="flex justify-center items-center h-full">
-                  <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
-                </div>
-              ) : (
-                <ProjectPagos
-                  projectPagos={projectPagos}
-                  planPagos={planPagos}
-                  updateProject={updateProject}
-                  projectUsers={projectUsers}
-                  getProjectUsersAsync={getProjectUsersAsync}
-                />
-              ))}
+            {/* 
+  {activeSection === 'payments' &&
+    (loadingPagos ? (
+      <div className="flex justify-center items-center h-full">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
+      </div>
+    ) : (
+      <ProjectPagos
+        projectPagos={projectPagos}
+        planPagos={planPagos}
+        updateProject={updateProject}
+        projectUsers={projectUsers}
+        getProjectUsersAsync={getProjectUsersAsync}
+      />
+    ))
+  }
+*/}
+
           </div>
         </div>
       </>
