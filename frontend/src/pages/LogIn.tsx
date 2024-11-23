@@ -36,7 +36,7 @@ const LogIn = () => {
                   onChange={(e) => {
                     setInputs({ ...inputs, us_email: e.target.value })
                   }}
-                  className="w-full rounded-md bg-white border border-black px-4 py-2 text-black placeholder-black"
+                  className="w-full rounded-md bg-green-300 border-green-800 px-4 py-2 text-green-950 placeholder-green-100"
                 />
               </div>
 
@@ -50,7 +50,7 @@ const LogIn = () => {
                   onChange={(e) => {
                     setInputs({ ...inputs, us_password: e.target.value })
                   }}
-                  className="w-full rounded-md bg-white border border-black px-4 py-2 text-black placeholder-black"
+                  className="w-full rounded-md bg-green-300  border-green-800 px-4 py-2 text-green-950 placeholder-green-100"
                 />
               </div>
 
