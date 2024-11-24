@@ -21,15 +21,10 @@ const UserByProjectCard = ({ up, updateProject, hasTickets }: IUserByProjectCard
 
   return (
     <div className="flex justify-between items-center bg-gradient-to-br from-emerald-500 to-green-700 text-white p-3 rounded-lg">
-      <div className=" flex items-center space-x-3">
+      <div className="justify-between flex items-center w-full">
         <span>{up.Usuario.us_nombre}</span>
-        {!hasTickets && authUser != up.Usuario.us_email &&
-
-          <button onClick={handleDeleteUser}>X</button>
-        }
-
+        {!hasTickets && authUser != up.Usuario.us_email && <button onClick={handleDeleteUser}>🗑️</button>}
       </div>
-
     </div>
   )
 }

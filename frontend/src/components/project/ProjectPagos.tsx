@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PagoByProjectCard from './PagoByProjectCard'
 import PagoByProjectForm from './PagoByProjectForm'
 import { IPago, IPlanPagos, IProjectPagosProps } from '../../../interfaces'
+import PagoPendienteByProjectCard from './PagoPendienteByProjectCard'
 
 
 
@@ -21,7 +22,7 @@ const ProjectPagos = ({ projectPagos, updateProject, projectUsers, getProjectUse
           {projectPagos
             ?.filter((p: IPago) => !p.pa_is_enviado || !p.pa_is_recibido)
             .map((p: IPago, index: number) => (
-              <PagoByProjectCard
+              <PagoPendienteByProjectCard
                 key={index}
                 p={p}
               />
@@ -41,7 +42,7 @@ const ProjectPagos = ({ projectPagos, updateProject, projectUsers, getProjectUse
         </div>
       </div>
 
-      {!isAddingPago ? (
+      {/* {!isAddingPago ? (
         <button
           className="p-3 text-white mt-4 rounded-full bg-green-700 hover:bg-green-400"
           onClick={handleAddPago}
@@ -55,7 +56,7 @@ const ProjectPagos = ({ projectPagos, updateProject, projectUsers, getProjectUse
           usersInProyect={projectUsers}
           getProjectUsersAsync={getProjectUsersAsync}
         />
-      )}
+      )} */}
     </>
   )
 }
