@@ -4,7 +4,7 @@ import EditProjectForm from './EditProjectForm'
 import useCloseProject from '../../hooks/project/useCloseProject'
 import CloseProjectPopUp from './CloseProjectPopUp'
 
-const ProjectHeader = ({ projectDetail, loadingDetail, getProjectDetailAsync, monto, updateProject }: IProjectHeaderProps) => {
+const ProjectHeader = ({ projectDetail, loadingDetail, getProjectDetailAsync, monto, updateProject, getProjectPagosAsync }: IProjectHeaderProps) => {
   const [isEditingProject, setIsEditingProject] = useState<boolean>(false)
   const [isClosingProject, setIsClosingProject] = useState<boolean>(false)
   const {closeProject} = useCloseProject()
@@ -20,6 +20,7 @@ const ProjectHeader = ({ projectDetail, loadingDetail, getProjectDetailAsync, mo
     await closeProject(projectDetail?.pr_id!)
     await updateProject()
     setIsClosingProject(false)
+    await getProjectPagosAsync()
   }
 
 

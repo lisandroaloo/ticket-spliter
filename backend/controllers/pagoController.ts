@@ -69,4 +69,30 @@ export const getPagosByProyectoId = async (req: any, res: any) => {
   }
 }
 
+export const setPagoAsSent = async (req: any, res: any) => {
+  try {
+    const { paId } = req.params
+
+    const pago = await prisma.pago.update({where:{pa_id: +paId},data:{pa_isEnviado: true}})
+
+    res.json(pago)
+  } catch (error: any) {
+    console.error('Error setPagoAsSent controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}
+
+export const setPagoAsRecieved = async (req: any, res: any) => {
+  try {
+    const { paId } = req.params
+
+    const pago = await prisma.pago.update({ where: { pa_id: +paId }, data: { pa_isRecibido: true } })
+
+    res.json(pago)
+  } catch (error: any) {
+    console.error('Error setPagoAsRecieved controller', error.message)
+    res.status(500).json({ error: 'internal Server Error' })
+  }
+}
+
 

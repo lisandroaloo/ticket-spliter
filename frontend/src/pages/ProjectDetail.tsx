@@ -90,6 +90,7 @@ const ProjectDetail = () => {
           getProjectDetailAsync={getProjectDetailAsync}
           monto={projectTickets}
           updateProject={updateProject}
+          getProjectPagosAsync={getProjectPagosAsync}
         />
         <div className="bg-gradient-to-br from-emerald-200 to-green-300 md:mx-4 rounded-t-lg shadow-lg p-4 h-full">
           <ProjectNavBar

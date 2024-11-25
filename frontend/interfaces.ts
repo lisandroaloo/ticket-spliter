@@ -22,6 +22,11 @@ export interface IPagoByProjectCardProps {
   p: IPago
 }
 
+export interface IPagoPendienteByProjectCardProps {
+  p: IPago
+  updateProject: () => Promise<void>
+}
+
 export interface IPagoForm {
   pa_fecha: Date
   pa_us_receptor_id: string
@@ -236,8 +241,8 @@ export interface IPago {
   pa_us_receptor_id: string
   Emisor?: IUsername
   Receptor?: IUsername
-  pa_is_enviado: boolean
-  pa_is_recibido: boolean
+  pa_isEnviado: boolean
+  pa_isRecibido: boolean
 }
 
 export interface IProjectHeaderProps {
@@ -246,6 +251,7 @@ export interface IProjectHeaderProps {
   getProjectDetailAsync: () => Promise<void>
   monto: IProjectTickets | undefined
   updateProject: () => Promise<void>
+  getProjectPagosAsync: () => Promise<void>
 }
 
 export interface IEditProjectFormProps {

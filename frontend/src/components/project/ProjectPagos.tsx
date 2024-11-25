@@ -6,12 +6,7 @@ import PagoPendienteByProjectCard from './PagoPendienteByProjectCard'
 
 
 
-const ProjectPagos = ({ projectPagos, updateProject, projectUsers, getProjectUsersAsync, }: IProjectPagosProps) => {
-  const [isAddingPago, setIsAddingPago] = useState<boolean>(false)
-
-  const handleAddPago = () => {
-    setIsAddingPago(!isAddingPago)
-  }
+const ProjectPagos = ({ projectPagos, updateProject, projectUsers, getProjectUsersAsync }: IProjectPagosProps) => {
 
   return (
     <>
@@ -20,11 +15,12 @@ const ProjectPagos = ({ projectPagos, updateProject, projectUsers, getProjectUse
           <h2>Pagos pendientes</h2>
 
           {projectPagos
-            ?.filter((p: IPago) => !p.pa_is_enviado || !p.pa_is_recibido)
+            ?.filter((p: IPago) => !p.pa_isEnviado || !p.pa_isRecibido)
             .map((p: IPago, index: number) => (
               <PagoPendienteByProjectCard
                 key={index}
                 p={p}
+                updateProject={updateProject}
               />
             ))}
         </div>
@@ -32,7 +28,7 @@ const ProjectPagos = ({ projectPagos, updateProject, projectUsers, getProjectUse
         <div className="h-[30vh] w-50 ">
           <h2>Pagos realizados</h2>
           {projectPagos
-            .filter((p: IPago) => p.pa_is_enviado && p.pa_is_recibido)
+            .filter((p: IPago) => p.pa_isEnviado && p.pa_isRecibido)
             .map((p: IPago, index: number) => (
               <PagoByProjectCard
                 key={index}

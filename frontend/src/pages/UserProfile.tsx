@@ -145,8 +145,8 @@ const UserProfile = () => {
 
                   <div className="h-4/5  overflow-y-scroll no-scrollbar">
                     {activeSection === 'tickets' && <ProfileTickets tickets={tickets} />}
-                    {activeSection === 'sent' && <ProfilePayementSend pagosEmisor={pagosEmisor.filter((pago) => pago.pa_is_enviado)} />}
-                    {activeSection === 'received' && <ProfilePaymentReceive pagosReceptor={pagosReceptor.filter((pago) => pago.pa_is_recibido)} />}
+                    {activeSection === 'sent' && <ProfilePayementSend pagosEmisor={pagosEmisor.filter((pago) => pago.pa_isEnviado)} />}
+                    {activeSection === 'received' && <ProfilePaymentReceive pagosReceptor={pagosReceptor.filter((pago) => pago.pa_isRecibido)} />}
                   </div>
                 </div>
               </div>
