@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import ProjectMembers from '../components/project/ProjectMembers'
 import ProjectTickets from '../components/project/ProjectTickets'
 import ProjectPagos from '../components/project/ProjectPagos'
-import { IPago,IProject, IProjectTickets, IUser, IUserWrapper } from '../../interfaces'
+import { IPago, IProject, IProjectTickets, IUser, IUserWrapper } from '../../interfaces'
 import ProjectHeader from '../components/project/ProjectHeader'
 import ProjectNavBar from '../components/navbars/ProjectNavBar'
 import useGetProjectDetail from '../hooks/project/useGetProjectDetail'
@@ -12,16 +12,17 @@ import useGetProjectTickets from '../hooks/project/useGetProjectTickets'
 import useGetProjectUsers from '../hooks/project/useGetProjectUsers'
 import useGetUsersNotInProject from '../hooks/project/useGetUsersNotInProject'
 import useGetPagosByProjectId from '../hooks/pagos/useGetPagosByProjectId'
+import toast from 'react-hot-toast'
 
 
 const ProjectDetail = () => {
+
   const { id } = useParams<{ id: string }>()
   const [projectDetail, setProjectDetail] = useState<IProject | undefined>()
   const [projectPagos, setProjectPagos] = useState<IPago[]>([])
   const [projectTickets, setProjectTickets] = useState<IProjectTickets | undefined>(undefined)
   const [projectUsers, setProjectUsers] = useState<IUserWrapper[]>([])
   const [usersNotInProject, setUsersNotInProject] = useState<IUser[]>([])
-  
   const { loading: loadingDetail, getProjectDetail } = useGetProjectDetail()
   // const { loading: loadingPagos, getProjectPagos } = useGetProjectPagos()
   const { loading: loadingTickets, getProjectTickets } = useGetProjectTickets()
@@ -41,19 +42,28 @@ const ProjectDetail = () => {
   }
 
   const updateProject = async () => {
-    getProjectDetailAsync()
-    getProjectTicketsAsync()
-    getProjectUsersAsync()
-    getUsersNotInProjectAsync()
-    if (!projectDetail?.pr_abierto) {
-      getProjectPagosAsync()
+    try {
+
+      await getProjectDetailAsync()
+
+      await getProjectTicketsAsync()
+      await getProjectUsersAsync()
+      await getUsersNotInProjectAsync()
+      if (!projectDetail?.pr_abierto) {
+        await getProjectPagosAsync()
+      }
+    } catch {
+      console.log("ERROR EN UPDATE PROJECT");
+
     }
+
+
   }
 
   const getProjectPagosAsync = async () => {
 
     const _pagos = await getPagosByProjectId(id!)
-    console.log("PAGOS", _pagos)
+
     setProjectPagos(_pagos)
   }
 

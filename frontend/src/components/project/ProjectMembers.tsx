@@ -30,7 +30,7 @@ const ProjectMembers = ({
   return (
     <>
       <div className="space-y-4 h-[30vh] overflow-y-scroll no-scrollbar">
-        {projectUsers.map((up: IUserWrapper, index: any) => (
+        {projectUsers?.map((up: IUserWrapper, index: any) => (
           <UserByProjectCard
             key={index}
             up={up}

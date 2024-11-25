@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import { ILogin } from "../../interfaces";
+import toast from "react-hot-toast";
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -19,12 +20,15 @@ const useLogin = () => {
       const data = await res.json();
 
       if (data.error) {
-        throw new Error(data.error);
+        toast.error(data.error)
+      }
+      else{
+
+        localStorage.setItem("app-user", JSON.stringify(data));
+        
+        setAuthUser(data);
       }
 
-      localStorage.setItem("app-user", JSON.stringify(data));
-      
-      setAuthUser(data);
 
 
     } catch (error: unknown) {

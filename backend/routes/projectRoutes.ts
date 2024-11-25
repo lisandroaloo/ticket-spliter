@@ -17,9 +17,9 @@ import protectRoute from '../middleware/protectRoute';
 
 const projectRoutes = express.Router();
 
-projectRoutes.get('/:userId', getProjects);
+projectRoutes.get('/:userId',  getProjects);
 
-projectRoutes.post('/', createProject);
+projectRoutes.post('/',  createProject);
 
 projectRoutes.patch('/', editProject);
 

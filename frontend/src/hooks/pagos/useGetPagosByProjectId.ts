@@ -1,8 +1,9 @@
 import { useState } from 'react'
-
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router'
 const useGetPagosByProjectId = () => {
   const [loading, setLoading] = useState(false)
-
+  const navigate = useNavigate()
   const getPagosByProjectId = async (pr_id: string) => {
     try {
       setLoading(true)
@@ -11,16 +12,16 @@ const useGetPagosByProjectId = () => {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
       })
-
+      if (!_res.ok) {
+        throw new Error(`Error ${_res.status}: ${_res.statusText}`);
+      }
       const res = await _res.json()
 
       return res
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        alert(error.message)
-      } else {
-        alert('An unknown error occurred')
-      }
+      toast.error("No perteneces a este proyecto")
+      navigate("/projects/");
+      throw error
     } finally {
       setLoading(false)
     }

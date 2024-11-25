@@ -11,7 +11,7 @@ model Usuario {
   us_email     String             @id
   us_nombre    String
   us_password  String
-  us_estado    String
+  us_activo    Boolean            @default(true) // Campo para indicar si el usuario está activo
   PagoPago_us_emisor_id   Pago[]  @relation("PagoPago_us_emisor_id")
   PagoPago_us_receptor_id Pago[]  @relation("PagoPago_us_receptor_id")
   UsuarioXProyecto UsuarioXProyecto[]

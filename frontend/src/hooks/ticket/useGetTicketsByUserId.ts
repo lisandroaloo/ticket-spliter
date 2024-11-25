@@ -12,6 +12,8 @@ const useGetTicketsByUserId = () => {
       const _res = await fetch(`http://localhost:5000/api/tickets/getList/${authUser}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
+        
+        credentials: 'include',
       })
 
       const res = await _res.json()
