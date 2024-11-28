@@ -7,6 +7,7 @@ import userRoutes from './routes/userRoutes';
 import ticketRoutes from './routes/ticketRoutes';
 import pagoRoutes from './routes/pagoRoutes';
 import cookieParser from "cookie-parser";
+import { scheduleJobs } from './services/cronJobs';
 
 
 dotenv.config();
@@ -39,3 +40,5 @@ app.use("/api/pagos", pagoRoutes);
 app.listen(PORT, () => {
   console.log(`alleluyah - ${PORT}`);
 });
+
+scheduleJobs()

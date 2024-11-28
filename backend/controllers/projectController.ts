@@ -123,6 +123,7 @@ for (const deudor of deudores) {
           pa_pr_id: +prId,
           pa_isEnviado: false,
           pa_isRecibido: false,
+          pa_ultimo_recordatorio: new Date(),
         },
       });
 
