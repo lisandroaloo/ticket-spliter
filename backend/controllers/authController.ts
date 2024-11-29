@@ -71,7 +71,7 @@ export const login = async (req: any, res: any) => {
     const passwordMatch = await bcrypt.compare(pw, user.us_password);
 
     if (!passwordMatch) {
-      return res.status(400).json({ error: 'Invalid user or password' });
+      return res.status(400).json({ error: 'Mail o contraseña incorrecta' });
     }
 
     // Generar cookie de inicio de sesión

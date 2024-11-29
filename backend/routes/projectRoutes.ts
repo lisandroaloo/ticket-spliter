@@ -23,8 +23,6 @@ projectRoutes.post('/',  createProject);
 
 projectRoutes.patch('/', editProject);
 
-// projectRoutes.patch('/percentage/:prId', protectRoute, editProjectPercentages);
-
 projectRoutes.post('/detail/:prId', protectRoute, addUserToProject);
 
 projectRoutes.post('/detail/delete/:prId', protectRoute, deleteUserFromProject);

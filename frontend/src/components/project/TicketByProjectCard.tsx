@@ -7,11 +7,18 @@ const TicketByProjectCard = ({ t, onClickRow }: ITicketByProjectCardProps) => {
   }
 
   return (
-    <div className="flex justify-between items-center bg-gradient-to-br from-emerald-500 to-green-700 text-green-100 p-3 rounded-lg" onClick={()=>onClickRow(t)}>
+    <div className="flex justify-between items-center bg-gradient-to-br from-emerald-500 to-green-700 text-green-100 p-3 rounded-lg" >
       <div className="flex items-center space-x-3">
         <span>{t.Usuario.us_nombre}</span>
       </div>
       <div className="flex items-center space-x-3">
+     
+        <span
+          onClick={() => onClickRow(t)}
+          className="cursor-pointer"
+        >
+          ✏️
+        </span>
         {t.ti_image_url && (
           <span
             onClick={redirectImage}

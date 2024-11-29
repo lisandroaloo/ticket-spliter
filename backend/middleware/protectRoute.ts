@@ -53,6 +53,7 @@ const protectRoute = async (req: any, res: any, next: any) => {
 
 
     const { prId } = req.params;
+    
     if (prId) {
 
       // Chequeo si el usuario loggeado pertenece al proyecto

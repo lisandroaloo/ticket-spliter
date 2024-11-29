@@ -7,11 +7,14 @@ import toast from 'react-hot-toast'
 
 
 
+
 export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateProject, projectUsers, setEditingTicket }: ITicketByProjectFormProps) {
   const { id } = useParams<{ id: string }>()
   const { loading, createTicket } = useCreateTicket()
   const { uploadFile, isUploading, error } = useUploadTicket()
   const [file, setFile] = useState<File | undefined>(undefined)
+
+
 
   const [formState, setFormState] = useState<ITicketForm>(
     ticket || {
@@ -27,6 +30,30 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
       })),
     }
   )
+
+  const equalPercentages = async () => {
+    const porcentaje = (100 / projectUsers.length).toString(); // Convierte el porcentaje a string
+  
+    console.log(porcentaje);
+  
+    // Actualizamos los porcentajes de cada usuario
+    const newPercentages = formState.userPercentage.map((user) => ({
+      ...user,
+      percentage: porcentaje,  // Asegúrate de asignar un string aquí
+    }));
+  
+    // Actualizamos el estado con los nuevos porcentajes
+    setFormState((prevState) => ({
+      ...prevState,
+      userPercentage: newPercentages,  // Asegúrate de actualizar `userPercentage`
+    }));
+  
+    // Aquí pasamos directamente el estado actualizado
+    console.log({ ...formState, userPercentage: newPercentages });
+  
+  
+  };
+  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -46,7 +73,7 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
     try {
       formState.userPercentage.forEach(percentage => {
         if (parseFloat(percentage.percentage) < 0) {
-         
+
           throw new Error()
         }
         total += parseFloat(percentage.percentage)
@@ -140,8 +167,8 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
           <table className="min-w-full table-auto border-collapse">
             <thead>
               <tr className="bg-green-700 text-white">
-                <th className="px-4 py-2 text-left">Username</th>
-                <th className="px-4 py-2 text-left">Percentage</th>
+                <th className="px-4 py-2 text-left">Usuario</th>
+                <th className="px-4 py-2 text-left">Porcentaje</th>
               </tr>
             </thead>
             <tbody>
@@ -193,6 +220,7 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
           >
             Cancelar
           </button>
+          <button className='ml-2' onClick={equalPercentages}>⚖️</button>
         </div>
       </div>
     </div>
