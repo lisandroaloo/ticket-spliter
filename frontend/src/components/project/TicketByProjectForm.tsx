@@ -32,23 +32,22 @@ export default function TicketByProjectForm({ ticket, setIsAddingTicket, updateP
   )
 
   const equalPercentages = async () => {
-    const porcentaje = (100 / projectUsers.length).toString(); // Convierte el porcentaje a string
+    const porcentaje = (100 / projectUsers.length).toString(); 
   
     console.log(porcentaje);
   
-    // Actualizamos los porcentajes de cada usuario
     const newPercentages = formState.userPercentage.map((user) => ({
       ...user,
-      percentage: porcentaje,  // Asegúrate de asignar un string aquí
+      percentage: porcentaje,  
     }));
   
-    // Actualizamos el estado con los nuevos porcentajes
+
     setFormState((prevState) => ({
       ...prevState,
-      userPercentage: newPercentages,  // Asegúrate de actualizar `userPercentage`
+      userPercentage: newPercentages,  
     }));
   
-    // Aquí pasamos directamente el estado actualizado
+  
     console.log({ ...formState, userPercentage: newPercentages });
   
   

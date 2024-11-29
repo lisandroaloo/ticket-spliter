@@ -22,7 +22,7 @@ interface IMailContent {
 const sendMail = async ({ email, subject, htmlTemplate }: IMailContent) => {
     const msg = {
         to: email,
-        from: "ticketspliter@gmail.com", // Usa una dirección verificada en SendGrid
+        from: "alolisandro13@gmail.com", // Usa una dirección verificada en SendGrid
         subject,
         html: htmlTemplate,
     };
