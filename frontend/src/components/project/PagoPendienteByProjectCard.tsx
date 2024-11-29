@@ -26,9 +26,9 @@ const PagoPendienteByProjectCard = ({ p, updateProject }: IPagoPendienteByProjec
         <span>{p.Emisor?.us_nombre + ' --> ' + p.Receptor?.us_nombre}</span>
       </div>
       <div className="flex items-center space-x-3">
-        {!p.pa_isEnviado && p.pa_us_emisor_id === authUser && <button onClick={handleClickSent}>Pago enviado</button>}
-        {p.pa_isEnviado && !p.pa_isRecibido && p.pa_us_receptor_id === authUser && <button onClick={handleClickRecieved}>Pago recibido</button>}
-        <span>${p.pa_monto}</span>
+        {!p.pa_isEnviado && p.pa_us_emisor_id === authUser && <button className='mr-2 hover:text-white' onClick={handleClickSent}>Pago enviado</button>}
+        {p.pa_isEnviado && !p.pa_isRecibido && p.pa_us_receptor_id === authUser && <button className='mr-2 hover:text-white'  onClick={handleClickRecieved}>Pago recibido</button>}
+        <span className='text-greem-800'>${p.pa_monto}</span>
         <span className="bg-green-200 text-green-800 px-2 py-1 rounded-full text-xs">{p.pa_fecha.split('T')[0]}</span>
       </div>
     </div>
@@ -36,3 +36,4 @@ const PagoPendienteByProjectCard = ({ p, updateProject }: IPagoPendienteByProjec
 }
 
 export default PagoPendienteByProjectCard
+
